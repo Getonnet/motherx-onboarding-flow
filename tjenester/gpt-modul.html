@@ -25,7 +25,7 @@
       <a href="../index.html#priser">Priser</a>
       <a href="../index.html#kontakt">Kontakt</a>
     </div>
-    <a href="../kom-i-gang.html" class="btn btn-pill">Start gratis prøve <span class="arrow">→</span></a>
+    <a href="../kom-i-gang.html" class="btn btn-pill">Prøv gratis <span class="arrow">→</span></a>
   </div>
 </nav>
 
@@ -49,6 +49,159 @@
       <h2 class="section-title">Ekte spørsmål. <span class="grad-text-light">Presise svar.</span></h2>
       <p class="section-sub">GPT-Modulen bruker kun dine dokumenter — og refererer til kilden hver gang.</p>
     </div>
+
+    <div class="gpt-mock reveal" id="gptMock">
+      <div class="demo-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="url">dinbedrift.no/gpt · Din GPT</span>
+      </div>
+      <div class="gpt-mock-body">
+        <aside class="gpt-mock-side">
+          <button class="gpt-mock-new">+ Ny samtale</button>
+          <div class="gpt-mock-section">Populære spørsmål</div>
+          <div class="gpt-mock-conv">Jakke til fjelltur i april</div>
+          <div class="gpt-mock-conv">Hva tåler -25°C?</div>
+          <div class="gpt-mock-conv">Størrelsesguide Arctic Parka</div>
+          <div class="gpt-mock-conv">Frakt til Bergen</div>
+          <div class="gpt-mock-section">Kategorier</div>
+          <div class="gpt-mock-conv">🧥 Vinterjakker</div>
+          <div class="gpt-mock-conv">🏔️ Skaljakker</div>
+          <div class="gpt-mock-conv">🎒 Tilbehør</div>
+          <div class="gpt-mock-side-foot">
+            <div class="gpt-mock-avatar gpt-guest">?</div>
+            <div>
+              <div class="gpt-mock-user">Gjest</div>
+              <div class="gpt-mock-role">Nordkraft AS · support</div>
+            </div>
+          </div>
+        </aside>
+        <main class="gpt-mock-main" id="gptMain">
+          <div class="gpt-mock-scroll" id="gptScroll">
+
+          <!-- Landing (empty state) -->
+          <div class="gpt-welcome" id="gptWelcome">
+            <div class="gpt-welcome-logo">Din bedrift</div>
+            <h3 class="gpt-welcome-title">Hei 👋 Hva kan jeg hjelpe deg med?</h3>
+            <p class="gpt-welcome-sub">Jeg kjenner hele bedriften — produkter, størrelser, frakt og retur. Spør i vei!</p>
+            <div class="gpt-welcome-chips">
+              <span>Jakke til fjelltur</span>
+              <span>Størrelsesguide</span>
+              <span>Frakt og retur</span>
+              <span>Vaskeråd</span>
+            </div>
+          </div>
+
+          <!-- Conversation (animated in) -->
+          <div class="gpt-mock-msg u gpt-hidden" id="gptUserMsg">
+            <div class="gpt-mock-who">Kunde</div>
+            <span id="gptUserText"></span>
+          </div>
+          <div class="gpt-mock-msg a gpt-hidden" id="gptAnswer">
+            <div class="gpt-mock-head">
+              <span class="gpt-mock-logo">Din bedrift</span>
+            </div>
+            <div class="gpt-typing-dots" id="gptTypingDots"><span></span><span></span><span></span></div>
+            <div class="gpt-answer-body" id="gptAnswerBody" style="display:none">
+              <p>Til en fjelltur i april vil jeg anbefale <strong>Arctic Parka 2000</strong> — den tåler ned til -25°C og har innsydd fôr som ikke føles tungt.</p>
+              <p>Tre modeller som passer godt:</p>
+              <ul>
+                <li><strong>Arctic Parka 2000</strong> — lang modell, -25°C, 2 499 kr</li>
+                <li><strong>Fjell Down Jacket</strong> — kort og lett, -20°C, 1 899 kr</li>
+                <li><strong>Nordic Winter Coat</strong> — medium, -22°C, 1 599 kr (på tilbud)</li>
+              </ul>
+              <p>Skal jeg finne riktig størrelse for deg?</p>
+              <div class="gpt-mock-sources">
+                <div class="gpt-mock-sources-label">Kilder</div>
+                <div class="gpt-mock-src"><span class="gpt-mock-src-ic">🧥</span><span>Produktside — Arctic Parka 2000</span></div>
+                <div class="gpt-mock-src"><span class="gpt-mock-src-ic">📘</span><span>Vinterjakke-guide 2025</span></div>
+                <div class="gpt-mock-src"><span class="gpt-mock-src-ic">⭐</span><span>Kundevurderinger (328 stk)</span></div>
+              </div>
+            </div>
+          </div>
+
+          </div><!-- /gpt-mock-scroll -->
+
+          <!-- Input with animated typing -->
+          <div class="gpt-mock-input" id="gptInputBar">
+            <span class="gpt-mock-typed" id="gptTyped"></span>
+            <span class="gpt-mock-placeholder" id="gptPlaceholder">Still et spørsmål…</span>
+            <span class="gpt-mock-caret" id="gptCaret"></span>
+            <span class="gpt-mock-spacer"></span>
+            <span class="gpt-mock-send">↑</span>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+      const QUESTION = "Har dere en jakke som tåler -25°C uten å bli altfor tung?";
+      const root = document.getElementById('gptMock');
+      if(!root) return;
+      const typed = document.getElementById('gptTyped');
+      const placeholder = document.getElementById('gptPlaceholder');
+      const welcome = document.getElementById('gptWelcome');
+      const userMsg = document.getElementById('gptUserMsg');
+      const userText = document.getElementById('gptUserText');
+      const answer = document.getElementById('gptAnswer');
+      const dots = document.getElementById('gptTypingDots');
+      const answerBody = document.getElementById('gptAnswerBody');
+      const scroll = document.getElementById('gptScroll');
+      const scrollToBottom = () => { if(scroll) scroll.scrollTop = scroll.scrollHeight; };
+
+      let timers = [];
+      const schedule = (fn, ms) => timers.push(setTimeout(fn, ms));
+      const reset = () => {
+        timers.forEach(clearTimeout); timers = [];
+        typed.textContent = '';
+        placeholder.style.display = '';
+        welcome.classList.remove('gpt-fade-out');
+        userMsg.classList.add('gpt-hidden');
+        userText.textContent = '';
+        answer.classList.add('gpt-hidden');
+        dots.style.display = '';
+        answerBody.style.display = 'none';
+      };
+
+      const play = () => {
+        reset();
+        // 1. Hide placeholder, start typing
+        schedule(()=>{ placeholder.style.display = 'none'; }, 800);
+        [...QUESTION].forEach((ch,i)=>{
+          schedule(()=>{ typed.textContent += ch; }, 900 + i*45);
+        });
+        const typedDone = 900 + QUESTION.length*45;
+        // 2. Submit: clear input, fade welcome, show user bubble
+        schedule(()=>{
+          welcome.classList.add('gpt-fade-out');
+          userText.textContent = QUESTION;
+          userMsg.classList.remove('gpt-hidden');
+          typed.textContent = '';
+          placeholder.style.display = '';
+          scrollToBottom();
+        }, typedDone + 600);
+        // 3. Show AI bubble with thinking dots
+        schedule(()=>{
+          answer.classList.remove('gpt-hidden');
+          scrollToBottom();
+        }, typedDone + 1100);
+        // 4. Replace dots with actual answer
+        schedule(()=>{
+          dots.style.display = 'none';
+          answerBody.style.display = 'block';
+          scrollToBottom();
+        }, typedDone + 2400);
+      };
+
+      // Start only when visible
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){ play(); io.disconnect(); }
+        });
+      }, {threshold: 0.3});
+      io.observe(root);
+    })();
+    </script>
 
     <div class="use-grid">
       <div class="use-card reveal">
@@ -168,7 +321,7 @@
       <div class="eyebrow dark"><span class="pulse-dot"></span> 30 dager gratis</div>
       <h2>Gi organisasjonen sin egen AI.</h2>
       <p>Privat, sikkert og trent på deres kunnskap. Oppsett inkludert.</p>
-      <a href="../kom-i-gang.html" class="btn btn-primary" style="margin-top:8px">Start gratis prøve <span class="arrow">→</span></a>
+      <a href="../kom-i-gang.html" class="btn btn-primary" style="margin-top:8px">Prøv gratis <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
