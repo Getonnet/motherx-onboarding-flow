@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AnswerX for WordPress — MotherX</title>
+<meta name="description" content="AnswerX er MotherX sitt WordPress-plugin. AI-søk og chat på nettsiden din på minutter — med full kontroll over stil og plassering."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css"/>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav hero-mode" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand">
+      <img src="../assets/logo-white.png" alt="MotherX" class="logo logo-light"/>
+      <img src="../assets/logo-purple.png" alt="MotherX" class="logo logo-dark"/>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html#tjenester">Tjenester</a>
+      <a href="../index.html#plattform">Plattform</a>
+      <a href="../index.html#priser">Priser</a>
+      <a href="../index.html#kontakt">Kontakt</a>
+    </div>
+    <a href="../kom-i-gang.html" class="btn btn-pill">Start gratis prøve <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<header class="subpage-hero" id="hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">Hjem</a> <span>/</span> <a href="../index.html#tjenester">Tjenester</a> <span>/</span> <span>AnswerX for WordPress</span></div>
+    <div class="eyebrow"><span class="pulse-dot"></span> Plugin</div>
+    <h1><em style="font-family:'Instrument Serif',serif;font-weight:400;color:var(--purple-200)">AnswerX</em> — MotherX rett inn i WordPress.</h1>
+    <p class="lead">Installer plugin-et, lim inn API-nøkkelen din, plasser en shortcode — og du har AI-søk og chat på siden. Ingen utvikling. Ingen konfigurasjon.</p>
+    <div class="sub-cta">
+      <a href="https://wordpress.org/plugins/answerx/" target="_blank" rel="noopener" class="btn btn-primary">Last ned fra WordPress <span class="arrow">→</span></a>
+      <a href="#oppsett" class="btn btn-ghost">Se oppsett</a>
+    </div>
+  </div>
+</header>
+
+<section class="section-pad" id="oppsett">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow dark"><span class="pulse-dot"></span> 3 steg til live</div>
+      <h2 class="section-title">Fra nedlasting til <span class="grad-text-light">AI på siden</span> på 10 minutter.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div><h4>Installer plugin</h4>
+        <p>Søk etter "AnswerX" i WordPress plugin-katalogen og trykk Installer → Aktiver.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div><h4>Lim inn API-nøkkel</h4>
+        <p>Gå til AnswerX → Min plan, lim inn nøkkelen fra MotherX-dashboard og lagre.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div><h4>Plasser shortcode</h4>
+        <p>Bruk <code style="background:var(--purple-100);color:var(--purple-800);padding:2px 8px;border-radius:6px;font-family:'SF Mono',monospace;font-size:13px">[answerx_search]</code> hvor som helst — side, post, widget eller sidebar.</p>
+      </div>
+    </div>
+
+    <div style="max-width:760px;margin:60px auto 0">
+      <div class="code-block reveal">
+<span class="c">// Enkel shortcode</span>
+[answerx_search]
+
+<span class="c">// Tilpasset</span>
+[answerx_search
+  <span class="k">placeholder</span>=<span class="s">"Spør oss om hva som helst..."</span>
+  <span class="k">button_text</span>=<span class="s">"Søk"</span>
+  <span class="k">class</span>=<span class="s">"min-container"</span>
+  <span class="k">button_style</span>=<span class="s">"background:#7C3AED;color:#fff;"</span>
+]
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad alt-bg">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal">
+        <div class="eyebrow dark"><span class="pulse-dot"></span> Full stil-kontroll</div>
+        <h2>Matcher merkevaren din — til siste piksel.</h2>
+        <p>AnswerX kommer med fornuftige defaults, men alt kan overstyres via CSS-klasser, inline-stil eller egen tema-integrasjon.</p>
+        <ul class="mini-list">
+          <li>Egne klasser på container, input og knapp</li>
+          <li>Inline-style for raske justeringer</li>
+          <li>Full CSS-frihet via tema-filer</li>
+          <li>Mørk og lys modus</li>
+        </ul>
+      </div>
+      <div class="visual reveal">
+        <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.6;margin-bottom:18px">Widget-eksempel</div>
+        <div style="background:#fff;padding:18px;border-radius:14px;display:flex;gap:10px;align-items:center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" style="width:20px;height:20px"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+          <input style="border:none;outline:none;flex:1;font-family:inherit;font-size:15px;color:var(--ink)" placeholder="Spør oss om hva som helst..." disabled/>
+          <button style="background:#7C3AED;color:#fff;border:none;padding:10px 18px;border-radius:10px;font-weight:600;font-family:inherit">Søk</button>
+        </div>
+        <div style="margin-top:16px;padding:16px;background:rgba(255,255,255,.08);border-radius:12px;font-size:13px;opacity:.8">
+          <div style="opacity:.6;font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px">Forhåndsvisning</div>
+          Bygget med AnswerX shortcode — fullt tilpassbar.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow dark"><span class="pulse-dot"></span> Funksjoner</div>
+      <h2 class="section-title">Alt du får <span class="grad-text-light">ut av boksen.</span></h2>
+    </div>
+    <div class="use-grid">
+      <div class="use-card reveal"><span class="emoji">⚡</span><h4>Øyeblikkelig trening</h4><p>AnswerX lærer av nettsidens innhold automatisk — ingen manuell import.</p></div>
+      <div class="use-card reveal"><span class="emoji">🎁</span><h4>30 dagers gratis prøve</h4><p>Full tilgang til søk og chat — ingen betalingskort kreves.</p></div>
+      <div class="use-card reveal"><span class="emoji">🎨</span><h4>Tilpassbare widgets</h4><p>Design chat-grensesnittet til å matche merkevaren din.</p></div>
+      <div class="use-card reveal"><span class="emoji">📚</span><h4>Kunnskap-trening (Pro)</h4><p>Last opp egne PDF-er og dokumenter for spesialisert AI.</p></div>
+      <div class="use-card reveal"><span class="emoji">📈</span><h4>Innebygd analyse</h4><p>Spor AI-interaksjoner og ytelse i sanntid direkte i WP-admin.</p></div>
+      <div class="use-card reveal"><span class="emoji">👥</span><h4>Teamsamarbeid</h4><p>Administrer team og jobb sammen sømløst innenfor plattformen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad alt-bg">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow dark"><span class="pulse-dot"></span> Shortcode-attributter</div>
+      <h2 class="section-title">Full kontroll via <span class="grad-text-light">parametere.</span></h2>
+    </div>
+    <div style="max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden">
+      <table style="width:100%;border-collapse:collapse;font-size:14.5px">
+        <thead>
+          <tr style="background:var(--cream)"><th style="text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)">Attributt</th><th style="text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)">Beskrivelse</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:14px 18px;border-bottom:1px solid var(--line);font-family:'SF Mono',monospace;color:var(--purple-700)">class</td><td style="padding:14px 18px;border-bottom:1px solid var(--line);opacity:.8">Egen klasse på ytre container</td></tr>
+          <tr><td style="padding:14px 18px;border-bottom:1px solid var(--line);font-family:'SF Mono',monospace;color:var(--purple-700)">input_class</td><td style="padding:14px 18px;border-bottom:1px solid var(--line);opacity:.8">Egen klasse på input-feltet</td></tr>
+          <tr><td style="padding:14px 18px;border-bottom:1px solid var(--line);font-family:'SF Mono',monospace;color:var(--purple-700)">button_class</td><td style="padding:14px 18px;border-bottom:1px solid var(--line);opacity:.8">Egen klasse på knappen</td></tr>
+          <tr><td style="padding:14px 18px;border-bottom:1px solid var(--line);font-family:'SF Mono',monospace;color:var(--purple-700)">style</td><td style="padding:14px 18px;border-bottom:1px solid var(--line);opacity:.8">Inline-stil på container</td></tr>
+          <tr><td style="padding:14px 18px;border-bottom:1px solid var(--line);font-family:'SF Mono',monospace;color:var(--purple-700)">placeholder</td><td style="padding:14px 18px;border-bottom:1px solid var(--line);opacity:.8">Egen tekst i input-feltet</td></tr>
+          <tr><td style="padding:14px 18px;font-family:'SF Mono',monospace;color:var(--purple-700)">button_text</td><td style="padding:14px 18px;opacity:.8">Tilpasset tekst på knappen</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow dark"><span class="pulse-dot"></span> FAQ</div>
+      <h2 class="section-title">Ofte stilte <span class="grad-text-light">spørsmål.</span></h2>
+    </div>
+    <div class="faq">
+      <details open><summary>Fungerer AnswerX med mitt WordPress-tema?</summary><p>Ja. AnswerX bruker standard WordPress shortcode-API og arver ditt tema — pluss full stil-kontroll på toppen.</p></details>
+      <details><summary>Påvirker det hastigheten på siden?</summary><p>Nei. Widget-et laster asynkront og cacher resultater. PageSpeed-score forblir uendret.</p></details>
+      <details><summary>Kan jeg bruke det på flere sider?</summary><p>Ja. Shortcoden kan brukes i sider, innlegg, sidebars og widgetiserte områder — så mange ganger du vil.</p></details>
+      <details><summary>Trenger jeg MotherX-konto i tillegg?</summary><p>Ja. Start en gratis prøve på MotherX for å få API-nøkkelen, så limer du den inn i plugin-innstillingene.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-bg"></div><div class="cta-orb"></div>
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="eyebrow dark"><span class="pulse-dot"></span> Gratis plugin</div>
+      <h2>Last ned AnswerX og kom i gang.</h2>
+      <p>Tilgjengelig i WordPress plugin-katalogen — 30 dager gratis prøveperiode.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+        <a href="https://wordpress.org/plugins/answerx/" target="_blank" rel="noopener" class="btn btn-primary">Last ned plugin <span class="arrow">→</span></a>
+        <a href="../kom-i-gang.html" class="btn btn-outline">Få API-nøkkel</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="foot-brand">
+      <img src="../assets/logo-white.png" alt="MotherX" class="logo foot-logo"/>
+      <p class="foot-tag">Intelligent AI — trent på din bedrift.</p>
+    </div>
+    <div class="foot-col"><h5>Tjenester</h5><a href="ai-sok.html">AI-Søk</a><a href="chat.html">Chat</a><a href="gpt-modul.html">GPT-Modul</a><a href="answerx.html">AnswerX</a></div>
+    <div class="foot-col"><h5>Selskap</h5><a href="../index.html#plattform">Plattform</a><a href="../index.html#priser">Priser</a><a href="../kom-i-gang.html">Gratis prøve</a></div>
+    <div class="foot-col"><h5>Kontakt</h5><a href="mailto:support@motherx.ai">support@motherx.ai</a><a href="tel:+4790067788">+47 900 67 788</a><span>Oscars gate 3B, 0350 Oslo</span></div>
+  </div>
+  <div class="foot-bottom container"><span>© <span id="year"></span> MotherX AI. Laget i Oslo.</span><span>All rights reserved</span></div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

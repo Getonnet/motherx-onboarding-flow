@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kom i gang — MotherX</title>
+<meta name="description" content="Start 30 dager gratis prøveperiode med MotherX. Sett opp AI på nettsiden din på minutter."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="wizard-wrap">
+  <div class="wizard-inner">
+
+    <a href="index.html" class="wiz-back">← Tilbake til MotherX</a>
+
+    <div class="wiz-progress" id="wizProgress"></div>
+
+    <div class="wiz-card">
+
+      <!-- STEP 1: Platform -->
+      <div class="wiz-step active" data-step="1">
+        <div class="wiz-eyebrow">Plattform</div>
+        <h2 class="wiz-title">Hvor kjører nettsiden din?</h2>
+        <p class="wiz-sub">Vi tilpasser oppsettet etter hva du bruker. Du kan alltid endre senere.</p>
+
+        <div class="wiz-options">
+          <label class="wiz-option">
+            <input type="radio" name="platform" value="wordpress" required/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">📰</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">WordPress</div>
+              <div class="wiz-opt-desc">Installer AnswerX plugin på minutter.</div>
+            </div>
+          </label>
+          <label class="wiz-option">
+            <input type="radio" name="platform" value="snippet"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">🧩</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">HTML / JS-snippet</div>
+              <div class="wiz-opt-desc">Lim inn en kodesnutt i &lt;head&gt;.</div>
+            </div>
+          </label>
+          <label class="wiz-option">
+            <input type="radio" name="platform" value="shopify"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">🛍️</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">Shopify</div>
+              <div class="wiz-opt-desc">Legg til via tema-editor.</div>
+            </div>
+          </label>
+          <label class="wiz-option">
+            <input type="radio" name="platform" value="webflow"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">🎨</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">Webflow</div>
+              <div class="wiz-opt-desc">Custom code i Project Settings.</div>
+            </div>
+          </label>
+          <label class="wiz-option">
+            <input type="radio" name="platform" value="squarespace"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">⬛</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">Squarespace / Wix</div>
+              <div class="wiz-opt-desc">Embed-blokk i page editor.</div>
+            </div>
+          </label>
+          <label class="wiz-option">
+            <input type="radio" name="platform" value="other"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">⚙️</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">Annet / egenutviklet</div>
+              <div class="wiz-opt-desc">Vi hjelper deg via API.</div>
+            </div>
+          </label>
+          <label class="wiz-option">
+            <input type="radio" name="platform" value="unsure"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">🤔</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">Usikker</div>
+              <div class="wiz-opt-desc">La AI analysere nettsiden din.</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="wiz-detect" id="wizDetect">
+          <div class="wiz-detect-head">
+            <div class="wiz-detect-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <div>
+              <div class="wiz-detect-title">La AI finne ut av det</div>
+              <div class="wiz-detect-sub">Lim inn nettsiden din — vi sjekker hva den er bygget med på sekunder.</div>
+            </div>
+          </div>
+          <div class="wiz-detect-row">
+            <input type="url" id="detectUrl" placeholder="https://minbedrift.no"/>
+            <button type="button" class="btn btn-primary" id="detectBtn">Analyser</button>
+          </div>
+          <div class="wiz-detect-result" id="detectResult"></div>
+        </div>
+
+        <div class="wiz-nav">
+          <span class="wiz-err" id="err1">Velg en plattform for å fortsette.</span>
+          <button class="btn btn-primary" data-action="next">Fortsett <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Services -->
+      <div class="wiz-step" data-step="2">
+        <div class="wiz-eyebrow">Tjenester</div>
+        <h2 class="wiz-title">Hvilke tjenester vil du bruke?</h2>
+        <p class="wiz-sub">Alle planene inkluderer tilgang til alt — velg det du vil begynne med. Kan endres senere.</p>
+
+        <div class="wiz-options">
+          <label class="wiz-option">
+            <input type="checkbox" name="services" value="sok"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">🔍</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">AI-Søk</div>
+              <div class="wiz-opt-desc">Smart søk som forstår intensjon.</div>
+            </div>
+          </label>
+          <label class="wiz-option">
+            <input type="checkbox" name="services" value="chat"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">💬</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">Chat</div>
+              <div class="wiz-opt-desc">AI-chat trent på din data.</div>
+            </div>
+          </label>
+          <label class="wiz-option">
+            <input type="checkbox" name="services" value="gpt"/>
+            <span class="wiz-opt-check"></span>
+            <div class="wiz-opt-icon">🧠</div>
+            <div class="wiz-opt-body">
+              <div class="wiz-opt-title">GPT-Modul</div>
+              <div class="wiz-opt-desc">Intern ChatGPT for ansatte.</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="wiz-nav">
+          <button class="btn btn-outline" data-action="back">← Tilbake</button>
+          <div style="display:flex;align-items:center;gap:16px">
+            <span class="wiz-err" id="err2">Velg minst én tjeneste.</span>
+            <button class="btn btn-primary" data-action="next">Fortsett <span class="arrow">→</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: About site -->
+      <div class="wiz-step" data-step="3">
+        <div class="wiz-eyebrow">Nettsiden din</div>
+        <h2 class="wiz-title">Fortell oss litt om nettsiden.</h2>
+        <p class="wiz-sub">Vi bruker dette til å foreslå riktig oppsett — ingen av feltene er bindende.</p>
+
+        <div class="wiz-fields">
+          <div class="wiz-field full">
+            <label>Nettside-URL</label>
+            <input type="url" name="siteUrl" placeholder="https://minbedrift.no"/>
+          </div>
+          <div class="wiz-field">
+            <label>Bransje</label>
+            <select name="industry">
+              <option value="">Velg bransje...</option>
+              <option>E-handel</option>
+              <option>SaaS / teknologi</option>
+              <option>Offentlig sektor</option>
+              <option>Utdanning</option>
+              <option>Helse</option>
+              <option>Finans</option>
+              <option>Reiseliv</option>
+              <option>Media</option>
+              <option>Annet</option>
+            </select>
+          </div>
+          <div class="wiz-field">
+            <label>Besøkende per måned</label>
+            <select name="traffic">
+              <option value="">Velg omfang...</option>
+              <option>Under 5 000</option>
+              <option>5 000 – 25 000</option>
+              <option>25 000 – 100 000</option>
+              <option>100 000 – 500 000</option>
+              <option>Over 500 000</option>
+            </select>
+          </div>
+          <div class="wiz-field full">
+            <label>Hva er hovedmålet? <span class="hint">Valgfritt</span></label>
+            <textarea name="goal" placeholder="F.eks. redusere support-tickets, øke konvertering, hjelpe ansatte å finne rutiner..."></textarea>
+          </div>
+        </div>
+
+        <div class="wiz-nav">
+          <button class="btn btn-outline" data-action="back">← Tilbake</button>
+          <button class="btn btn-primary" data-action="next">Fortsett <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Data sources -->
+      <div class="wiz-step" data-step="4">
+        <div class="wiz-eyebrow">Kunnskapskilder</div>
+        <h2 class="wiz-title">Hva skal AI-en lære av?</h2>
+        <p class="wiz-sub">Jo mer kilder, desto bedre svar. Du kan legge til mer senere.</p>
+
+        <div class="wiz-fields" style="margin-bottom:20px">
+          <div class="wiz-field full">
+            <label>Sitemap-URL <button type="button" class="wiz-inline-btn" id="sitemapFind">✨ Finn automatisk</button></label>
+            <input type="url" name="sitemap" id="sitemapInput" placeholder="https://minbedrift.no/sitemap.xml"/>
+            <span class="hint" id="sitemapHint">AI-en leser automatisk alle sider i sitemap-en.</span>
+          </div>
+        </div>
+
+        <div class="wiz-field full" style="margin-bottom:20px">
+          <label>Eksterne lenker <span class="hint">Valgfritt · f.eks. artikler, dokumentasjon, referanser</span></label>
+          <div class="wiz-url-add">
+            <input type="url" id="urlInput" placeholder="https://eksempel.no/artikkel"/>
+            <button type="button" class="btn btn-primary wiz-url-btn" id="urlAdd">+ Legg til</button>
+          </div>
+          <div class="wiz-url-list" id="urlList"></div>
+        </div>
+
+        <div class="wiz-dropzone" id="dropzone">
+          <div class="drop-icon">📄</div>
+          <h5>Last opp dokumenter</h5>
+          <p>PDF, Word, Excel, PowerPoint — slipp filer her eller <span style="color:var(--purple-700);font-weight:600;text-decoration:underline">bla gjennom</span></p>
+          <input type="file" id="fileInput" multiple style="display:none"/>
+        </div>
+        <div class="wiz-files" id="fileList"></div>
+
+        <div class="wiz-field full" style="margin-top:20px">
+          <label>Eller beskriv bedriften med egne ord <span class="hint">Valgfritt</span></label>
+          <textarea name="manual" placeholder="En kort beskrivelse av hva bedriften gjør, tjenester, prosesser osv."></textarea>
+        </div>
+
+        <div class="wiz-nav">
+          <button class="btn btn-outline" data-action="back">← Tilbake</button>
+          <button class="btn btn-primary" data-action="next">Fortsett <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Agent personality (conditional: only when chat or gpt selected) -->
+      <div class="wiz-step" data-step="5" data-conditional="agent">
+        <div class="wiz-eyebrow">Personlighet</div>
+        <h2 class="wiz-title">Gi agenten din en personlighet.</h2>
+        <p class="wiz-sub">Velg en forhåndsdefinert profil, eller tilpass fritt. Alt kan endres senere i dashboard.</p>
+
+        <div class="wiz-eyebrow" style="font-size:11px;margin-top:8px">Velg profil</div>
+        <div class="wiz-profiles">
+          <label class="wiz-profile"><input type="radio" name="profile" value="alex" checked/><span class="pf-ava">🧑‍💼</span><span class="pf-n">Alex</span><span class="pf-r">Rådgiver</span></label>
+          <label class="wiz-profile"><input type="radio" name="profile" value="beatriz"/><span class="pf-ava">👩</span><span class="pf-n">Beatriz</span><span class="pf-r">Assistent</span></label>
+          <label class="wiz-profile"><input type="radio" name="profile" value="funa"/><span class="pf-ava">🧑</span><span class="pf-n">Funa</span><span class="pf-r">Supporter</span></label>
+          <label class="wiz-profile"><input type="radio" name="profile" value="max"/><span class="pf-ava">🧑‍🏫</span><span class="pf-n">Max</span><span class="pf-r">Lærer</span></label>
+          <label class="wiz-profile"><input type="radio" name="profile" value="felix"/><span class="pf-ava">🎨</span><span class="pf-n">Felix</span><span class="pf-r">Kreativ</span></label>
+          <label class="wiz-profile"><input type="radio" name="profile" value="custom"/><span class="pf-ava">✨</span><span class="pf-n">Egen</span><span class="pf-r">Tilpasset</span></label>
+        </div>
+
+        <div class="wiz-profile-info" id="profileInfo"></div>
+
+        <div class="wiz-fields">
+          <div class="wiz-field">
+            <label>Navn på agent</label>
+            <input type="text" name="agentName" id="agentName" placeholder="Alex"/>
+          </div>
+          <div class="wiz-field">
+            <label>Velkomstmelding</label>
+            <input type="text" name="agentWelcome" placeholder="Hei! Hva kan jeg hjelpe deg med?"/>
+          </div>
+        </div>
+
+        <details class="wiz-advanced">
+          <summary>
+            <span class="adv-icon">⚙</span>
+            <span class="adv-label">Avanserte innstillinger</span>
+            <span class="adv-hint">Tone, egenskaper og systempromt</span>
+            <span class="adv-arrow">▾</span>
+          </summary>
+
+          <div class="wiz-eyebrow" style="font-size:11px;margin-top:18px">Språk & stil</div>
+          <div class="wiz-fields">
+            <div class="wiz-field">
+              <label>Tone</label>
+              <select name="tone" id="toneSel">
+                <option>Nøytral</option><option>Vennlig</option><option>Profesjonell</option><option>Energisk</option><option>Formell</option>
+              </select>
+            </div>
+            <div class="wiz-field">
+              <label>Perspektiv</label>
+              <select name="perspective" id="perspectiveSel">
+                <option>Du-form</option><option>De-form</option><option>Vi-form</option>
+              </select>
+            </div>
+            <div class="wiz-field">
+              <label>Språknivå</label>
+              <select name="register" id="registerSel">
+                <option>Enkelt</option><option>Balansert</option><option>Teknisk</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wiz-eyebrow" style="font-size:11px;margin-top:8px">Egenskaper</div>
+          <div class="wiz-sliders">
+            <label><span>Nøyaktighet</span><input type="range" min="0" max="100" value="80" data-trait="accuracy"/><output>80</output></label>
+            <label><span>Dybde</span><input type="range" min="0" max="100" value="60" data-trait="depth"/><output>60</output></label>
+            <label><span>Entusiasme</span><input type="range" min="0" max="100" value="50" data-trait="energy"/><output>50</output></label>
+            <label><span>Formell</span><input type="range" min="0" max="100" value="40" data-trait="formal"/><output>40</output></label>
+            <label><span>Opplæringsorientert</span><input type="range" min="0" max="100" value="30" data-trait="teaching"/><output>30</output></label>
+          </div>
+
+          <div class="wiz-prompt-wrap">
+            <div class="wiz-eyebrow" style="font-size:11px;margin-top:8px">Systempromt <span style="opacity:.6;font-weight:400;text-transform:none;letter-spacing:0;margin-left:6px">Forhåndsvisning · oppdateres automatisk</span></div>
+            <pre class="wiz-prompt" id="promptPreview"></pre>
+          </div>
+        </details>
+
+        <div class="wiz-nav">
+          <button class="btn btn-outline" data-action="back">← Tilbake</button>
+          <button class="btn btn-primary" data-action="next">Fortsett <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 6: Account -->
+      <div class="wiz-step" data-step="6">
+        <div class="wiz-eyebrow">Din konto</div>
+        <h2 class="wiz-title">Opprett kontoen din.</h2>
+        <p class="wiz-sub">Vi sender innloggingsdetaljer og API-nøkkel på e-post.</p>
+
+        <div class="wiz-fields">
+          <div class="wiz-field">
+            <label>Fornavn</label>
+            <input type="text" name="firstName" placeholder="Kari" required/>
+          </div>
+          <div class="wiz-field">
+            <label>Etternavn</label>
+            <input type="text" name="lastName" placeholder="Nordmann" required/>
+          </div>
+          <div class="wiz-field">
+            <label>Jobb-e-post</label>
+            <input type="email" name="email" placeholder="kari@minbedrift.no" required/>
+          </div>
+          <div class="wiz-field">
+            <label>Telefon <span class="hint">Valgfritt</span></label>
+            <input type="tel" name="phone" placeholder="+47 900 00 000"/>
+          </div>
+          <div class="wiz-field full">
+            <label>Bedriftsnavn</label>
+            <input type="text" name="company" placeholder="Min Bedrift AS" required/>
+          </div>
+          <div class="wiz-field full">
+            <label>Passord</label>
+            <input type="password" name="password" placeholder="Minst 8 tegn" minlength="8" required/>
+          </div>
+        </div>
+
+        <div class="wiz-nav">
+          <button class="btn btn-outline" data-action="back">← Tilbake</button>
+          <div style="display:flex;align-items:center;gap:16px">
+            <span class="wiz-err" id="err6">Fyll inn alle obligatoriske felt.</span>
+            <button class="btn btn-primary" data-action="next">Fortsett <span class="arrow">→</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7: Plan -->
+      <div class="wiz-step" data-step="7">
+        <div class="wiz-eyebrow">Velg plan</div>
+        <h2 class="wiz-title">30 dager gratis — uansett plan.</h2>
+        <p class="wiz-sub">Ingen betalingskort kreves. Si opp når som helst. Oppsett og support inkludert i alle planer.</p>
+
+        <div class="wiz-plans">
+          <label class="wiz-plan">
+            <input type="radio" name="plan" value="Basic"/>
+            <div class="wiz-plan-top"><div class="wiz-plan-name">Basic</div><div class="wiz-plan-price">499<span> kr/mnd</span></div></div>
+            <ul><li>500 kilder / mnd</li><li>1 000 meldinger</li><li>Alle tjenester</li></ul>
+          </label>
+          <label class="wiz-plan">
+            <input type="radio" name="plan" value="Start"/>
+            <div class="wiz-plan-top"><div class="wiz-plan-name">Start</div><div class="wiz-plan-price">999<span> kr/mnd</span></div></div>
+            <ul><li>1 500 kilder / mnd</li><li>3 000 meldinger</li><li>Alle tjenester</li></ul>
+          </label>
+          <label class="wiz-plan">
+            <span class="wiz-plan-tag">Mest populær</span>
+            <input type="radio" name="plan" value="Pro" checked/>
+            <div class="wiz-plan-top"><div class="wiz-plan-name">Pro</div><div class="wiz-plan-price">1 599<span> kr/mnd</span></div></div>
+            <ul><li>5 000 kilder / mnd</li><li>10 000 meldinger</li><li>Prioritert support</li></ul>
+          </label>
+          <label class="wiz-plan">
+            <input type="radio" name="plan" value="Enterprise"/>
+            <div class="wiz-plan-top"><div class="wiz-plan-name">Enterprise</div><div class="wiz-plan-price" style="font-size:16px">Etter avtale</div></div>
+            <ul><li>Ubegrenset volum</li><li>Custom integrasjoner</li><li>SLA & dedikert kontakt</li></ul>
+          </label>
+        </div>
+
+        <div class="wiz-summary" id="summary"></div>
+
+        <div class="wiz-nav">
+          <button class="btn btn-outline" data-action="back">← Tilbake</button>
+          <button class="btn btn-primary" data-action="submit">Opprett konto <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- STEP 8: Success -->
+      <div class="wiz-step" data-step="8">
+        <div class="wiz-success">
+          <div class="wiz-success-icon">✓</div>
+          <div class="wiz-eyebrow">Velkommen</div>
+          <h2 class="wiz-title">Kontoen din er klar!</h2>
+          <p class="wiz-sub">Vi har sendt innloggingsdetaljer til <strong id="successEmail">e-posten din</strong>. Din 30 dagers gratis prøve starter nå.</p>
+
+          <div style="text-align:left">
+            <div class="wiz-eyebrow" style="margin-top:10px">Din API-nøkkel</div>
+            <div class="wiz-apikey">
+              <span id="apiKey">mx_live_placeholder_8f4a9c2b7e</span>
+              <button class="wiz-copy" onclick="copyKey(this)">Kopier</button>
+            </div>
+          </div>
+
+          <div class="wiz-next-steps" id="nextSteps"></div>
+
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap">
+            <a href="#" class="btn btn-primary">Åpne dashboard <span class="arrow">→</span></a>
+            <a href="index.html" class="btn btn-outline">Til forsiden</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const state = {step:1, data:{services:[], files:[], urls:[], traits:{accuracy:80,depth:60,energy:50,formal:40,teaching:30}}};
+
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+function hasAgentStep(){ return (state.data.services||[]).some(s => s==='chat' || s==='gpt'); }
+function stepOrder(){
+  const base = [1,2,3,4];
+  if(hasAgentStep()) base.push(5);
+  base.push(6,7);
+  return base;
+}
+function totalSteps(){ return stepOrder().length; }
+function displayIndex(n){ return stepOrder().indexOf(n)+1; }
+
+function renderProgress(){
+  const order = stepOrder();
+  const wrap = $('#wizProgress');
+  wrap.innerHTML = order.map(n => `<div class="wiz-step-dot" data-dot="${n}"></div>`).join('') + `<span class="wiz-counter" id="wizCounter"></span>`;
+}
+
+function show(n){
+  state.step = n;
+  $$('.wiz-step').forEach(el => el.classList.toggle('active', +el.dataset.step === n));
+  renderProgress();
+  const order = stepOrder();
+  const idx = order.indexOf(n);
+  $$('.wiz-step-dot').forEach((el, i) => {
+    el.classList.remove('active','done');
+    if(i < idx) el.classList.add('done');
+    if(i === idx) el.classList.add('active');
+  });
+  const counter = $('#wizCounter');
+  if(counter){
+    if(n <= 7) counter.textContent = `Steg ${idx+1} / ${order.length}`;
+    else counter.textContent = 'Ferdig';
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+renderProgress();
+show(1);
+
+function collect(){
+  const d = state.data;
+  const step = $(`.wiz-step[data-step="${state.step}"]`);
+  step.querySelectorAll('input,select,textarea').forEach(inp => {
+    if(inp.type === 'radio' && inp.checked) d[inp.name] = inp.value;
+    else if(inp.type === 'checkbox'){
+      if(!d.services) d.services = [];
+      if(inp.checked && !d.services.includes(inp.value)) d.services.push(inp.value);
+      else if(!inp.checked) d.services = d.services.filter(v => v !== inp.value);
+    }
+    else if(inp.type !== 'file' && inp.type !== 'radio' && inp.type !== 'checkbox') d[inp.name] = inp.value;
+  });
+}
+
+function validate(n){
+  if(n === 1 && !state.data.platform){ showErr('err1'); return false; }
+  if(n === 2 && (!state.data.services || !state.data.services.length)){ showErr('err2'); return false; }
+  if(n === 6){
+    const req = ['firstName','lastName','email','company','password'];
+    for(const k of req){ if(!state.data[k]){ showErr('err6'); return false; } }
+  }
+  return true;
+}
+function nextStep(cur){
+  const order = stepOrder();
+  const i = order.indexOf(cur);
+  return order[i+1] ?? cur;
+}
+function prevStep(cur){
+  const order = stepOrder();
+  const i = order.indexOf(cur);
+  return order[i-1] ?? cur;
+}
+function showErr(id){ const e = $('#'+id); if(e){ e.classList.add('show'); setTimeout(()=>e.classList.remove('show'), 2400); } }
+
+document.addEventListener('click', e => {
+  const action = e.target.closest('[data-action]')?.dataset.action;
+  if(!action) return;
+  if(action === 'next'){
+    collect();
+    if(!validate(state.step)) return;
+    if(state.step === 7) return;
+    show(nextStep(state.step));
+  }
+  if(action === 'back'){
+    collect();
+    show(prevStep(state.step));
+  }
+  if(action === 'submit'){
+    collect();
+    buildSummaryAndFinish();
+  }
+});
+
+// Agent step: profiles, sliders, prompt preview
+const profilePresets = {
+  alex:{name:'Alex',role:'Rådgiver',welcome:'Hei! Hva kan jeg hjelpe deg med i dag?',tone:'Profesjonell',perspective:'Du-form',register:'Balansert',
+    desc:'Saklig og presis ekspert som gir gjennomtenkte svar med tydelig autoritet.',
+    bullets:['Profesjonell og tillitsvekkende tone','Foretrekker fakta og kilder','Passer til finans, jus, B2B og rådgivning'],
+    traits:{accuracy:90,depth:70,energy:40,formal:60,teaching:40}},
+  beatriz:{name:'Beatriz',role:'Assistent',welcome:'Hei, hyggelig å møte deg! Still et spørsmål, så ordner vi det.',tone:'Vennlig',perspective:'Du-form',register:'Enkelt',
+    desc:'Varm og effektiv hjelper som gjør det enkelt å spørre om hva som helst.',
+    bullets:['Vennlig og imøtekommende','Korte, klare svar','Passer til e-handel og kundeservice'],
+    traits:{accuracy:80,depth:50,energy:70,formal:30,teaching:30}},
+  funa:{name:'Funa',role:'Supporter',welcome:'Hei! Jeg er her for å hjelpe. Hva lurer du på?',tone:'Vennlig',perspective:'Du-form',register:'Enkelt',
+    desc:'Tålmodig support-spesialist som gjerne forklarer flere ganger.',
+    bullets:['Empatisk og rolig','Følger opp aktivt','Passer til SaaS-support og helse'],
+    traits:{accuracy:85,depth:60,energy:60,formal:20,teaching:20}},
+  max:{name:'Max',role:'Lærer',welcome:'Hei! La meg forklare trinn for trinn.',tone:'Profesjonell',perspective:'Du-form',register:'Balansert',
+    desc:'Pedagogisk veileder som bygger forståelse — ikke bare gir svar.',
+    bullets:['Forklarer trinn for trinn','Bruker eksempler og analogier','Passer til utdanning, onboarding og opplæring'],
+    traits:{accuracy:90,depth:85,energy:50,formal:50,teaching:90}},
+  felix:{name:'Felix',role:'Kreativ',welcome:'Hei! La oss finne noe kreativt sammen.',tone:'Energisk',perspective:'Du-form',register:'Balansert',
+    desc:'Inspirerende idémaker som tør å foreslå og prøve nye vinkler.',
+    bullets:['Energisk og lekent språk','Foreslår og inspirerer','Passer til media, markedsføring og design'],
+    traits:{accuracy:70,depth:60,energy:95,formal:20,teaching:40}},
+  custom:{name:'Assistent',role:'Tilpasset',welcome:'Hei! Hva kan jeg hjelpe deg med?',tone:'Nøytral',perspective:'Du-form',register:'Balansert',
+    desc:'Start fra blank og bygg en agent som passer akkurat dine behov.',
+    bullets:['Nøytrale defaults — tilpass alt selv','Full kontroll over tone og egenskaper','Bruk avanserte innstillinger for finjustering'],
+    traits:{accuracy:80,depth:60,energy:50,formal:40,teaching:30}}
+};
+
+function applyProfile(key){
+  const p = profilePresets[key];
+  if(!p) return;
+  $('#agentName').value = p.name;
+  document.querySelector('input[name="agentWelcome"]').value = p.welcome;
+  $('#toneSel').value = p.tone;
+  $('#perspectiveSel').value = p.perspective;
+  $('#registerSel').value = p.register;
+  document.querySelectorAll('.wiz-sliders input[type=range]').forEach(r=>{
+    const t = r.dataset.trait;
+    if(p.traits[t] != null){ r.value = p.traits[t]; r.nextElementSibling.value = p.traits[t]; state.data.traits[t] = p.traits[t]; }
+  });
+  const info = $('#profileInfo');
+  if(info){
+    info.innerHTML = `
+      <div class="pi-head">
+        <strong>${p.name}</strong>
+        <span class="pi-role">${p.role}</span>
+      </div>
+      <p class="pi-desc">${p.desc}</p>
+      <ul class="pi-bullets">${p.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+    `;
+  }
+  updatePrompt();
+}
+
+function updatePrompt(){
+  const name = $('#agentName')?.value || 'Assistent';
+  const tone = $('#toneSel')?.value || 'Nøytral';
+  const persp = $('#perspectiveSel')?.value || 'Du-form';
+  const reg = $('#registerSel')?.value || 'Balansert';
+  const t = state.data.traits;
+  const traitLine = (v,lo,hi) => v>70?hi:(v<30?lo:'balansert');
+
+  const prompt = `Du er ${name}, en AI-assistent for ${state.data.company || 'bedriften'}.\n\n`+
+    `Tone: ${tone.toLowerCase()} · Perspektiv: ${persp.toLowerCase()} · Språknivå: ${reg.toLowerCase()}.\n\n`+
+    `Personlighet:\n`+
+    `- Nøyaktighet: ${traitLine(t.accuracy,'løs og omtrentlig','svært presis — siterer kilder')}\n`+
+    `- Dybde: ${traitLine(t.depth,'korte svar','grundige, detaljerte svar')}\n`+
+    `- Entusiasme: ${traitLine(t.energy,'rolig og saklig','engasjert og energisk')}\n`+
+    `- Formell: ${traitLine(t.formal,'avslappet og uformell','formell og korrekt')}\n`+
+    `- Opplæringsorientert: ${traitLine(t.teaching,'rett på svaret','forklarer trinn for trinn')}\n\n`+
+    `Svar kun basert på bedriftens egen kunnskap. Hvis du ikke vet svaret, si det ærlig og tilby kontakt med et menneske.`;
+  const el = $('#promptPreview');
+  if(el) el.textContent = prompt;
+}
+
+document.querySelectorAll('input[name="profile"]').forEach(r => r.addEventListener('change', () => applyProfile(r.value)));
+document.querySelectorAll('.wiz-sliders input[type=range]').forEach(r => {
+  r.addEventListener('input', () => {
+    r.nextElementSibling.value = r.value;
+    state.data.traits[r.dataset.trait] = +r.value;
+    updatePrompt();
+  });
+});
+['agentName','toneSel','perspectiveSel','registerSel'].forEach(id => {
+  const el = $('#'+id);
+  el?.addEventListener('input', updatePrompt);
+  el?.addEventListener('change', updatePrompt);
+});
+// Init prompt
+setTimeout(()=>{ applyProfile('alex'); updatePrompt(); }, 50);
+
+document.addEventListener('keydown', e => {
+  // no-op placeholder for future shortcuts
+});
+
+function buildSummaryAndFinish(){
+  const d = state.data;
+  const platformLabel = {wordpress:'WordPress',snippet:'HTML/JS-snippet',shopify:'Shopify',webflow:'Webflow',squarespace:'Squarespace/Wix',other:'Egenutviklet'}[d.platform] || '—';
+  const svcLabel = (d.services||[]).map(s=>({sok:'AI-Søk',chat:'Chat',gpt:'GPT-Modul'}[s])).join(', ') || '—';
+  $('#successEmail').textContent = d.email || 'e-posten din';
+  $('#nextSteps').innerHTML = nextStepsFor(d.platform);
+  show(8);
+}
+
+function nextStepsFor(platform){
+  const heads = {
+    wordpress: 'Neste steg for WordPress',
+    snippet: 'Neste steg — HTML/JS-snippet',
+    shopify: 'Neste steg for Shopify',
+    webflow: 'Neste steg for Webflow',
+    squarespace: 'Neste steg for Squarespace/Wix',
+    other: 'Neste steg — via API'
+  };
+  const steps = {
+    wordpress: [
+      'Last ned <a href="https://wordpress.org/plugins/answerx/" target="_blank" style="color:var(--purple-700);font-weight:600">AnswerX-pluginen</a> fra WordPress-katalogen',
+      'Aktiver plugin-et og gå til <code>AnswerX → Min plan</code>',
+      'Lim inn API-nøkkelen over og trykk Lagre',
+      'Plasser <code>[answerx_search]</code> shortcoden der du vil ha widget-en'
+    ],
+    snippet: [
+      'Kopier kodesnutten fra dashboard',
+      'Lim inn i <code>&lt;head&gt;</code> på nettsiden din',
+      'Widget-et vises automatisk — pass plasseringen via data-attributter',
+      'Følg med i dashboard når første samtaler kommer inn'
+    ],
+    shopify: [
+      'Gå til Online Store → Themes → Edit code',
+      'Åpne <code>theme.liquid</code> og lim inn snippet i <code>&lt;head&gt;</code>',
+      'Lagre og publiser',
+      'AI-en trener seg automatisk på produkter og sider'
+    ],
+    webflow: [
+      'Gå til Project Settings → Custom Code',
+      'Lim inn snippet i <code>Head Code</code>-feltet',
+      'Publiser nettsiden på nytt',
+      'Widget er nå live — tilpass stil via CSS'
+    ],
+    squarespace: [
+      'Åpne Page Settings → Advanced → Page Header Code Injection',
+      'Lim inn snippet og lagre',
+      'Plasser en Embed Block der du vil ha chat/søk',
+      'Vi hjelper gjerne med oppsett — send oss en melding'
+    ],
+    other: [
+      'Åpne dashboard for å se API-dokumentasjon',
+      'Autentiser med API-nøkkelen over',
+      'Implementer <code>/search</code> og <code>/chat</code> endepunkter',
+      'Book en teknisk onboarding-økt om ønskelig'
+    ]
+  };
+  const h = heads[platform] || 'Neste steg';
+  const s = (steps[platform] || steps.other).map(x => `<li>${x}</li>`).join('');
+  return `<h4>${h}</h4><ol>${s}</ol>`;
+}
+
+// Platform detection (placeholder — real version hits a detection API)
+const detectWrap = $('#wizDetect');
+const detectUrl = $('#detectUrl');
+const detectBtn = $('#detectBtn');
+const detectResult = $('#detectResult');
+
+function togglePlatformCustom(){
+  const v = document.querySelector('input[name="platform"]:checked')?.value;
+  if(detectWrap) detectWrap.classList.toggle('show', v === 'unsure');
+}
+document.querySelectorAll('input[name="platform"]').forEach(i => i.addEventListener('change', togglePlatformCustom));
+
+const platformLabels = {
+  wordpress:{name:'WordPress',icon:'📰'},
+  shopify:{name:'Shopify',icon:'🛍️'},
+  webflow:{name:'Webflow',icon:'🎨'},
+  squarespace:{name:'Squarespace',icon:'⬛'},
+  wix:{name:'Wix',icon:'⬛'},
+  snippet:{name:'HTML / JS (statisk)',icon:'🧩'},
+  other:{name:'Egenutviklet',icon:'⚙️'}
+};
+
+function normalizeUrl(raw){
+  let v = raw.trim();
+  if(!v) return null;
+  if(!/^https?:\/\//i.test(v)) v = 'https://' + v;
+  try{ const u = new URL(v); if(!u.hostname.includes('.')) return null; return u.toString(); }
+  catch(e){ return null; }
+}
+
+// Signature scoring — checks for multiple markers, returns best match + confidence
+function scoreSignatures(html, hostname){
+  const h = html.toLowerCase();
+  const sig = {
+    wordpress:[
+      /wp-content\//,/wp-includes\//,/wp-json/,/<meta[^>]+name=["']generator["'][^>]+wordpress/i,
+      /\/wp-admin/,/wp-emoji/,/class=["'][^"']*wp-/,/woocommerce/
+    ],
+    shopify:[
+      /cdn\.shopify\.com/,/shopify\.shop/,/shopify-section/,/<meta[^>]+shopify/i,
+      /\.myshopify\.com/,/shopify-features/,/window\.shopify/
+    ],
+    webflow:[
+      /webflow\.js/,/data-wf-site/,/data-wf-page/,/<meta[^>]+content=["']webflow/i,
+      /\.webflow\.io/,/w-nav|w-button/
+    ],
+    squarespace:[
+      /squarespace-headers/,/static\.squarespace\.com/,/\.sqsp\./,/squarespace\.com/,
+      /<meta[^>]+squarespace/i
+    ],
+    wix:[
+      /static\.wixstatic\.com/,/wix\.com/,/wixsite\.com/,/_wixcp/,/<meta[^>]+wix\.com/i
+    ]
+  };
+  let best = {key:null, hits:0, total:0};
+  for(const key in sig){
+    const hits = sig[key].reduce((n, re) => n + (re.test(h) ? 1 : 0), 0);
+    if(hits > best.hits) best = {key, hits, total:sig[key].length};
+  }
+  if(best.key){
+    const conf = Math.min(99, 70 + best.hits * 6);
+    return {key: best.key, conf};
+  }
+  // No CMS detected — check if it looks like a plain HTML site
+  if(/<html|<body/.test(h)) return {key:'snippet', conf:65};
+  return {key:'other', conf:55};
+}
+
+function withTimeout(p, ms){
+  return Promise.race([p, new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))]);
+}
+
+async function tryFetch(url, ms=7000){
+  const proxies = [
+    u => 'https://corsproxy.io/?' + encodeURIComponent(u),
+    u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+    u => 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u)
+  ];
+  for(const p of proxies){
+    try{
+      const r = await withTimeout(fetch(p(url), {cache:'no-store'}), ms);
+      if(r.ok){
+        const t = await r.text();
+        if(t && t.length > 20) return t;
+      }
+    } catch(e){ /* try next */ }
+  }
+  return null;
+}
+
+async function probeWordPressAPI(origin){
+  // Try multiple WP-specific endpoints. Any one is near-proof of WordPress.
+  const probes = [
+    {path:'/wp-json/', check: t => {
+      if(!t) return false;
+      try{ const j = JSON.parse(t); return !!(j && (j.namespaces || j.routes || j.name || j.home)); }catch(e){}
+      return /"namespaces"|"routes"|wp\/v2/i.test(t);
+    }},
+    {path:'/wp-login.php', check: t => t && /(WordPress|wp-submit|loginform|wp-content)/i.test(t)},
+    {path:'/wp-admin/', check: t => t && /(WordPress|wp-login|wp-admin)/i.test(t)},
+    {path:'/xmlrpc.php', check: t => t && /XML-RPC server accepts POST|XML-RPC/i.test(t)}
+  ];
+  for(const p of probes){
+    const txt = await tryFetch(origin + p.path, 4500);
+    if(p.check(txt)) return true;
+  }
+  return false;
+}
+
+async function detectPlatform(url){
+  const u = new URL(url);
+  const origin = u.origin;
+
+  // Step 1: WordPress-specific probes (very reliable, runs first since WP is most common)
+  try{
+    const isWP = await probeWordPressAPI(origin);
+    if(isWP) return {key:'wordpress', conf:99, method:'wp-probe'};
+  } catch(e){}
+
+  // Step 2: fetch homepage HTML and score signatures
+  const html = await tryFetch(url, 8000);
+  if(html){
+    // Aggressive WP check in HTML first — catches sites with REST API disabled
+    const wpMarkers = [
+      /link rel=["']https:\/\/api\.w\.org/i,
+      /\/wp-json\//i,
+      /\/wp-content\//i,
+      /\/wp-includes\//i,
+      /<meta[^>]+generator[^>]+wordpress/i,
+      /wp-emoji-release/i,
+      /id=["']wp-/i,
+      /class=["'][^"']*wp-block-/i
+    ];
+    const wpHits = wpMarkers.reduce((n, re) => n + (re.test(html) ? 1 : 0), 0);
+    if(wpHits >= 1) return {key:'wordpress', conf: Math.min(99, 85 + wpHits*3), method:'html-wp'};
+
+    const scored = scoreSignatures(html, u.hostname);
+    return scored;
+  }
+
+  // Step 3: hostname fallback
+  const h = url.toLowerCase();
+  if(/myshopify|shopify/.test(h)) return {key:'shopify', conf:80};
+  if(/webflow\.io/.test(h)) return {key:'webflow', conf:80};
+  if(/wixsite|wix\.com/.test(h)) return {key:'wix', conf:80};
+  if(/sqsp\.|squarespace/.test(h)) return {key:'squarespace', conf:80};
+  return {key:'other', conf:40, error:true};
+}
+
+detectBtn?.addEventListener('click', async ()=>{
+  const normalized = normalizeUrl(detectUrl.value);
+  if(!normalized){
+    detectUrl.style.borderColor='#DC2626';
+    setTimeout(()=>detectUrl.style.borderColor='',1500);
+    return;
+  }
+  detectUrl.value = normalized;
+
+  const hostname = new URL(normalized).hostname;
+  detectResult.innerHTML = `<div class="wiz-detect-loading"><span class="wiz-spin"></span> Leser ${hostname}...</div>`;
+  detectBtn.disabled = true;
+
+  const result = await detectPlatform(normalized);
+  const mapKey = result.key === 'wix' ? 'squarespace' : result.key; // Wix-brukere mappes til "Squarespace/Wix"
+  const p = platformLabels[result.key] || platformLabels.other;
+  const displayName = result.key === 'wix' ? 'Wix' : p.name;
+
+  detectResult.innerHTML = `
+    <div class="wiz-detect-hit">
+      <div class="wiz-detect-hit-icon">${p.icon}</div>
+      <div class="wiz-detect-hit-body">
+        <div class="wiz-detect-hit-title">Ser ut som <strong>${displayName}</strong></div>
+        <div class="wiz-detect-hit-conf">${result.error ? 'Kunne ikke lese siden — gjetting basert på URL' : 'Sikkerhet: ' + result.conf + '%'}</div>
+      </div>
+      <button type="button" class="btn btn-primary wiz-detect-use" data-key="${mapKey}">Bruk dette</button>
+    </div>
+    <div class="wiz-detect-foot">Feil? Velg manuelt i listen over.</div>
+  `;
+  detectBtn.disabled = false;
+  detectResult.querySelector('.wiz-detect-use').onclick = ()=>{
+    const radio = document.querySelector(`input[name="platform"][value="${mapKey}"]`);
+    if(radio){ radio.checked = true; state.data.platform = mapKey; togglePlatformCustom(); }
+  };
+});
+
+// Auto-normalize on blur
+detectUrl?.addEventListener('blur', ()=>{
+  const n = normalizeUrl(detectUrl.value);
+  if(n) detectUrl.value = n;
+});
+detectUrl?.addEventListener('keydown', e => {
+  if(e.key === 'Enter'){ e.preventDefault(); detectBtn.click(); }
+});
+
+// Sitemap autofill + auto-find
+function prefillSitemap(){
+  const input = $('#sitemapInput');
+  if(!input || input.value) return;
+  const siteUrl = state.data.siteUrl || document.querySelector('input[name="siteUrl"]')?.value || '';
+  const detectedUrl = detectUrl?.value || '';
+  let base = siteUrl || detectedUrl;
+  if(!base) return;
+  const normalized = normalizeUrl(base);
+  if(!normalized) return;
+  try{ input.value = new URL(normalized).origin + '/sitemap.xml'; }catch(e){}
+}
+// When user advances to step 4, prefill if possible
+document.addEventListener('click', e => {
+  if(e.target.closest('[data-action="next"]') && state.step === 3){
+    setTimeout(prefillSitemap, 50);
+  }
+});
+
+const sitemapFind = $('#sitemapFind');
+const sitemapInput = $('#sitemapInput');
+const sitemapHint = $('#sitemapHint');
+sitemapFind?.addEventListener('click', async ()=>{
+  const siteUrl = state.data.siteUrl || document.querySelector('input[name="siteUrl"]')?.value || '';
+  const base = normalizeUrl(siteUrl || sitemapInput.value || detectUrl?.value || '');
+  if(!base){
+    sitemapHint.innerHTML = '<span style="color:#DC2626">Fyll inn nettside-URL først (steg 3).</span>';
+    return;
+  }
+  const origin = new URL(base).origin;
+  sitemapFind.disabled = true;
+  sitemapHint.innerHTML = '<span class="wiz-spin" style="display:inline-block;vertical-align:middle;margin-right:6px"></span> Søker etter sitemap på ' + new URL(base).hostname + '...';
+
+  const candidates = [
+    '/sitemap.xml',
+    '/sitemap_index.xml',
+    '/wp-sitemap.xml',
+    '/sitemap/sitemap.xml',
+    '/sitemaps/sitemap.xml'
+  ];
+
+  // Also try robots.txt for Sitemap: directive
+  try{
+    const robots = await tryFetch(origin + '/robots.txt', 4000);
+    if(robots){
+      const m = robots.match(/Sitemap:\s*(\S+)/i);
+      if(m){ candidates.unshift(m[1].replace(origin,'')); }
+    }
+  }catch(e){}
+
+  for(const path of candidates){
+    const url = path.startsWith('http') ? path : origin + path;
+    const txt = await tryFetch(url, 4000);
+    if(txt && /<(urlset|sitemapindex)/i.test(txt)){
+      sitemapInput.value = url;
+      sitemapHint.innerHTML = '<span style="color:var(--purple-700);font-weight:600">✓ Fant sitemap på ' + path + '</span>';
+      sitemapFind.disabled = false;
+      return;
+    }
+  }
+  sitemapHint.innerHTML = '<span style="color:#DC2626">Fant ingen sitemap — skriv URL manuelt eller hopp over.</span>';
+  sitemapFind.disabled = false;
+});
+
+// External URLs
+const urlInput = $('#urlInput');
+const urlAdd = $('#urlAdd');
+const urlList = $('#urlList');
+function addUrl(){
+  const v = urlInput.value.trim();
+  if(!v) return;
+  try{ new URL(v); } catch(e){ urlInput.style.borderColor='#DC2626'; setTimeout(()=>urlInput.style.borderColor='',1500); return; }
+  if(state.data.urls.includes(v)){ urlInput.value=''; return; }
+  state.data.urls.push(v);
+  const row = document.createElement('div');
+  row.className = 'wiz-url-row';
+  let host = v; try{ host = new URL(v).hostname.replace(/^www\./,''); }catch(e){}
+  row.innerHTML = `<span class="wiz-url-ico">🔗</span><div class="wiz-url-body"><div class="wiz-url-host">${host}</div><div class="wiz-url-full">${v}</div></div><span class="rm">Fjern</span>`;
+  row.querySelector('.rm').onclick = ()=>{
+    state.data.urls = state.data.urls.filter(u => u !== v);
+    row.remove();
+  };
+  urlList.appendChild(row);
+  urlInput.value = '';
+  urlInput.focus();
+}
+urlAdd?.addEventListener('click', addUrl);
+urlInput?.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); addUrl(); }});
+
+// File upload (placeholder only — shows filenames)
+const dz = $('#dropzone');
+const fi = $('#fileInput');
+const fl = $('#fileList');
+dz?.addEventListener('click', ()=> fi.click());
+dz?.addEventListener('dragover', e=>{e.preventDefault();dz.style.borderColor='var(--purple-600)'});
+dz?.addEventListener('dragleave', ()=>{dz.style.borderColor=''});
+dz?.addEventListener('drop', e=>{e.preventDefault();dz.style.borderColor='';handleFiles(e.dataTransfer.files)});
+fi?.addEventListener('change', e=>handleFiles(e.target.files));
+
+function handleFiles(list){
+  [...list].forEach(f=>{
+    state.data.files.push(f.name);
+    const row = document.createElement('div');
+    row.className = 'wiz-file';
+    row.innerHTML = `<span>📄 ${f.name} <span style="opacity:.5;font-size:12px;margin-left:6px">${(f.size/1024).toFixed(0)} KB</span></span><span class="rm">Fjern</span>`;
+    row.querySelector('.rm').onclick = ()=>{
+      state.data.files = state.data.files.filter(n=>n!==f.name);
+      row.remove();
+    };
+    fl.appendChild(row);
+  });
+}
+
+// Summary on plan step open
+const obs = new MutationObserver(()=>{
+  if($('.wiz-step[data-step="7"]').classList.contains('active')){
+    const d = state.data;
+    const platformLabel = {wordpress:'WordPress',snippet:'HTML/JS-snippet',shopify:'Shopify',webflow:'Webflow',squarespace:'Squarespace/Wix',other:'Egenutviklet'}[d.platform] || '—';
+    const svcLabel = (d.services||[]).map(s=>({sok:'AI-Søk',chat:'Chat',gpt:'GPT-Modul'}[s])).join(', ') || '—';
+    $('#summary').innerHTML = `
+      <div class="wiz-summary-row"><span>Plattform</span><span>${platformLabel}</span></div>
+      <div class="wiz-summary-row"><span>Tjenester</span><span>${svcLabel}</span></div>
+      <div class="wiz-summary-row"><span>Nettside</span><span>${d.siteUrl || '—'}</span></div>
+      <div class="wiz-summary-row"><span>Bedrift</span><span>${d.company || '—'}</span></div>
+      <div class="wiz-summary-row"><span>Kontakt</span><span>${d.email || '—'}</span></div>
+    `;
+  }
+});
+$$('.wiz-step[data-step="7"]').forEach(el => obs.observe(el, {attributes:true, attributeFilter:['class']}));
+
+function copyKey(btn){
+  const k = $('#apiKey').textContent;
+  navigator.clipboard?.writeText(k);
+  btn.textContent = 'Kopiert ✓';
+  setTimeout(()=> btn.textContent = 'Kopier', 1800);
+}
+</script>
+</body>
+</html>
