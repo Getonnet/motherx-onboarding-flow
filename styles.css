@@ -890,7 +890,8 @@ img{max-width:100%;display:block}
 @keyframes blink{50%{opacity:0}}
 .demo-result{margin-top:22px;padding:22px;background:var(--cream);border-radius:16px;border:1px solid var(--line)}
 .demo-result-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--purple-600);font-weight:600;margin-bottom:10px}
-.demo-result p{font-size:16px;margin-bottom:10px}
+.demo-result p{font-size:16px;margin-bottom:10px;min-height:4.8em;line-height:1.5}
+@media (max-width:620px){.demo-result p{min-height:6em}}
 .demo-link{color:var(--purple-700);font-weight:600;font-size:14px;display:inline-block;margin-top:4px}
 
 /* Product cards in demo */

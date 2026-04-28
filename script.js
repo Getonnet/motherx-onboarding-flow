@@ -74,7 +74,7 @@ function applyResult(d){
   answerEl.textContent = d.a;
   if(linkEl) linkEl.textContent = d.link;
   if(productsEl){
-    productsEl.style.display = d.products ? 'grid' : 'none';
+    productsEl.style.visibility = d.products ? 'visible' : 'hidden';
   }
 }
 
