@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Knowledge — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="knowledge"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i kilder..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-cta">+ Last opp kilde</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Treningsdata</div>
+          <div class="panel-hello">47 kilder · 1 284 sider indeksert · sist synket for 12 min siden.</div>
+        </div>
+        <div class="panel-range">Auto-sync hver 6. time</div>
+      </div>
+
+      <div class="panel-ai-card">
+        <div class="panel-ai-main">
+          <div class="panel-ai-head">
+            <span class="panel-ai-tag">✦ AI-oppsummering</span>
+            <span class="panel-ai-meta">oppdatert for 4 min siden · basert på 2 847 samtaler</span>
+          </div>
+          <div class="panel-ai-title">
+            Modellen svarer trygt på frakt, produkt og størrelser — men har tydelige hull rundt internasjonal levering og B2B.
+          </div>
+          <div class="panel-ai-body">
+            AI-en kjenner sortimentet godt (94 % dekning) og håndterer <strong>retur, garanti og ordrestatus</strong> presist. Siste uka har det kommet 87 spørsmål om <strong>levering til utlandet</strong> og 64 om <strong>bedriftsavtaler</strong> som ikke fant svar i noen kilde. To eksisterende kilder bør også oppdateres — garanti-PDF-en er 89 dager gammel med utdatert prisinfo, og vaskeråd-PDF-en feilet ved indeksering.
+          </div>
+        </div>
+
+        <div class="panel-ai-suggestions">
+          <div class="panel-ai-sugg-head">
+            <span>Anbefalte tiltak</span>
+            <span class="count">6</span>
+          </div>
+          <div class="panel-ai-sugg">
+            <div class="panel-ai-sugg-ico crit">!</div>
+            <div class="panel-ai-sugg-body">
+              <strong>Internasjonal frakt</strong>
+              <div class="panel-ai-sugg-meta">87 ubesvarte spørsmål · 28 % dekning</div>
+            </div>
+            <div class="panel-ai-sugg-actions">
+              <button class="panel-ai-sugg-check" type="button" title="Sjekk om løst" aria-label="Sjekk om løst">
+                <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 4v5h-5"/></svg>
+              </button>
+              <span class="panel-ai-sugg-cta">Last opp →</span>
+            </div>
+          </div>
+          <div class="panel-ai-sugg">
+            <div class="panel-ai-sugg-ico crit">!</div>
+            <div class="panel-ai-sugg-body">
+              <strong>Bedriftsavtaler &amp; volumrabatt</strong>
+              <div class="panel-ai-sugg-meta">64 ubesvarte spørsmål · ingen kilde</div>
+            </div>
+            <div class="panel-ai-sugg-actions">
+              <button class="panel-ai-sugg-check" type="button" title="Sjekk om løst" aria-label="Sjekk om løst">
+                <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 4v5h-5"/></svg>
+              </button>
+              <span class="panel-ai-sugg-cta">Last opp →</span>
+            </div>
+          </div>
+          <div class="panel-ai-sugg">
+            <div class="panel-ai-sugg-ico">⚠</div>
+            <div class="panel-ai-sugg-body">
+              <strong>Vaskeråd ullfôr (PDF)</strong>
+              <div class="panel-ai-sugg-meta">Indeksering feilet · 22 spørsmål uten svar</div>
+            </div>
+            <div class="panel-ai-sugg-actions">
+              <button class="panel-ai-sugg-check" type="button" title="Sjekk om løst" aria-label="Sjekk om løst">
+                <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 4v5h-5"/></svg>
+              </button>
+              <span class="panel-ai-sugg-cta">Reparér →</span>
+            </div>
+          </div>
+          <div class="panel-ai-sugg">
+            <div class="panel-ai-sugg-ico">⚠</div>
+            <div class="panel-ai-sugg-body">
+              <strong>Garantibetingelser_2024.pdf</strong>
+              <div class="panel-ai-sugg-meta">Utdatert (89 dager) · pris-info stemmer ikke</div>
+            </div>
+            <div class="panel-ai-sugg-actions">
+              <button class="panel-ai-sugg-check" type="button" title="Sjekk om løst" aria-label="Sjekk om løst">
+                <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 4v5h-5"/></svg>
+              </button>
+              <span class="panel-ai-sugg-cta">Erstatt →</span>
+            </div>
+          </div>
+          <div class="panel-ai-sugg">
+            <div class="panel-ai-sugg-ico opp">★</div>
+            <div class="panel-ai-sugg-body">
+              <strong>Fitguide herre XS</strong>
+              <div class="panel-ai-sugg-meta">31 spørsmål · stort konverteringspotensial</div>
+            </div>
+            <div class="panel-ai-sugg-actions">
+              <button class="panel-ai-sugg-check" type="button" title="Sjekk om løst" aria-label="Sjekk om løst">
+                <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 4v5h-5"/></svg>
+              </button>
+              <span class="panel-ai-sugg-cta">Last opp →</span>
+            </div>
+          </div>
+          <div class="panel-ai-sugg">
+            <div class="panel-ai-sugg-ico opp">★</div>
+            <div class="panel-ai-sugg-body">
+              <strong>Levering til Svalbard</strong>
+              <div class="panel-ai-sugg-meta">18 spørsmål · enkel oppgave å løse</div>
+            </div>
+            <div class="panel-ai-sugg-actions">
+              <button class="panel-ai-sugg-check" type="button" title="Sjekk om løst" aria-label="Sjekk om løst">
+                <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 4v5h-5"/></svg>
+              </button>
+              <span class="panel-ai-sugg-cta">Last opp →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-kpis">
+        <div class="panel-kpi">
+          <div class="panel-kpi-label">Kilder totalt</div>
+          <div class="panel-kpi-val">47</div>
+          <div class="panel-kpi-delta up">▲ 4 nye denne uka</div>
+        </div>
+        <div class="panel-kpi">
+          <div class="panel-kpi-label">Sider indeksert</div>
+          <div class="panel-kpi-val">1 284</div>
+          <div class="panel-kpi-delta up">▲ 138</div>
+        </div>
+        <div class="panel-kpi">
+          <div class="panel-kpi-label">Dekning</div>
+          <div class="panel-kpi-val">86%</div>
+          <div class="panel-kpi-delta down">▼ 4 emner uten innhold</div>
+        </div>
+        <div class="panel-kpi">
+          <div class="panel-kpi-label">Status <span class="dash-live"><span class="dash-live-dot"></span>live</span></div>
+          <div class="panel-kpi-val" style="font-size:24px">3 i kø</div>
+          <div class="panel-kpi-delta up">2 synker · 1 venter</div>
+        </div>
+      </div>
+
+      <div class="panel-chips">
+        <span class="panel-chip active">Alle (47)</span>
+        <span class="panel-chip">📄 PDF (22)</span>
+        <span class="panel-chip">🌐 URL/Sitemap (14)</span>
+        <span class="panel-chip">N Notion (6)</span>
+        <span class="panel-chip">⊞ CSV (3)</span>
+        <span class="panel-chip">⚠ Med feil (2)</span>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-card-head">
+          <span>Alle kilder</span>
+          <span class="panel-card-sub">sortert etter sist synket</span>
+        </div>
+        <div>
+          <div class="panel-src-row panel-src-head">
+            <span></span><span>Navn</span><span>Type</span><span style="text-align:right">Sider</span><span>Sist synket</span><span style="text-align:right">Status</span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico">📄</div>
+            <div class="panel-src-name"><span class="panel-src-title">Returvilkår 2026 v3.pdf</span><span class="panel-src-meta">Brukt i 412 samtaler</span></div>
+            <span class="panel-src-type">PDF</span>
+            <span class="panel-src-num" style="text-align:right">38</span>
+            <span class="panel-src-num">for 12 min</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico web">🌐</div>
+            <div class="panel-src-name"><span class="panel-src-title">dinbedrift.no/produkter</span><span class="panel-src-meta">Brukt i 1 247 samtaler</span></div>
+            <span class="panel-src-type">Sitemap</span>
+            <span class="panel-src-num" style="text-align:right">284</span>
+            <span class="panel-src-num">for 1 t</span>
+            <span style="text-align:right"><span class="panel-pill sync"><span class="panel-pill-dot"></span>Synker</span></span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico">📄</div>
+            <div class="panel-src-name"><span class="panel-src-title">Størrelsesguide_2026.pdf</span><span class="panel-src-meta">Brukt i 812 samtaler</span></div>
+            <span class="panel-src-type">PDF</span>
+            <span class="panel-src-num" style="text-align:right">12</span>
+            <span class="panel-src-num">for 4 t</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico notion">N</div>
+            <div class="panel-src-name"><span class="panel-src-title">Intern kundeservice-wiki</span><span class="panel-src-meta">Brukt i 689 samtaler</span></div>
+            <span class="panel-src-type">Notion</span>
+            <span class="panel-src-num" style="text-align:right">142</span>
+            <span class="panel-src-num">for 6 t</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico csv">⊞</div>
+            <div class="panel-src-name"><span class="panel-src-title">Produktkatalog_v18.csv</span><span class="panel-src-meta">Brukt i 947 samtaler</span></div>
+            <span class="panel-src-type">CSV</span>
+            <span class="panel-src-num" style="text-align:right">2 184</span>
+            <span class="panel-src-num">i går</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico">📄</div>
+            <div class="panel-src-name"><span class="panel-src-title">Garantibetingelser_2024.pdf</span><span class="panel-src-meta">Brukt i 188 samtaler</span></div>
+            <span class="panel-src-type">PDF</span>
+            <span class="panel-src-num" style="text-align:right">9</span>
+            <span class="panel-src-num">for 89 dager</span>
+            <span style="text-align:right"><span class="panel-pill warn"><span class="panel-pill-dot"></span>Utdatert</span></span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico web">🌐</div>
+            <div class="panel-src-name"><span class="panel-src-title">dinbedrift.no/frakt</span><span class="panel-src-meta">Brukt i 1 284 samtaler</span></div>
+            <span class="panel-src-type">URL</span>
+            <span class="panel-src-num" style="text-align:right">4</span>
+            <span class="panel-src-num">for 2 t</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico">📄</div>
+            <div class="panel-src-name"><span class="panel-src-title">Vaskeråd_ull_v2.pdf</span><span class="panel-src-meta">Feilet ved indeksering · sjekk PDF-en</span></div>
+            <span class="panel-src-type">PDF</span>
+            <span class="panel-src-num" style="text-align:right">—</span>
+            <span class="panel-src-num">aldri</span>
+            <span style="text-align:right"><span class="panel-pill err"><span class="panel-pill-dot"></span>Feilet</span></span>
+          </div>
+          <div class="panel-src-row">
+            <div class="panel-src-ico notion">N</div>
+            <div class="panel-src-name"><span class="panel-src-title">Salgsmanual 2026</span><span class="panel-src-meta">Brukt i 124 samtaler</span></div>
+            <span class="panel-src-type">Notion</span>
+            <span class="panel-src-num" style="text-align:right">68</span>
+            <span class="panel-src-num">for 8 t</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-grid-2">
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Dekning per kategori</span><span class="panel-card-sub">% av spørsmål med treff</span></div>
+          <div class="panel-coverage">
+            <div><div class="panel-cov-row"><span>Frakt og levering</span><span class="panel-cov-pct">98%</span></div><div class="panel-cov-bar"><div class="panel-cov-fill" style="width:98%"></div></div></div>
+            <div><div class="panel-cov-row"><span>Produkt</span><span class="panel-cov-pct">94%</span></div><div class="panel-cov-bar"><div class="panel-cov-fill" style="width:94%"></div></div></div>
+            <div><div class="panel-cov-row"><span>Bestilling</span><span class="panel-cov-pct">91%</span></div><div class="panel-cov-bar"><div class="panel-cov-fill" style="width:91%"></div></div></div>
+            <div><div class="panel-cov-row"><span>Retur og bytte</span><span class="panel-cov-pct">72%</span></div><div class="panel-cov-bar"><div class="panel-cov-fill low" style="width:72%"></div></div></div>
+            <div><div class="panel-cov-row"><span>Betaling B2B</span><span class="panel-cov-pct">54%</span></div><div class="panel-cov-bar"><div class="panel-cov-fill low" style="width:54%"></div></div></div>
+            <div><div class="panel-cov-row"><span>Internasjonal frakt</span><span class="panel-cov-pct">28%</span></div><div class="panel-cov-bar"><div class="panel-cov-fill crit" style="width:28%"></div></div></div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card-head"><span>⚠ Hull i kunnskapsbasen</span><span class="panel-card-sub">spørsmål uten kilde</span></div>
+          <ul class="panel-missing">
+            <li><strong>Fraktkostnad utenfor Norge</strong> — 47 spørsmål siste uka</li>
+            <li><strong>Fitguide herre XS</strong> — 31 spørsmål siste uka</li>
+            <li><strong>Vaskeråd ullfôr</strong> — 22 spørsmål · kilde feilet</li>
+            <li><strong>Levering til Svalbard</strong> — 18 spørsmål</li>
+            <li><strong>Bedriftsrabatt 50+ enheter</strong> — 14 spørsmål</li>
+            <li><strong>Returperiode B2B</strong> — 9 spørsmål</li>
+          </ul>
+          <button class="panel-cta" style="align-self:flex-start">+ Last opp ny kilde</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+<script>
+  // Per-tiltak verifisering — sjekker om en enkelt anbefaling er løst
+  (function(){
+    const list = document.querySelector('.panel-ai-suggestions');
+    if(!list) return;
+
+    const countEl = list.querySelector('.panel-ai-sugg-head .count');
+
+    list.addEventListener('click', (e) => {
+      const btn = e.target.closest('.panel-ai-sugg-check');
+      if(!btn) return;
+      const row = btn.closest('.panel-ai-sugg');
+      if(!row || row.classList.contains('scanning') || row.classList.contains('resolved')) return;
+
+      row.classList.add('scanning');
+
+      setTimeout(() => {
+        row.classList.remove('scanning');
+
+        // For demoens skyld: rader med "opp"-ikon (grønn stjerne) treffer alltid løst,
+        // resten har 60% sjanse for å være løst. Det gir variasjon når man klikker rundt.
+        const isOpp = row.querySelector('.panel-ai-sugg-ico.opp');
+        const resolved = isOpp || Math.random() < 0.6;
+
+        if(resolved){
+          row.classList.add('resolved');
+          const ico = row.querySelector('.panel-ai-sugg-ico');
+          ico.textContent = '✓';
+          ico.classList.remove('crit','opp');
+          ico.classList.add('opp');
+          const cta = row.querySelector('.panel-ai-sugg-cta');
+          cta.innerHTML = '✓ Løst';
+          // Oppdater teller
+          if(countEl){
+            const current = parseInt(countEl.textContent, 10) || 0;
+            countEl.textContent = Math.max(0, current - 1);
+          }
+        } else {
+          row.classList.add('unresolved-flash');
+          setTimeout(() => row.classList.remove('unresolved-flash'), 1300);
+        }
+      }, 1400);
+    });
+  })();
+</script>
+</body>
+</html>

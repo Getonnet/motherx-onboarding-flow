@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Settings — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="settings"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i innstillinger..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-cta">Lagre endringer</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Settings</div>
+          <div class="panel-hello">Administrer workspace, branding, integrasjoner og fakturering.</div>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+
+        <aside class="settings-side">
+          <a class="active">Generelt</a>
+          <a>Tema</a>
+          <a>API &amp; webhooks</a>
+          <a>Integrasjoner</a>
+          <a>Fakturering</a>
+          <a>Sikkerhet &amp; logger</a>
+          <a style="color:#DC2626">Faresone</a>
+        </aside>
+
+        <div class="settings-section">
+
+          <h3>Generelt</h3>
+
+          <div style="font-size:12.5px;color:var(--ink-soft);background:#FAFAF7;border:1px dashed var(--line);border-radius:10px;padding:11px 14px;margin-bottom:4px">
+            Bedriftsnavn, logo, farger, språk og AI-tone bor nå under <a href="din-bedrift.html" style="color:var(--purple-700);font-weight:600">Din bedrift</a>.
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-l"><strong>Innsamling av leads</strong><span>AI prøver å hente ut kontaktinfo når relevant.</span></div>
+            <div class="settings-toggle on" style="justify-self:end"></div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-l"><strong>Auto-eskalering</strong><span>Overfør til menneske ved CSAT &lt; 3 i 2 påfølgende svar.</span></div>
+            <div class="settings-toggle on" style="justify-self:end"></div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-l"><strong>Trening av modell</strong><span>Tillat MotherX å bruke samtaler til å forbedre modellen din.</span></div>
+            <div class="settings-toggle" style="justify-self:end"></div>
+          </div>
+
+          <h3 style="margin-top:24px">Tema</h3>
+
+          <div style="font-size:12.5px;color:var(--ink-soft);margin-bottom:4px">Velg utseendet på panelet. Endringen lagres lokalt og brukes på tvers av alle sider.</div>
+
+          <div class="theme-picker" id="themePicker">
+            <div class="theme-card t-default" data-theme-choice="default">
+              <div class="theme-card-check">✓</div>
+              <div class="theme-card-preview">
+                <div class="theme-card-bar">
+                  <span class="theme-card-dot" style="background:#FF5F57"></span>
+                  <span class="theme-card-dot" style="background:#FEBC2E"></span>
+                  <span class="theme-card-dot" style="background:#28C840"></span>
+                </div>
+                <div class="theme-card-body">
+                  <div class="theme-card-side">
+                    <div></div><div></div><div></div><div></div>
+                  </div>
+                  <div class="theme-card-main">
+                    <div class="theme-card-h"></div>
+                    <div class="theme-card-row"></div>
+                    <div class="theme-card-row"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="theme-card-info">
+                <div class="theme-card-name">Standard</div>
+                <div class="theme-card-desc">Ren SaaS-stil med lilla aksenter og hvite kort.</div>
+              </div>
+            </div>
+
+            <div class="theme-card t-warm" data-theme-choice="warm">
+              <div class="theme-card-check">✓</div>
+              <div class="theme-card-preview">
+                <div class="theme-card-bar">
+                  <span class="theme-card-dot" style="background:#FF5F57"></span>
+                  <span class="theme-card-dot" style="background:#FEBC2E"></span>
+                  <span class="theme-card-dot" style="background:#28C840"></span>
+                </div>
+                <div class="theme-card-body">
+                  <div class="theme-card-side">
+                    <div></div><div></div><div></div><div></div>
+                  </div>
+                  <div class="theme-card-main">
+                    <div class="theme-card-h"></div>
+                    <div class="theme-card-row"></div>
+                    <div class="theme-card-row"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="theme-card-info">
+                <div class="theme-card-name">Varmt &amp; håndverk</div>
+                <div class="theme-card-desc">Jordnær terrakotta, papir-bakgrunn og Fraunces-serif på overskrifter.</div>
+              </div>
+            </div>
+
+            <div class="theme-card t-warm-purple" data-theme-choice="warm-purple">
+              <div class="theme-card-check">✓</div>
+              <div class="theme-card-preview">
+                <div class="theme-card-bar">
+                  <span class="theme-card-dot" style="background:#FF5F57"></span>
+                  <span class="theme-card-dot" style="background:#FEBC2E"></span>
+                  <span class="theme-card-dot" style="background:#28C840"></span>
+                </div>
+                <div class="theme-card-body">
+                  <div class="theme-card-side">
+                    <div></div><div></div><div></div><div></div>
+                  </div>
+                  <div class="theme-card-main">
+                    <div class="theme-card-h"></div>
+                    <div class="theme-card-row"></div>
+                    <div class="theme-card-row"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="theme-card-info">
+                <div class="theme-card-name">Lilla på papir</div>
+                <div class="theme-card-desc">Samme papir-struktur og Fraunces, men med MotherX-lilla som primær.</div>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px">API &amp; webhooks</h3>
+
+          <div class="settings-row" style="grid-template-columns:1fr">
+            <div>
+              <div class="settings-row-l"><strong>API-nøkkel (live)</strong><span>Brukes ved server-til-server-kall. Hold den hemmelig.</span></div>
+              <div style="display:flex;gap:8px;margin-top:10px;max-width:520px">
+                <input class="pg-input" type="text" value="mx_live_••••••••••••••••3f7a" readonly style="font-family:monospace;flex:1"/>
+                <button class="panel-btn-ghost">Vis</button>
+                <button class="panel-btn-ghost">Kopier</button>
+                <button class="panel-btn-ghost" style="color:#DC2626">Rotér</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-l"><strong>Webhook ved ny lead</strong><span>POST sendes til denne URL-en når en lead identifiseres.</span></div>
+            <input class="pg-input" type="text" value="https://hooks.dinbedrift.no/mx/leads" style="justify-self:end;max-width:380px;font-family:monospace;font-size:12px"/>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-row-l"><strong>Webhook ved negativ CSAT</strong><span>Trigges ved rating ≤ 2 av 5.</span></div>
+            <input class="pg-input" type="text" placeholder="Ikke konfigurert" style="justify-self:end;max-width:380px;font-family:monospace;font-size:12px"/>
+          </div>
+
+          <h3 style="margin-top:24px;color:#DC2626">Faresone</h3>
+
+          <div class="settings-row" style="border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04)">
+            <div class="settings-row-l"><strong>Slett alle samtaler</strong><span>Sletter chat-historikken permanent. Kilder og medlemmer beholdes.</span></div>
+            <button class="panel-btn-ghost" style="justify-self:end;color:#DC2626;border-color:rgba(239,68,68,.3)">Slett samtaler</button>
+          </div>
+          <div class="settings-row" style="border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04)">
+            <div class="settings-row-l"><strong>Slett workspace</strong><span>Sletter <em>alt</em> — kilder, samtaler, medlemmer, fakturering. Kan ikke angres.</span></div>
+            <button class="panel-btn-ghost" style="justify-self:end;color:#DC2626;border-color:rgba(239,68,68,.3)">Slett workspace</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+<script>
+  // Tema-velger: marker aktiv + bytt på klikk
+  (function(){
+    const current = localStorage.getItem('mx-theme') || 'default';
+    document.querySelectorAll('[data-theme-choice]').forEach(card => {
+      if(card.dataset.themeChoice === current) card.classList.add('active');
+      card.addEventListener('click', () => {
+        window.setMxTheme(card.dataset.themeChoice);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

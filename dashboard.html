@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — MotherX</title>
+<meta name="description" content="MotherX-dashboard: sanntids innsikt, populære temaer og ytelse — alt på ett sted."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="apple-touch-icon" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+  /* Sandbox-tilpasninger for denne siden */
+  .dash-sandbox{
+    padding:100px 0 140px;
+    background:linear-gradient(180deg,var(--cream-2,#F5F2EA) 0%,var(--cream,#FAF7F0) 100%);
+    position:relative;
+  }
+  .dash-sandbox .dashboard-wrap{
+    max-width:1180px;margin:0 auto;
+    background:#fff;
+  }
+  .dash-sandbox .dash-mock{min-height:680px}
+  .dash-sandbox .section-head{margin-bottom:48px}
+  .dash-sandbox .section-head .section-title{color:var(--ink)}
+  .dash-sandbox .section-head .section-sub{color:var(--ink-soft);opacity:.8}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="nav hero-mode" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo-white.png" alt="MotherX" class="logo logo-light"/>
+      <img src="assets/logo-purple.png" alt="MotherX" class="logo logo-dark"/>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#tjenester">Tjenester</a>
+      <a href="index.html#plattform">Plattform</a>
+      <a href="index.html#priser">Priser</a>
+      <a href="index.html#kontakt">Kontakt</a>
+    </div>
+    <a href="kom-i-gang.html" class="btn btn-pill">Prøv gratis <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<header class="subpage-hero" id="hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Hjem</a> <span>/</span> <span>Dashboard</span></div>
+    <div class="eyebrow"><span class="pulse-dot"></span> Plattform · Sanntid</div>
+    <h1>Innsikt som <em style="font-family:'Instrument Serif',serif;font-weight:400;color:var(--purple-200)">lever</em> — alt på ett sted.</h1>
+    <p class="lead">Følg samtaler, temaer og ytelse i sanntid. Se hva brukerne spør om, hvor du leverer best, og hvor innholdet trenger litt mer kjærlighet.</p>
+    <div class="sub-cta">
+      <a href="kom-i-gang.html" class="btn btn-primary">Start 30 dager gratis <span class="arrow">→</span></a>
+      <a href="#dashboard" class="btn btn-ghost">Se dashboardet</a>
+    </div>
+  </div>
+</header>
+
+<section class="dash-sandbox" id="dashboard">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow dark"><span class="pulse-dot"></span> Live mock</div>
+      <h2 class="section-title">Dashboardet <span class="grad-text-light">i bevegelse.</span></h2>
+      <p class="section-sub">Tall som teller opp, en kurve som puster, og temaer som rangerer seg selv på nytt etter hvert som nye samtaler kommer inn.</p>
+    </div>
+
+    <div class="dashboard-wrap reveal">
+      <div class="dash-glow"></div>
+      <div class="dash-mock">
+        <aside class="dash-side">
+          <div class="dash-logo">
+            <span class="dash-logo-mark">M</span>
+            <span class="dash-logo-text">MotherX</span>
+          </div>
+          <nav class="dash-nav">
+            <a class="active"><span class="dash-ico">◈</span>Dashboard</a>
+            <a><span class="dash-ico">❖</span>Knowledge</a>
+            <a><span class="dash-ico">❑</span>Chat Logs</a>
+            <a><span class="dash-ico">✎</span>Chat Testing</a>
+            <a><span class="dash-ico">✦</span>Leads <span class="dash-badge">12</span></a>
+            <a><span class="dash-ico">◉</span>Members</a>
+            <a><span class="dash-ico">◐</span>Chat modules</a>
+            <a><span class="dash-ico">⚙</span>Settings</a>
+          </nav>
+          <div class="dash-lang">🇳🇴 Norsk</div>
+        </aside>
+
+        <section class="dash-main">
+          <header class="dash-head">
+            <div>
+              <div class="dash-h1">Dashboard</div>
+              <div class="dash-hello">Velkommen tilbake, Tor</div>
+            </div>
+            <div class="dash-range">📅 21. mars – 21. april 2026</div>
+          </header>
+
+          <div class="dash-tabs">
+            <span class="active">Oversikt</span>
+            <span>Temaer</span>
+            <span>Ytelse</span>
+          </div>
+
+          <div class="dash-kpis" id="dashKpis">
+            <div class="dash-kpi">
+              <div class="dash-kpi-label">Samtaler <span class="dash-live"><span class="dash-live-dot"></span>live</span></div>
+              <div class="dash-kpi-val" data-count="2847" data-fmt="int">0</div>
+              <div class="dash-kpi-delta up">▲ 18%</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="dash-kpi-label">Meldinger</div>
+              <div class="dash-kpi-val" data-count="18392" data-fmt="int">0</div>
+              <div class="dash-kpi-delta up">▲ 24%</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="dash-kpi-label">Snitt økt</div>
+              <div class="dash-kpi-val" data-count="252" data-fmt="time">0m 0s</div>
+              <div class="dash-kpi-delta up">▲ 6%</div>
+            </div>
+            <div class="dash-kpi">
+              <div class="dash-kpi-label">Engasjement</div>
+              <div class="dash-kpi-val" data-count="73" data-fmt="pct">0%</div>
+              <div class="dash-kpi-delta down">▼ 2%</div>
+            </div>
+          </div>
+
+          <div class="dash-grid">
+            <div class="dash-card">
+              <div class="dash-card-head">
+                <span>Mest søkte temaer</span>
+                <span class="dash-card-sub">siste 30 dager</span>
+              </div>
+              <div class="dash-bars" id="dashBars">
+                <div class="dash-bar"><span class="dash-bar-lbl">Frakt og levering</span><div class="dash-bar-track"><div class="dash-bar-fill" data-max="1284"></div></div><span class="dash-bar-num" data-count="1284">0</span></div>
+                <div class="dash-bar"><span class="dash-bar-lbl">Størrelsesguide</span><div class="dash-bar-track"><div class="dash-bar-fill" data-max="1284"></div></div><span class="dash-bar-num" data-count="987">0</span></div>
+                <div class="dash-bar"><span class="dash-bar-lbl">Retur og bytte</span><div class="dash-bar-track"><div class="dash-bar-fill" data-max="1284"></div></div><span class="dash-bar-num" data-count="712">0</span></div>
+                <div class="dash-bar"><span class="dash-bar-lbl">Vinterjakker -20°C</span><div class="dash-bar-track"><div class="dash-bar-fill" data-max="1284"></div></div><span class="dash-bar-num" data-count="541">0</span></div>
+                <div class="dash-bar"><span class="dash-bar-lbl">Garanti</span><div class="dash-bar-track"><div class="dash-bar-fill" data-max="1284"></div></div><span class="dash-bar-num" data-count="382">0</span></div>
+              </div>
+            </div>
+
+            <div class="dash-card">
+              <div class="dash-card-head">
+                <span>Samtaler over tid</span>
+                <span class="dash-card-sub">daglig</span>
+              </div>
+              <svg class="dash-chart" viewBox="0 0 320 140" preserveAspectRatio="none" id="dashChart">
+                <defs>
+                  <linearGradient id="dashGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#8B5CF6" stop-opacity=".35"/>
+                    <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path id="dashChartFill" d="" fill="url(#dashGrad)"/>
+                <path id="dashChartLine" d="" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linejoin="round"/>
+                <circle id="dashChartDot" r="4" fill="#8B5CF6" stroke="#fff" stroke-width="2"/>
+              </svg>
+              <div class="dash-chart-foot">
+                <span>1. apr</span><span>8</span><span>15</span><span>21. apr</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-grid-3">
+            <div class="dash-card">
+              <div class="dash-card-head"><span>👍 Høyt ratede samtaler</span></div>
+              <ul class="dash-tags">
+                <li>Produktanbefaling <em>94%</em></li>
+                <li>Størrelsesguide <em>91%</em></li>
+                <li>Ordrestatus <em>89%</em></li>
+              </ul>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-head"><span>👎 Lavt ratede samtaler</span></div>
+              <ul class="dash-tags alt">
+                <li>Returprosess <em>62%</em></li>
+                <li>Fakturering B2B <em>58%</em></li>
+                <li>Garantisak <em>51%</em></li>
+              </ul>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-head"><span>⚠ Info som mangler</span></div>
+              <ul class="dash-missing">
+                <li>Fraktkostnad utenfor Norge</li>
+                <li>Fitguide herre XS</li>
+                <li>Vaskeråd ullfôr</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-bg"></div><div class="cta-orb"></div>
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="eyebrow dark"><span class="pulse-dot"></span> 30 dager gratis</div>
+      <h2>Få ditt eget dashboard.</h2>
+      <p>Sanntids innsikt fra dag én — oppsett inkludert.</p>
+      <a href="kom-i-gang.html" class="btn btn-primary" style="margin-top:8px">Prøv gratis <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="foot-brand">
+      <img src="assets/logo-white.png" alt="MotherX" class="logo foot-logo"/>
+      <p class="foot-tag">Intelligent AI — trent på din bedrift.</p>
+    </div>
+    <div class="foot-col"><h5>Tjenester</h5><a href="tjenester/ai-sok.html">AI-Søk</a><a href="tjenester/chat.html">Chat</a><a href="tjenester/gpt-modul.html">GPT-Modul</a><a href="tjenester/answerx.html">AnswerX</a></div>
+    <div class="foot-col"><h5>Selskap</h5><a href="index.html#plattform">Plattform</a><a href="index.html#priser">Priser</a><a href="kom-i-gang.html">Gratis prøve</a></div>
+    <div class="foot-col"><h5>Kontakt</h5><a href="mailto:support@motherx.ai">support@motherx.ai</a><a href="tel:+4790067788">+47 900 67 788</a><span>Oscars gate 3B, 0350 Oslo</span></div>
+  </div>
+  <div class="foot-bottom container"><span>© <span id="year"></span> MotherX AI. Laget i Oslo.</span><span>All rights reserved</span></div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chat Testing — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="chat-testing"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i tester..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-cta">Kjør evaluering</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Chat Testing</div>
+          <div class="panel-hello">Test prompts og modeller mot kunnskapsbasen før du går live.</div>
+        </div>
+        <span class="panel-pill ok"><span class="panel-pill-dot"></span>Sandbox · ingen lekkasje til produksjon</span>
+      </div>
+
+      <div class="playground">
+
+        <div class="pg-controls">
+          <div class="panel-card">
+            <div class="panel-card-head"><span>Modell-innstillinger</span></div>
+            <div class="pg-field">
+              <span class="pg-label">Modell</span>
+              <select class="pg-select">
+                <option>MotherX-large (anbefalt)</option>
+                <option>MotherX-fast</option>
+                <option>MotherX-precise</option>
+              </select>
+            </div>
+            <div class="pg-field">
+              <span class="pg-label">Temperatur · 0,3</span>
+              <input class="pg-range" type="range" min="0" max="100" value="30"/>
+              <div class="pg-range-row"><span>Presis</span><span>Kreativ</span></div>
+            </div>
+            <div class="pg-field">
+              <span class="pg-label">Maks tokens</span>
+              <input class="pg-input" type="number" value="512"/>
+            </div>
+            <div class="pg-field">
+              <span class="pg-label">Kildebruk</span>
+              <select class="pg-select">
+                <option>Kun fra knowledge base</option>
+                <option>Knowledge + grunnmodell</option>
+                <option>Kun grunnmodell</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head"><span>System-prompt</span></div>
+            <textarea class="pg-textarea" rows="6">Du er en hjelpsom kundeservice-AI for Dinbedrift AS. Svar kort, vennlig og kun basert på interne kilder. Referer alltid til kilden i parentes.</textarea>
+            <div class="pg-field">
+              <span class="pg-label">Persona</span>
+              <select class="pg-select">
+                <option>Vennlig fagperson</option>
+                <option>Formell</option>
+                <option>Tøff og direkte</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="pg-chat">
+          <div class="pg-chat-msgs">
+            <div class="pg-msg user">
+              <div class="panel-av">T</div>
+              <div>
+                <div class="bubble">Har dere røde vinterjakker som tåler -20 °C?</div>
+              </div>
+            </div>
+            <div class="pg-msg bot">
+              <div class="panel-av" style="background:linear-gradient(135deg,var(--purple-500),var(--purple-700))">M</div>
+              <div>
+                <div class="bubble">Ja! Tre modeller i sortimentet vårt passer beskrivelsen: <strong>Arctic Parka</strong> (-30 °C, rød), <strong>Polarbukse Rød Edition</strong> (-25 °C) og <strong>Nordlys-skall</strong> (-22 °C, rød/svart). Vil du se størrelsesguide eller priser?</div>
+                <div class="src">📎 Produktkatalog_v18.csv · Størrelsesguide_2026.pdf</div>
+              </div>
+            </div>
+            <div class="pg-msg user">
+              <div class="panel-av">T</div>
+              <div>
+                <div class="bubble">Hva er prisen på Arctic Parka i str. L?</div>
+              </div>
+            </div>
+            <div class="pg-msg bot">
+              <div class="panel-av" style="background:linear-gradient(135deg,var(--purple-500),var(--purple-700))">M</div>
+              <div>
+                <div class="bubble">Arctic Parka i str. L koster <strong>4 990 kr</strong>. Den finnes nå i rød, svart og marineblå. Frakt på 49 kr i Norge — gratis over 1 500 kr.</div>
+                <div class="src">📎 Produktkatalog_v18.csv (r. 47) · dinbedrift.no/frakt</div>
+              </div>
+            </div>
+          </div>
+          <div class="pg-input-bar">
+            <input type="text" placeholder="Skriv en testmelding..." value="Hvor lang er returperioden?"/>
+            <button class="panel-cta">Send</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="panel-grid-3">
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Eval-resultat</span><span class="panel-card-sub">forrige kjøring</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <div style="font-size:36px;font-weight:700;color:#059669">92%</div>
+            <span class="panel-pill ok"><span class="panel-pill-dot"></span>Bestått</span>
+          </div>
+          <div style="font-size:12.5px;color:var(--ink-soft)">38 av 41 testspørsmål ga korrekt svar med kildereferanse. 3 feilet (manglende kilde).</div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Svartid</span><span class="panel-card-sub">snitt</span></div>
+          <div style="font-size:36px;font-weight:700;color:var(--ink)">1.2 <span style="font-size:18px;color:var(--ink-soft);font-weight:500">s</span></div>
+          <div style="font-size:12.5px;color:var(--ink-soft)">Innenfor SLA-mål på 2 s.</div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Kostnad</span><span class="panel-card-sub">per 1000 spørsmål</span></div>
+          <div style="font-size:36px;font-weight:700;color:var(--ink)">kr 14</div>
+          <div style="font-size:12.5px;color:var(--ink-soft)">≈ 1,4 øre per spørsmål med dagens modell.</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+</body>
+</html>

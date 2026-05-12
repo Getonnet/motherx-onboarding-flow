@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — MotherX</title>
+<meta name="description" content="MotherX-panelet — sanntids innsikt fra din AI."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="apple-touch-icon" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="panel-side" data-active="dashboard"></aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="panel-main">
+
+    <!-- Topbar -->
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i samtaler, kilder, brukere..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-cta">+ Ny modul</button>
+      </div>
+    </div>
+
+    <!-- Content — note: keeps .dash-mock + ids/data-attrs so script.js animates it -->
+    <div class="dash-mock" style="display:block;background:transparent;min-height:0">
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Dashboard</div>
+          <div class="panel-hello">Velkommen tilbake, Tor — her er hva som har skjedd siden i går.</div>
+        </div>
+        <div class="panel-range">📅 21. mars – 21. april 2026</div>
+      </div>
+
+      <div class="panel-tabs" id="panelTabs">
+        <span class="active" data-tab="oversikt" onclick="showTab('oversikt',this)">Oversikt</span>
+        <span data-tab="temaer" onclick="showTab('temaer',this)">Temaer</span>
+        <span data-tab="ytelse" onclick="showTab('ytelse',this)">Ytelse</span>
+        <span data-tab="kilder" onclick="showTab('kilder',this)">Kilder</span>
+      </div>
+
+      <!-- ========== TAB: OVERSIKT ========== -->
+      <section data-tab-panel="oversikt">
+
+      <!-- KPIs — class .dash-kpi keeps the flash animation -->
+      <div class="panel-kpis" id="dashKpis">
+        <div class="panel-kpi dash-kpi">
+          <div class="panel-kpi-label">Samtaler <span class="dash-live"><span class="dash-live-dot"></span>live</span></div>
+          <div class="panel-kpi-val dash-kpi-val" data-count="2847" data-fmt="int">0</div>
+          <div class="panel-kpi-delta up">▲ 18% mot forrige periode</div>
+        </div>
+        <div class="panel-kpi dash-kpi">
+          <div class="panel-kpi-label">Meldinger</div>
+          <div class="panel-kpi-val dash-kpi-val" data-count="18392" data-fmt="int">0</div>
+          <div class="panel-kpi-delta up">▲ 24%</div>
+        </div>
+        <div class="panel-kpi dash-kpi">
+          <div class="panel-kpi-label">Snitt økt</div>
+          <div class="panel-kpi-val dash-kpi-val" data-count="252" data-fmt="time">0m 0s</div>
+          <div class="panel-kpi-delta up">▲ 6%</div>
+        </div>
+        <div class="panel-kpi dash-kpi">
+          <div class="panel-kpi-label">Engasjement</div>
+          <div class="panel-kpi-val dash-kpi-val" data-count="73" data-fmt="pct">0%</div>
+          <div class="panel-kpi-delta down">▼ 2%</div>
+        </div>
+      </div>
+
+      <!-- Topics + chart -->
+      <div class="panel-grid-2">
+        <div class="panel-card">
+          <div class="panel-card-head">
+            <span>Mest søkte temaer</span>
+            <span class="panel-card-sub">siste 30 dager</span>
+          </div>
+          <div class="panel-bars" id="dashBars">
+            <div class="panel-bar dash-bar"><span class="panel-bar-lbl">Frakt og levering</span><div class="panel-bar-track"><div class="panel-bar-fill dash-bar-fill" data-max="1284"></div></div><span class="panel-bar-num dash-bar-num" data-count="1284">0</span></div>
+            <div class="panel-bar dash-bar"><span class="panel-bar-lbl">Størrelsesguide</span><div class="panel-bar-track"><div class="panel-bar-fill dash-bar-fill" data-max="1284"></div></div><span class="panel-bar-num dash-bar-num" data-count="987">0</span></div>
+            <div class="panel-bar dash-bar"><span class="panel-bar-lbl">Retur og bytte</span><div class="panel-bar-track"><div class="panel-bar-fill dash-bar-fill" data-max="1284"></div></div><span class="panel-bar-num dash-bar-num" data-count="712">0</span></div>
+            <div class="panel-bar dash-bar"><span class="panel-bar-lbl">Vinterjakker -20°C</span><div class="panel-bar-track"><div class="panel-bar-fill dash-bar-fill" data-max="1284"></div></div><span class="panel-bar-num dash-bar-num" data-count="541">0</span></div>
+            <div class="panel-bar dash-bar"><span class="panel-bar-lbl">Garanti</span><div class="panel-bar-track"><div class="panel-bar-fill dash-bar-fill" data-max="1284"></div></div><span class="panel-bar-num dash-bar-num" data-count="382">0</span></div>
+            <div class="panel-bar dash-bar"><span class="panel-bar-lbl">Betaling og faktura</span><div class="panel-bar-track"><div class="panel-bar-fill dash-bar-fill" data-max="1284"></div></div><span class="panel-bar-num dash-bar-num" data-count="298">0</span></div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card-head">
+            <span>Samtaler over tid</span>
+            <span class="panel-card-sub">daglig</span>
+          </div>
+          <svg class="panel-chart" viewBox="0 0 320 140" preserveAspectRatio="none" id="dashChart">
+            <defs>
+              <linearGradient id="dashGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8B5CF6" stop-opacity=".35"/>
+                <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path id="dashChartFill" d="" fill="url(#dashGrad)"/>
+            <path id="dashChartLine" d="" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linejoin="round"/>
+            <circle id="dashChartDot" r="4" fill="#8B5CF6" stroke="#fff" stroke-width="2"/>
+          </svg>
+          <div class="panel-chart-foot">
+            <span>1. apr</span><span>8</span><span>15</span><span>21. apr</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Three columns: rated up / rated down / missing -->
+      <div class="panel-grid-3">
+        <div class="panel-card">
+          <div class="panel-card-head"><span>👍 Høyt ratede samtaler</span></div>
+          <ul class="panel-tags">
+            <li>Produktanbefaling <em>94%</em></li>
+            <li>Størrelsesguide <em>91%</em></li>
+            <li>Ordrestatus <em>89%</em></li>
+            <li>Frakttid Norge <em>87%</em></li>
+          </ul>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-head"><span>👎 Lavt ratede samtaler</span></div>
+          <ul class="panel-tags alt">
+            <li>Returprosess <em>62%</em></li>
+            <li>Fakturering B2B <em>58%</em></li>
+            <li>Garantisak <em>51%</em></li>
+            <li>Bytte mellom størrelser <em>49%</em></li>
+          </ul>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-head"><span>⚠ Info som mangler</span></div>
+          <ul class="panel-missing">
+            <li>Fraktkostnad utenfor Norge</li>
+            <li>Fitguide herre XS</li>
+            <li>Vaskeråd ullfôr</li>
+            <li>Levering til Svalbard</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Activity feed -->
+      <div class="panel-card">
+        <div class="panel-card-head">
+          <span>Siste aktivitet</span>
+          <span class="panel-card-sub">sanntid</span>
+        </div>
+        <div class="panel-activity">
+          <div class="panel-act">
+            <div class="panel-act-ico green">✦</div>
+            <div class="panel-act-body">
+              <div class="panel-act-line"><strong>Ny lead</strong> — Marius B. spurte om volumrabatt på Arctic Parka</div>
+              <div class="panel-act-time">for 2 min siden</div>
+            </div>
+          </div>
+          <div class="panel-act">
+            <div class="panel-act-ico">❑</div>
+            <div class="panel-act-body">
+              <div class="panel-act-line"><strong>Samtale lukket</strong> — Bytte fra str. M til L, kunde fornøyd (👍)</div>
+              <div class="panel-act-time">for 7 min siden</div>
+            </div>
+          </div>
+          <div class="panel-act">
+            <div class="panel-act-ico amber">⚠</div>
+            <div class="panel-act-body">
+              <div class="panel-act-line"><strong>Mangler kilde</strong> — 4 spørsmål om "fraktkostnad utenfor Norge" uten svar</div>
+              <div class="panel-act-time">for 14 min siden</div>
+            </div>
+          </div>
+          <div class="panel-act">
+            <div class="panel-act-ico">❖</div>
+            <div class="panel-act-body">
+              <div class="panel-act-line"><strong>Kilde lagt til</strong> — <em>Returvilkår 2026 v3.pdf</em> indeksert (38 sider)</div>
+              <div class="panel-act-time">for 32 min siden</div>
+            </div>
+          </div>
+          <div class="panel-act">
+            <div class="panel-act-ico green">✦</div>
+            <div class="panel-act-body">
+              <div class="panel-act-line"><strong>Ny lead</strong> — Anna L. ba om tilbud på bedriftsavtale (5+ ansatte)</div>
+              <div class="panel-act-time">for 48 min siden</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </section><!-- /tab: oversikt -->
+
+      <!-- ========== TAB: TEMAER ========== -->
+      <section data-tab-panel="temaer" hidden>
+
+        <div class="panel-kpis">
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Aktive temaer</div>
+            <div class="panel-kpi-val" data-tabnum="48">48</div>
+            <div class="panel-kpi-delta up">▲ 5 nye denne uka</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Trending opp</div>
+            <div class="panel-kpi-val" data-tabnum="12">12</div>
+            <div class="panel-kpi-delta up">▲ 18%</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Trending ned</div>
+            <div class="panel-kpi-val" data-tabnum="7">7</div>
+            <div class="panel-kpi-delta down">▼ 9%</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Uklassifiserte</div>
+            <div class="panel-kpi-val" data-tabnum="34">34</div>
+            <div class="panel-kpi-delta down">▼ trenger gjennomgang</div>
+          </div>
+        </div>
+
+        <div class="panel-grid-2">
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <span>Fordeling per kategori</span>
+              <span class="panel-card-sub">siste 30 dager</span>
+            </div>
+            <div class="panel-donut-wrap">
+              <div class="panel-donut">
+                <svg viewBox="0 0 120 120">
+                  <circle class="donut-bg" cx="60" cy="60" r="50"/>
+                  <!-- segments — circumference 314.16, offsets pre-calc -->
+                  <circle cx="60" cy="60" r="50" stroke="#8B5CF6" stroke-dasharray="87.97 314.16" stroke-dashoffset="0"/>
+                  <circle cx="60" cy="60" r="50" stroke="#A78BFA" stroke-dasharray="69.12 314.16" stroke-dashoffset="-87.97"/>
+                  <circle cx="60" cy="60" r="50" stroke="#C4B5FD" stroke-dasharray="56.55 314.16" stroke-dashoffset="-157.09"/>
+                  <circle cx="60" cy="60" r="50" stroke="#10B981" stroke-dasharray="43.98 314.16" stroke-dashoffset="-213.64"/>
+                  <circle cx="60" cy="60" r="50" stroke="#F59E0B" stroke-dasharray="31.42 314.16" stroke-dashoffset="-257.62"/>
+                  <circle cx="60" cy="60" r="50" stroke="#94A3B8" stroke-dasharray="25.13 314.16" stroke-dashoffset="-289.04"/>
+                </svg>
+                <div class="panel-donut-center">
+                  <div>
+                    <div class="num">2 847</div>
+                    <div class="lbl">samtaler</div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-legend">
+                <div class="panel-legend-row"><span class="panel-legend-dot" style="background:#8B5CF6"></span><span>Frakt og levering</span><span class="panel-legend-pct">28%</span><span class="panel-legend-num">797</span></div>
+                <div class="panel-legend-row"><span class="panel-legend-dot" style="background:#A78BFA"></span><span>Produkt</span><span class="panel-legend-pct">22%</span><span class="panel-legend-num">626</span></div>
+                <div class="panel-legend-row"><span class="panel-legend-dot" style="background:#C4B5FD"></span><span>Bestilling</span><span class="panel-legend-pct">18%</span><span class="panel-legend-num">512</span></div>
+                <div class="panel-legend-row"><span class="panel-legend-dot" style="background:#10B981"></span><span>Retur og bytte</span><span class="panel-legend-pct">14%</span><span class="panel-legend-num">399</span></div>
+                <div class="panel-legend-row"><span class="panel-legend-dot" style="background:#F59E0B"></span><span>Betaling</span><span class="panel-legend-pct">10%</span><span class="panel-legend-num">285</span></div>
+                <div class="panel-legend-row"><span class="panel-legend-dot" style="background:#94A3B8"></span><span>Annet</span><span class="panel-legend-pct">8%</span><span class="panel-legend-num">228</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <span>Trending denne uka</span>
+              <span class="panel-card-sub">% endring</span>
+            </div>
+            <div class="panel-trend">
+              <div class="panel-trend-row"><span class="panel-trend-name">Vinterjakker -20°C</span><span class="panel-trend-count">541 samtaler</span><span class="panel-trend-pill up">▲ 64%</span></div>
+              <div class="panel-trend-row"><span class="panel-trend-name">Skaljakke vår 2026</span><span class="panel-trend-count">218 samtaler</span><span class="panel-trend-pill up">▲ 41%</span></div>
+              <div class="panel-trend-row"><span class="panel-trend-name">Levering Svalbard</span><span class="panel-trend-count">87 samtaler</span><span class="panel-trend-pill up">▲ 28%</span></div>
+              <div class="panel-trend-row"><span class="panel-trend-name">Størrelsesguide</span><span class="panel-trend-count">987 samtaler</span><span class="panel-trend-pill flat">— 2%</span></div>
+              <div class="panel-trend-row"><span class="panel-trend-name">Garantisak</span><span class="panel-trend-count">382 samtaler</span><span class="panel-trend-pill down">▼ 11%</span></div>
+              <div class="panel-trend-row"><span class="panel-trend-name">Fakturering B2B</span><span class="panel-trend-count">156 samtaler</span><span class="panel-trend-pill down">▼ 19%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card-head">
+            <span>Alle temaer</span>
+            <span class="panel-card-sub">sortert etter volum</span>
+          </div>
+          <div>
+            <div class="panel-cluster panel-cluster-head">
+              <span>Tema</span><span style="text-align:right">Samtaler</span><span style="text-align:right">% av total</span><span style="text-align:right">Sentiment</span>
+            </div>
+            <div class="panel-cluster"><span class="panel-cluster-name">Frakt og levering</span><span class="panel-cluster-num">1 284</span><span class="panel-cluster-num">45%</span><span style="text-align:right"><span class="panel-sentiment pos">●● 87%</span></span></div>
+            <div class="panel-cluster"><span class="panel-cluster-name">Størrelsesguide</span><span class="panel-cluster-num">987</span><span class="panel-cluster-num">35%</span><span style="text-align:right"><span class="panel-sentiment pos">●● 91%</span></span></div>
+            <div class="panel-cluster"><span class="panel-cluster-name">Retur og bytte</span><span class="panel-cluster-num">712</span><span class="panel-cluster-num">25%</span><span style="text-align:right"><span class="panel-sentiment mid">●○ 62%</span></span></div>
+            <div class="panel-cluster"><span class="panel-cluster-name">Vinterjakker -20°C <span class="panel-cluster-tag new">NY</span></span><span class="panel-cluster-num">541</span><span class="panel-cluster-num">19%</span><span style="text-align:right"><span class="panel-sentiment pos">●● 88%</span></span></div>
+            <div class="panel-cluster"><span class="panel-cluster-name">Garanti</span><span class="panel-cluster-num">382</span><span class="panel-cluster-num">13%</span><span style="text-align:right"><span class="panel-sentiment neg">○● 51%</span></span></div>
+            <div class="panel-cluster"><span class="panel-cluster-name">Betaling og faktura</span><span class="panel-cluster-num">298</span><span class="panel-cluster-num">10%</span><span style="text-align:right"><span class="panel-sentiment mid">●○ 68%</span></span></div>
+            <div class="panel-cluster"><span class="panel-cluster-name">Skaljakke vår 2026 <span class="panel-cluster-tag new">NY</span></span><span class="panel-cluster-num">218</span><span class="panel-cluster-num">8%</span><span style="text-align:right"><span class="panel-sentiment pos">●● 93%</span></span></div>
+            <div class="panel-cluster"><span class="panel-cluster-name">Fakturering B2B</span><span class="panel-cluster-num">156</span><span class="panel-cluster-num">5%</span><span style="text-align:right"><span class="panel-sentiment neg">○● 58%</span></span></div>
+          </div>
+        </div>
+
+      </section><!-- /tab: temaer -->
+
+      <!-- ========== TAB: YTELSE ========== -->
+      <section data-tab-panel="ytelse" hidden>
+
+        <div class="panel-kpis">
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Snitt svartid</div>
+            <div class="panel-kpi-val" data-tabnum="1.4" data-tabfmt="dec">1.4s</div>
+            <div class="panel-kpi-delta up">▲ 12% raskere</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Nøyaktighet</div>
+            <div class="panel-kpi-val" data-tabnum="94" data-tabfmt="pct">94%</div>
+            <div class="panel-kpi-delta up">▲ 3 pp</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">CSAT</div>
+            <div class="panel-kpi-val" data-tabnum="4.6" data-tabfmt="dec">4.6</div>
+            <div class="panel-kpi-delta up">▲ 0.2 av 5</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Løsningsgrad</div>
+            <div class="panel-kpi-val" data-tabnum="87" data-tabfmt="pct">87%</div>
+            <div class="panel-kpi-delta up">▲ 4 pp</div>
+          </div>
+        </div>
+
+        <div class="panel-grid-2">
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <span>Svartid over tid</span>
+              <span class="panel-card-sub">sekunder · daglig</span>
+            </div>
+            <svg class="panel-chart" viewBox="0 0 320 140" preserveAspectRatio="none" id="perfChart">
+              <defs>
+                <linearGradient id="perfGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#10B981" stop-opacity=".3"/>
+                  <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0 40 L20 38 L40 45 L60 32 L80 36 L100 28 L120 30 L140 22 L160 25 L180 20 L200 24 L220 18 L240 22 L260 16 L280 19 L300 14 L320 17 L320 140 L0 140 Z" fill="url(#perfGrad)"/>
+              <path d="M0 40 L20 38 L40 45 L60 32 L80 36 L100 28 L120 30 L140 22 L160 25 L180 20 L200 24 L220 18 L240 22 L260 16 L280 19 L300 14 L320 17" fill="none" stroke="#10B981" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="320" cy="17" r="4" fill="#10B981" stroke="#fff" stroke-width="2"/>
+            </svg>
+            <div class="panel-chart-foot">
+              <span>1. apr</span><span>8</span><span>15</span><span>21. apr</span>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <span>Tilbakemeldinger</span>
+              <span class="panel-card-sub">3 247 rangeringer</span>
+            </div>
+            <div>
+              <div class="panel-rate-row s5"><span class="panel-rate-stars">★★★★★</span><div class="panel-rate-track"><div class="panel-rate-fill" data-pct="62"></div></div><span class="panel-rate-pct">62%</span></div>
+              <div class="panel-rate-row s4"><span class="panel-rate-stars">★★★★</span><div class="panel-rate-track"><div class="panel-rate-fill" data-pct="24"></div></div><span class="panel-rate-pct">24%</span></div>
+              <div class="panel-rate-row s3"><span class="panel-rate-stars">★★★</span><div class="panel-rate-track"><div class="panel-rate-fill" data-pct="8"></div></div><span class="panel-rate-pct">8%</span></div>
+              <div class="panel-rate-row s2"><span class="panel-rate-stars">★★</span><div class="panel-rate-track"><div class="panel-rate-fill" data-pct="4"></div></div><span class="panel-rate-pct">4%</span></div>
+              <div class="panel-rate-row s1"><span class="panel-rate-stars">★</span><div class="panel-rate-track"><div class="panel-rate-fill" data-pct="2"></div></div><span class="panel-rate-pct">2%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-grid-2">
+          <div class="panel-card">
+            <div class="panel-card-head"><span>🏆 Beste kategorier</span><span class="panel-card-sub">CSAT</span></div>
+            <div>
+              <div class="panel-perf-card"><div class="panel-perf-icon">▲</div><div><strong>Produktanbefaling</strong><div class="panel-src-meta">947 samtaler · 94% positiv</div></div><div class="panel-perf-score up">4.8</div></div>
+              <div class="panel-perf-card"><div class="panel-perf-icon">▲</div><div><strong>Størrelsesguide</strong><div class="panel-src-meta">812 samtaler · 91% positiv</div></div><div class="panel-perf-score up">4.7</div></div>
+              <div class="panel-perf-card"><div class="panel-perf-icon">▲</div><div><strong>Ordrestatus</strong><div class="panel-src-meta">689 samtaler · 89% positiv</div></div><div class="panel-perf-score up">4.6</div></div>
+              <div class="panel-perf-card"><div class="panel-perf-icon">▲</div><div><strong>Frakttid Norge</strong><div class="panel-src-meta">574 samtaler · 87% positiv</div></div><div class="panel-perf-score up">4.5</div></div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head"><span>⚠ Trenger forbedring</span><span class="panel-card-sub">CSAT</span></div>
+            <div>
+              <div class="panel-perf-card"><div class="panel-perf-icon down">▼</div><div><strong>Bytte mellom størrelser</strong><div class="panel-src-meta">142 samtaler · 49% positiv</div></div><div class="panel-perf-score down">2.6</div></div>
+              <div class="panel-perf-card"><div class="panel-perf-icon down">▼</div><div><strong>Garantisak</strong><div class="panel-src-meta">382 samtaler · 51% positiv</div></div><div class="panel-perf-score down">2.8</div></div>
+              <div class="panel-perf-card"><div class="panel-perf-icon down">▼</div><div><strong>Fakturering B2B</strong><div class="panel-src-meta">156 samtaler · 58% positiv</div></div><div class="panel-perf-score down">3.1</div></div>
+              <div class="panel-perf-card"><div class="panel-perf-icon down">▼</div><div><strong>Returprosess</strong><div class="panel-src-meta">298 samtaler · 62% positiv</div></div><div class="panel-perf-score down">3.3</div></div>
+            </div>
+          </div>
+        </div>
+
+      </section><!-- /tab: ytelse -->
+
+      <!-- ========== TAB: KILDER ========== -->
+      <section data-tab-panel="kilder" hidden>
+
+        <div class="panel-kpis">
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Kilder totalt</div>
+            <div class="panel-kpi-val" data-tabnum="47">47</div>
+            <div class="panel-kpi-delta up">▲ 4 nye</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Sider indeksert</div>
+            <div class="panel-kpi-val" data-tabnum="1284" data-tabfmt="int">1 284</div>
+            <div class="panel-kpi-delta up">▲ 138</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Sist synket <span class="dash-live"><span class="dash-live-dot"></span>live</span></div>
+            <div class="panel-kpi-val" style="font-size:24px">12 min siden</div>
+            <div class="panel-kpi-delta up">3 oppdateringer i kø</div>
+          </div>
+          <div class="panel-kpi">
+            <div class="panel-kpi-label">Dekning</div>
+            <div class="panel-kpi-val" data-tabnum="86" data-tabfmt="pct">86%</div>
+            <div class="panel-kpi-delta down">▼ 4 emner uten innhold</div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card-head">
+            <span>Alle kilder</span>
+            <span class="panel-card-sub">47 totalt</span>
+          </div>
+          <div>
+            <div class="panel-src-row panel-src-head">
+              <span></span><span>Navn</span><span>Type</span><span style="text-align:right">Sider</span><span>Sist synket</span><span style="text-align:right">Status</span>
+            </div>
+            <div class="panel-src-row">
+              <div class="panel-src-ico">📄</div>
+              <div class="panel-src-name"><span class="panel-src-title">Returvilkår 2026 v3.pdf</span><span class="panel-src-meta">Brukt i 412 samtaler</span></div>
+              <span class="panel-src-type">PDF</span>
+              <span class="panel-src-num" style="text-align:right">38</span>
+              <span class="panel-src-num">for 12 min</span>
+              <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+            </div>
+            <div class="panel-src-row">
+              <div class="panel-src-ico web">🌐</div>
+              <div class="panel-src-name"><span class="panel-src-title">dinbedrift.no/produkter</span><span class="panel-src-meta">Brukt i 1 247 samtaler</span></div>
+              <span class="panel-src-type">Sitemap</span>
+              <span class="panel-src-num" style="text-align:right">284</span>
+              <span class="panel-src-num">for 1 t</span>
+              <span style="text-align:right"><span class="panel-pill sync"><span class="panel-pill-dot"></span>Synker</span></span>
+            </div>
+            <div class="panel-src-row">
+              <div class="panel-src-ico">📄</div>
+              <div class="panel-src-name"><span class="panel-src-title">Størrelsesguide_2026.pdf</span><span class="panel-src-meta">Brukt i 812 samtaler</span></div>
+              <span class="panel-src-type">PDF</span>
+              <span class="panel-src-num" style="text-align:right">12</span>
+              <span class="panel-src-num">for 4 t</span>
+              <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+            </div>
+            <div class="panel-src-row">
+              <div class="panel-src-ico notion">N</div>
+              <div class="panel-src-name"><span class="panel-src-title">Intern kundeservice-wiki</span><span class="panel-src-meta">Brukt i 689 samtaler</span></div>
+              <span class="panel-src-type">Notion</span>
+              <span class="panel-src-num" style="text-align:right">142</span>
+              <span class="panel-src-num">for 6 t</span>
+              <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+            </div>
+            <div class="panel-src-row">
+              <div class="panel-src-ico csv">⊞</div>
+              <div class="panel-src-name"><span class="panel-src-title">Produktkatalog_v18.csv</span><span class="panel-src-meta">Brukt i 947 samtaler</span></div>
+              <span class="panel-src-type">CSV</span>
+              <span class="panel-src-num" style="text-align:right">2 184</span>
+              <span class="panel-src-num">i går</span>
+              <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+            </div>
+            <div class="panel-src-row">
+              <div class="panel-src-ico">📄</div>
+              <div class="panel-src-name"><span class="panel-src-title">Garantibetingelser_2024.pdf</span><span class="panel-src-meta">Brukt i 188 samtaler</span></div>
+              <span class="panel-src-type">PDF</span>
+              <span class="panel-src-num" style="text-align:right">9</span>
+              <span class="panel-src-num">for 89 dager</span>
+              <span style="text-align:right"><span class="panel-pill warn"><span class="panel-pill-dot"></span>Utdatert</span></span>
+            </div>
+            <div class="panel-src-row">
+              <div class="panel-src-ico web">🌐</div>
+              <div class="panel-src-name"><span class="panel-src-title">dinbedrift.no/frakt</span><span class="panel-src-meta">Brukt i 1 284 samtaler</span></div>
+              <span class="panel-src-type">URL</span>
+              <span class="panel-src-num" style="text-align:right">4</span>
+              <span class="panel-src-num">for 2 t</span>
+              <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+            </div>
+            <div class="panel-src-row">
+              <div class="panel-src-ico">📄</div>
+              <div class="panel-src-name"><span class="panel-src-title">Vaskeråd_ull_v2.pdf</span><span class="panel-src-meta">Feilet ved indeksering</span></div>
+              <span class="panel-src-type">PDF</span>
+              <span class="panel-src-num" style="text-align:right">—</span>
+              <span class="panel-src-num">aldri</span>
+              <span style="text-align:right"><span class="panel-pill err"><span class="panel-pill-dot"></span>Feilet</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-grid-2">
+          <div class="panel-card">
+            <div class="panel-card-head"><span>Dekning per kategori</span><span class="panel-card-sub">% av spørsmål med treff</span></div>
+            <div class="panel-coverage">
+              <div>
+                <div class="panel-cov-row"><span>Frakt og levering</span><span class="panel-cov-pct">98%</span></div>
+                <div class="panel-cov-bar"><div class="panel-cov-fill" data-pct="98"></div></div>
+              </div>
+              <div>
+                <div class="panel-cov-row"><span>Produkt</span><span class="panel-cov-pct">94%</span></div>
+                <div class="panel-cov-bar"><div class="panel-cov-fill" data-pct="94"></div></div>
+              </div>
+              <div>
+                <div class="panel-cov-row"><span>Bestilling</span><span class="panel-cov-pct">91%</span></div>
+                <div class="panel-cov-bar"><div class="panel-cov-fill" data-pct="91"></div></div>
+              </div>
+              <div>
+                <div class="panel-cov-row"><span>Retur og bytte</span><span class="panel-cov-pct">72%</span></div>
+                <div class="panel-cov-bar"><div class="panel-cov-fill low" data-pct="72"></div></div>
+              </div>
+              <div>
+                <div class="panel-cov-row"><span>Betaling B2B</span><span class="panel-cov-pct">54%</span></div>
+                <div class="panel-cov-bar"><div class="panel-cov-fill low" data-pct="54"></div></div>
+              </div>
+              <div>
+                <div class="panel-cov-row"><span>Internasjonal frakt</span><span class="panel-cov-pct">28%</span></div>
+                <div class="panel-cov-bar"><div class="panel-cov-fill crit" data-pct="28"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head"><span>⚠ Hull i kunnskapsbasen</span><span class="panel-card-sub">spørsmål uten kilde</span></div>
+            <ul class="panel-missing">
+              <li><strong>Fraktkostnad utenfor Norge</strong> — 47 spørsmål siste uka</li>
+              <li><strong>Fitguide herre XS</strong> — 31 spørsmål siste uka</li>
+              <li><strong>Vaskeråd ullfôr</strong> — 22 spørsmål · kilde feilet</li>
+              <li><strong>Levering til Svalbard</strong> — 18 spørsmål</li>
+              <li><strong>Bedriftsrabatt 50+ enheter</strong> — 14 spørsmål</li>
+              <li><strong>Returperiode B2B</strong> — 9 spørsmål</li>
+            </ul>
+            <button class="panel-cta" style="align-self:flex-start">+ Last opp ny kilde</button>
+          </div>
+        </div>
+
+      </section><!-- /tab: kilder -->
+
+    </div>
+    </div><!-- /.dash-mock -->
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+<script>
+  // ===== Tab switching (global onclick handler) =====
+  window._tabAnimated = {};
+
+  function _fmtInt(n){ return Math.round(n).toLocaleString('nb-NO').replace(/,/g,' '); }
+  function _fmtDec(n){ return n.toFixed(1).replace('.', ','); }
+  function _fmtPct(n){ return Math.round(n) + '%'; }
+
+  function _tween(el, to, fmtFn, dur){
+    var start = performance.now();
+    function step(now){
+      var t = Math.min(1, (now-start)/(dur||900));
+      var eased = 1 - Math.pow(1-t, 3);
+      el.textContent = fmtFn(to * eased);
+      if(t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function _animatePanel(name){
+    if(window._tabAnimated[name]) return;
+    window._tabAnimated[name] = true;
+    var panel = document.querySelector('[data-tab-panel="'+name+'"]');
+    if(!panel) return;
+
+    panel.querySelectorAll('[data-tabnum]').forEach(function(el){
+      var to = parseFloat(el.dataset.tabnum);
+      var fmt = el.dataset.tabfmt;
+      var fn = fmt === 'pct' ? _fmtPct
+             : fmt === 'dec' ? _fmtDec
+             : fmt === 'int' ? _fmtInt
+             : function(n){ return Math.round(n).toString(); };
+      _tween(el, to, fn);
+    });
+    panel.querySelectorAll('.panel-rate-fill[data-pct]').forEach(function(el){
+      setTimeout(function(){ el.style.width = el.dataset.pct + '%'; }, 80);
+    });
+    panel.querySelectorAll('.panel-cov-fill[data-pct]').forEach(function(el,i){
+      setTimeout(function(){ el.style.width = el.dataset.pct + '%'; }, 80 + i*60);
+    });
+    panel.querySelectorAll('.panel-donut circle').forEach(function(c,i){
+      if(i === 0) return;
+      var off = c.getAttribute('stroke-dashoffset');
+      c.style.strokeDashoffset = '314';
+      requestAnimationFrame(function(){ c.style.strokeDashoffset = off; });
+    });
+  }
+
+  function showTab(name, el){
+    document.querySelectorAll('#panelTabs span').forEach(function(x){
+      x.classList.toggle('active', x === el);
+    });
+    document.querySelectorAll('[data-tab-panel]').forEach(function(p){
+      p.hidden = (p.dataset.tabPanel !== name);
+    });
+    _animatePanel(name);
+  }
+</script>
+<script src="panel-shell.js"></script>
+</body>
+</html>

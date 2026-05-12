@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Members — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="members"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i medlemmer..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-cta">+ Inviter medlem</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Members</div>
+          <div class="panel-hello">8 medlemmer · 2 admins · 1 venter på invitasjon.</div>
+        </div>
+      </div>
+
+      <div class="panel-chips">
+        <span class="panel-chip active">Alle (8)</span>
+        <span class="panel-chip">Admin (2)</span>
+        <span class="panel-chip">Editor (3)</span>
+        <span class="panel-chip">Viewer (2)</span>
+        <span class="panel-chip">Venter (1)</span>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-card-head">
+          <span>Team</span>
+          <span class="panel-card-sub">8 medlemmer</span>
+        </div>
+        <div class="panel-table">
+          <div class="panel-tr head" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <span></span><span>Navn</span><span>E-post</span><span>Rolle</span><span>Sist aktiv</span><span style="text-align:right">Status</span>
+          </div>
+          <div class="panel-tr" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <div class="panel-av">T</div>
+            <div><div style="font-weight:600">Tor Kjetil</div><div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Du · GetOnNet</div></div>
+            <span class="panel-trunc panel-num">tor@getonnet.no</span>
+            <span><span class="panel-pill" style="background:linear-gradient(135deg,var(--purple-600),var(--purple-700));color:#fff"><span class="panel-pill-dot"></span>Owner</span></span>
+            <span class="panel-num">nå</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-tr" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <div class="panel-av green">SH</div>
+            <div><div style="font-weight:600">Sara H.</div><div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Markedsansvarlig</div></div>
+            <span class="panel-trunc panel-num">sara@dinbedrift.no</span>
+            <span><span class="panel-pill" style="background:#EDE9FE;color:var(--purple-700)"><span class="panel-pill-dot"></span>Admin</span></span>
+            <span class="panel-num">12 min</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-tr" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <div class="panel-av blue">JN</div>
+            <div><div style="font-weight:600">Jens N.</div><div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Innholdsredaktør</div></div>
+            <span class="panel-trunc panel-num">jens@dinbedrift.no</span>
+            <span><span class="panel-pill sync"><span class="panel-pill-dot"></span>Editor</span></span>
+            <span class="panel-num">2 t</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-tr" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <div class="panel-av amber">IL</div>
+            <div><div style="font-weight:600">Ida L.</div><div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Kundeservice-leder</div></div>
+            <span class="panel-trunc panel-num">ida@dinbedrift.no</span>
+            <span><span class="panel-pill sync"><span class="panel-pill-dot"></span>Editor</span></span>
+            <span class="panel-num">i dag</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-tr" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <div class="panel-av">MK</div>
+            <div><div style="font-weight:600">Morten K.</div><div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Produktsjef</div></div>
+            <span class="panel-trunc panel-num">morten@dinbedrift.no</span>
+            <span><span class="panel-pill sync"><span class="panel-pill-dot"></span>Editor</span></span>
+            <span class="panel-num">i går</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-tr" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <div class="panel-av gray">RB</div>
+            <div><div style="font-weight:600">Rune B.</div><div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Daglig leder</div></div>
+            <span class="panel-trunc panel-num">rune@dinbedrift.no</span>
+            <span><span class="panel-pill neutral"><span class="panel-pill-dot"></span>Viewer</span></span>
+            <span class="panel-num">for 3 dg</span>
+            <span style="text-align:right"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span></span>
+          </div>
+          <div class="panel-tr" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <div class="panel-av red">CV</div>
+            <div><div style="font-weight:600">Camilla V.</div><div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Konsulent</div></div>
+            <span class="panel-trunc panel-num">camilla@konsulent.no</span>
+            <span><span class="panel-pill neutral"><span class="panel-pill-dot"></span>Viewer</span></span>
+            <span class="panel-num">for 2 uker</span>
+            <span style="text-align:right"><span class="panel-pill warn"><span class="panel-pill-dot"></span>Inaktiv</span></span>
+          </div>
+          <div class="panel-tr" style="grid-template-columns:32px 1.6fr 1.4fr 120px 110px 80px">
+            <div class="panel-av gray">??</div>
+            <div><div style="font-weight:600">erik@dinbedrift.no</div><div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Invitert som Editor</div></div>
+            <span class="panel-trunc panel-num">erik@dinbedrift.no</span>
+            <span><span class="panel-pill sync"><span class="panel-pill-dot"></span>Editor</span></span>
+            <span class="panel-num">—</span>
+            <span style="text-align:right"><span class="panel-pill warn"><span class="panel-pill-dot"></span>Venter</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-grid-3">
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Rolleforklaring</span></div>
+          <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">
+            <strong style="color:var(--ink)">Owner</strong> · full kontroll, fakturering, slette workspace.<br>
+            <strong style="color:var(--ink)">Admin</strong> · alt unntatt fakturering og sletting.<br>
+            <strong style="color:var(--ink)">Editor</strong> · publisere moduler, redigere kilder, se logger.<br>
+            <strong style="color:var(--ink)">Viewer</strong> · kun lesetilgang til dashboards.
+          </div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Sikkerhet</span><span class="panel-pill ok"><span class="panel-pill-dot"></span>SSO på</span></div>
+          <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.7">
+            ✓ SSO via Google Workspace<br>
+            ✓ Tofaktor påkrevd for Admin+<br>
+            ✓ IP-restriksjon: <strong style="color:var(--ink)">10.0.0.0/8, kontor</strong><br>
+            ✗ SCIM auto-provisjonering (Pro+)
+          </div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Plan</span></div>
+          <div style="font-size:13px"><strong style="font-size:18px">Team · 8 av 15 seter</strong></div>
+          <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.6">7 ledige seter på nåværende plan. Neste fakturering 21. mai for kr 4 990.</div>
+          <button class="panel-btn-ghost" style="align-self:flex-start">Administrer plan</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+</body>
+</html>

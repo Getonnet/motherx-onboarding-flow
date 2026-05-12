@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Leads — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="leads"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i leads..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-btn-ghost">Eksporter CSV</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Leads</div>
+          <div class="panel-hello">Kontakter MotherX har fanget opp fra samtaler. Sendes videre til CRM via webhook.</div>
+        </div>
+        <div class="panel-range" style="display:flex;align-items:center;gap:10px">
+          <span class="panel-pill ok"><span class="panel-pill-dot"></span>Webhook aktiv</span>
+          <span style="font-family:monospace;font-size:11.5px">hooks.dinbedrift.no/mx/leads</span>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-card-head">
+          <span>Siste leads</span>
+          <span class="panel-card-sub">74 totalt · siste 30 dager</span>
+        </div>
+        <div class="panel-table">
+          <div class="panel-tr head" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <span></span><span>Navn</span><span>Kontakt</span><span>Spørsmål</span><span>Modul</span><span>Webhook</span><span style="text-align:right">Tid</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av">MB</div>
+            <div>
+              <div style="font-weight:600">Marius B.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Nordby Anlegg AS</div>
+            </div>
+            <span class="panel-trunc panel-num">marius@nordby-anlegg.no</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Volumrabatt på Arctic Parka, 14 stk»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">2 min</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av green">AL</div>
+            <div>
+              <div style="font-weight:600">Anna L.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Lykkebo Bygg AS</div>
+            </div>
+            <span class="panel-trunc panel-num">anna@lykkebo.no</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Bedriftsavtale for 5+ ansatte»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">48 min</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av blue">JK</div>
+            <div>
+              <div style="font-weight:600">Jonas K.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Privatkunde</div>
+            </div>
+            <span class="panel-trunc panel-num">jonas.k@gmail.com</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Råd om jakke til fjelltur, Hardangervidda mai»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Produktsøk</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">4 t</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av amber">SO</div>
+            <div>
+              <div style="font-weight:600">Sigrid O.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Polarvarer AS</div>
+            </div>
+            <span class="panel-trunc panel-num">sigrid@polarvarer.no</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Distributøravtale for Svalbard og Nord-Norge»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">6 t</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av">KH</div>
+            <div>
+              <div style="font-weight:600">Kine H.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Privatkunde</div>
+            </div>
+            <span class="panel-trunc panel-num">kine.h@protonmail.com</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Komplett vinterutstyr — barn 8–12 år»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Produktsøk</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">i går</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av red">PV</div>
+            <div>
+              <div style="font-weight:600">Per V.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Sjøsiden Hotell</div>
+            </div>
+            <span class="panel-trunc panel-num">post@sjøsiden.no</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«28 jakker til staben — uke 18»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">B2B-chat</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">i går</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av blue">EH</div>
+            <div>
+              <div style="font-weight:600">Erik H.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Fjellguide Erik</div>
+            </div>
+            <span class="panel-trunc panel-num">erik@fjellguide.no</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Demo-program for skaljakke»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
+            <span><span class="panel-pill err"><span class="panel-pill-dot"></span>Feilet · 502</span></span>
+            <span class="panel-num" style="text-align:right">2 dg</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av green">LO</div>
+            <div>
+              <div style="font-weight:600">Lise O.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Privatkunde</div>
+            </div>
+            <span class="panel-trunc panel-num">lise.o@hotmail.com</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Pris på Polarbukse — 38 kr fraktbestilling»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Produktsøk</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">3 dg</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av">CB</div>
+            <div>
+              <div style="font-weight:600">Camilla B.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Fjellstyret Hemsedal</div>
+            </div>
+            <span class="panel-trunc panel-num">camilla@fjellstyret.no</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Uniformer for sesongansatte 2026/27»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">B2B-chat</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">4 dg</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av amber">NV</div>
+            <div>
+              <div style="font-weight:600">Nora V.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Privatkunde</div>
+            </div>
+            <span class="panel-trunc panel-num">nora.v@gmail.com</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Gave til mann — størrelse XL, varm»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">5 dg</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av red">DA</div>
+            <div>
+              <div style="font-weight:600">David A.</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Arctic Tours AS</div>
+            </div>
+            <span class="panel-trunc panel-num">david@arctic-tours.no</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«40 jakker til guide-staben for sesongen»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">B2B-chat</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">1 uke</span>
+          </div>
+
+          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
+            <div class="panel-av gray">??</div>
+            <div>
+              <div style="font-weight:600">Anonym</div>
+              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Kun telefon: +47 482••• ••</div>
+            </div>
+            <span class="panel-trunc panel-num" style="opacity:.6">— ingen e-post —</span>
+            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Vil bli ringt opp angående bedriftsavtale»</span>
+            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
+            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
+            <span class="panel-num" style="text-align:right">1 uke</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="font-size:12px;color:var(--ink-soft);text-align:center;padding:6px 0">
+        Viser 12 av 74 · <a href="#" style="color:var(--purple-700)">vis alle</a> · konfigurer webhook-destinasjon i <a href="settings.html" style="color:var(--purple-700)">Settings</a>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+</body>
+</html>

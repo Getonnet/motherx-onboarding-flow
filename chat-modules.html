@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chat modules — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active=""></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i moduler..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-cta">+ Ny modul</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Chat modules</div>
+          <div class="panel-hello">6 aktive moduler distribuert på 4 nettsteder.</div>
+        </div>
+      </div>
+
+      <div class="panel-kpis">
+        <div class="panel-kpi">
+          <div class="panel-kpi-label">Aktive moduler</div>
+          <div class="panel-kpi-val">6</div>
+          <div class="panel-kpi-delta up">▲ 2 nye denne måneden</div>
+        </div>
+        <div class="panel-kpi">
+          <div class="panel-kpi-label">Sesjoner i dag</div>
+          <div class="panel-kpi-val">1 247</div>
+          <div class="panel-kpi-delta up">▲ 14% mot i går</div>
+        </div>
+        <div class="panel-kpi">
+          <div class="panel-kpi-label">Snitt CSAT</div>
+          <div class="panel-kpi-val">4,6</div>
+          <div class="panel-kpi-delta up">▲ 0,2</div>
+        </div>
+        <div class="panel-kpi">
+          <div class="panel-kpi-label">Oppetid</div>
+          <div class="panel-kpi-val">99,9%</div>
+          <div class="panel-kpi-delta up">30 dagers SLA oppfylt</div>
+        </div>
+      </div>
+
+      <div class="panel-chips">
+        <span class="panel-chip active">Alle (6)</span>
+        <span class="panel-chip">💬 Chat-widget (3)</span>
+        <span class="panel-chip">🔍 AI-søk (2)</span>
+        <span class="panel-chip">🤖 GPT-modul (1)</span>
+        <span class="panel-chip">Pauset (0)</span>
+      </div>
+
+      <div class="modules-grid">
+
+        <div class="mod-card">
+          <div class="mod-head">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div class="panel-src-ico" style="width:40px;height:40px">💬</div>
+              <div>
+                <div class="mod-name">Dinbedrift kundeservice</div>
+                <div class="mod-url">dinbedrift.no/* · widget</div>
+              </div>
+            </div>
+            <span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span>
+          </div>
+          <div class="mod-stats">
+            <div><strong>847</strong>sesjoner i dag</div>
+            <div><strong>4,7</strong>CSAT</div>
+            <div><strong>1,2s</strong>svartid</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="panel-btn-ghost" style="flex:1">Innstillinger</button>
+            <button class="panel-btn-ghost" style="flex:1">Embed-kode</button>
+          </div>
+        </div>
+
+        <div class="mod-card">
+          <div class="mod-head">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div class="panel-src-ico web" style="width:40px;height:40px">🔍</div>
+              <div>
+                <div class="mod-name">Produktsøk</div>
+                <div class="mod-url">dinbedrift.no/sok · søkemodul</div>
+              </div>
+            </div>
+            <span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span>
+          </div>
+          <div class="mod-stats">
+            <div><strong>312</strong>søk i dag</div>
+            <div><strong>4,4</strong>CSAT</div>
+            <div><strong>0,4s</strong>svartid</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="panel-btn-ghost" style="flex:1">Innstillinger</button>
+            <button class="panel-btn-ghost" style="flex:1">Embed-kode</button>
+          </div>
+        </div>
+
+        <div class="mod-card">
+          <div class="mod-head">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div class="panel-src-ico" style="width:40px;height:40px;background:rgba(245,158,11,.15);color:#B45309">🤖</div>
+              <div>
+                <div class="mod-name">Intern HR-GPT</div>
+                <div class="mod-url">intern.dinbedrift.no/hr · GPT-modul</div>
+              </div>
+            </div>
+            <span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span>
+          </div>
+          <div class="mod-stats">
+            <div><strong>54</strong>sesjoner i dag</div>
+            <div><strong>4,9</strong>CSAT</div>
+            <div><strong>1,8s</strong>svartid</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="panel-btn-ghost" style="flex:1">Innstillinger</button>
+            <button class="panel-btn-ghost" style="flex:1">Embed-kode</button>
+          </div>
+        </div>
+
+        <div class="mod-card">
+          <div class="mod-head">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div class="panel-src-ico" style="width:40px;height:40px">💬</div>
+              <div>
+                <div class="mod-name">B2B-chat (begrenset)</div>
+                <div class="mod-url">b2b.dinbedrift.no/* · widget · innlogget</div>
+              </div>
+            </div>
+            <span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv</span>
+          </div>
+          <div class="mod-stats">
+            <div><strong>28</strong>sesjoner i dag</div>
+            <div><strong>4,5</strong>CSAT</div>
+            <div><strong>1,4s</strong>svartid</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="panel-btn-ghost" style="flex:1">Innstillinger</button>
+            <button class="panel-btn-ghost" style="flex:1">Embed-kode</button>
+          </div>
+        </div>
+
+        <div class="mod-card">
+          <div class="mod-head">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div class="panel-src-ico web" style="width:40px;height:40px">🔍</div>
+              <div>
+                <div class="mod-name">Dokumentsøk Notion</div>
+                <div class="mod-url">intern.dinbedrift.no/wiki · søkemodul</div>
+              </div>
+            </div>
+            <span class="panel-pill sync"><span class="panel-pill-dot"></span>Synker</span>
+          </div>
+          <div class="mod-stats">
+            <div><strong>—</strong>under sync</div>
+            <div><strong>—</strong>CSAT</div>
+            <div><strong>—</strong>svartid</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="panel-btn-ghost" style="flex:1">Innstillinger</button>
+            <button class="panel-btn-ghost" style="flex:1">Embed-kode</button>
+          </div>
+        </div>
+
+        <div class="mod-card">
+          <div class="mod-head">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div class="panel-src-ico" style="width:40px;height:40px;background:#F1ECE0;color:var(--ink-soft)">💬</div>
+              <div>
+                <div class="mod-name">Sjøsiden Hotell — chat</div>
+                <div class="mod-url">sjosiden.no/* · whitelabel</div>
+              </div>
+            </div>
+            <span class="panel-pill neutral"><span class="panel-pill-dot"></span>Utkast</span>
+          </div>
+          <div class="mod-stats">
+            <div><strong>—</strong>ikke publisert</div>
+            <div><strong>—</strong>CSAT</div>
+            <div><strong>—</strong>svartid</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="panel-btn-ghost" style="flex:1">Rediger</button>
+            <button class="panel-cta" style="flex:1">Publiser</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+</body>
+</html>

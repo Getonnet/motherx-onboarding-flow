@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GPT-bygger — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<style>
+  /* Configurator layout */
+  .gpt-builder{
+    display:grid;grid-template-columns:480px 1fr;gap:0;
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;align-self:start;
+  }
+  .gpt-form-col{
+    border-right:1px solid var(--line);
+    display:flex;flex-direction:column;min-width:0;
+  }
+  .gpt-form-head{
+    padding:20px 22px 0;
+  }
+  .gpt-form-title{
+    font-size:17px;font-weight:700;letter-spacing:-.01em;margin-bottom:14px;
+  }
+  .gpt-tabs{
+    display:flex;gap:0;border-bottom:1px solid var(--line);margin:0 -22px;padding:0 22px;
+  }
+  .gpt-tabs span{
+    padding:9px 14px;font-size:13px;font-weight:500;color:var(--ink-soft);
+    cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+    transition:all .15s var(--ease);user-select:none;
+  }
+  .gpt-tabs span:hover{color:var(--ink)}
+  .gpt-tabs span.active{color:var(--purple-700);border-bottom-color:var(--purple-600);font-weight:600}
+
+  .gpt-form-body{
+    padding:18px 22px 22px;
+    overflow-y:auto;
+    display:flex;flex-direction:column;gap:16px;
+  }
+
+  .gpt-field{display:flex;flex-direction:column;gap:6px}
+  .gpt-label{
+    font-size:13px;font-weight:600;color:var(--ink);
+  }
+  .gpt-label .req{color:var(--purple-600);margin-left:2px}
+  .gpt-hint{font-size:11.5px;color:var(--ink-soft);opacity:.75;margin-top:-2px}
+  .gpt-input,.gpt-select,.gpt-textarea{
+    width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:9px;
+    font:inherit;font-size:13px;background:#fff;color:var(--ink);outline:0;
+    transition:border-color .15s var(--ease);
+  }
+  .gpt-input:focus,.gpt-select:focus,.gpt-textarea:focus{border-color:var(--purple-400,#A78BFA);box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+  .gpt-textarea{resize:vertical;min-height:74px;line-height:1.5}
+  .gpt-counter{font-size:11px;color:var(--ink-soft);opacity:.6;text-align:right;margin-top:2px}
+
+  /* Logo upload row */
+  .gpt-logo-row{display:grid;grid-template-columns:80px 1fr;gap:14px;align-items:center}
+  .gpt-logo-preview{
+    width:80px;height:80px;border-radius:50%;border:1px solid var(--line);
+    background:#FAFAF7;display:grid;place-items:center;flex-shrink:0;overflow:hidden;
+  }
+  .gpt-logo-preview svg{width:32px;height:32px;color:var(--ink-soft);opacity:.5}
+  .gpt-logo-preview img{width:100%;height:100%;object-fit:cover}
+  .gpt-logo-drop{
+    border:1px dashed var(--line);border-radius:10px;padding:14px;
+    text-align:center;cursor:pointer;
+    transition:all .15s var(--ease);
+  }
+  .gpt-logo-drop:hover{border-color:var(--purple-300);background:#FAFAF7}
+  .gpt-logo-drop strong{color:var(--purple-700);font-weight:600;font-size:13px}
+  .gpt-logo-drop-sub{font-size:11px;color:var(--ink-soft);opacity:.7;margin-top:2px}
+  .gpt-logo-drop svg{width:18px;height:18px;color:var(--ink-soft);margin-bottom:4px;opacity:.6}
+
+  /* Color picker */
+  .gpt-color-row{
+    display:flex;align-items:center;gap:0;
+    border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;
+  }
+  .gpt-color-swatch{
+    width:38px;height:38px;flex-shrink:0;cursor:pointer;
+    background:var(--c,#2d3c1f);
+  }
+  .gpt-color-row input{
+    flex:1;border:0;padding:9px 12px;font:inherit;font-size:13px;
+    font-variant-numeric:tabular-nums;outline:0;background:transparent;
+  }
+  .gpt-color-row .eye{
+    padding:0 12px;color:var(--ink-soft);cursor:pointer;
+  }
+
+  /* Suggested questions */
+  .gpt-radio-row{display:flex;gap:18px;font-size:13px}
+  .gpt-radio-row label{display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+  .gpt-radio-row input{accent-color:var(--purple-600)}
+  .gpt-sugg-list{display:flex;flex-direction:column;gap:6px;margin-top:2px}
+  .gpt-sugg-item{
+    display:grid;grid-template-columns:1fr auto;gap:0;
+    border:1px solid var(--line);border-radius:9px;overflow:hidden;
+  }
+  .gpt-sugg-item input{
+    border:0;padding:9px 12px;font:inherit;font-size:13px;outline:0;
+  }
+  .gpt-sugg-remove{
+    padding:0 14px;background:rgba(239,68,68,.08);color:#DC2626;
+    font-size:11.5px;font-weight:600;cursor:pointer;border:0;border-left:1px solid var(--line);
+  }
+  .gpt-sugg-remove:hover{background:rgba(239,68,68,.15)}
+  .gpt-add-btn{
+    align-self:flex-start;
+    padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;
+    font:inherit;font-size:12.5px;font-weight:500;color:var(--ink);cursor:pointer;
+    transition:all .15s var(--ease);
+  }
+  .gpt-add-btn:hover{border-color:var(--purple-300);color:var(--purple-700)}
+
+  /* Toggle row */
+  .gpt-toggle-row{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:10px 0;
+  }
+  .gpt-toggle-row .gpt-label{margin:0}
+  .gpt-toggle{
+    position:relative;width:38px;height:22px;background:#E5E5E5;border-radius:999px;cursor:pointer;
+    transition:background .2s var(--ease);flex-shrink:0;
+  }
+  .gpt-toggle::after{
+    content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;
+    background:#fff;transition:left .2s var(--ease);box-shadow:0 1px 2px rgba(0,0,0,.15);
+  }
+  .gpt-toggle.on{background:linear-gradient(135deg,var(--purple-500),var(--purple-700))}
+  .gpt-toggle.on::after{left:19px}
+
+  .gpt-save-row{
+    border-top:1px solid var(--line);padding:14px 22px;
+    display:flex;justify-content:flex-end;background:#FAFAF7;
+  }
+
+  /* ========== PREVIEW ========== */
+  .gpt-preview-col{
+    background:#F5F2EA;display:flex;flex-direction:column;min-width:0;
+  }
+  .gpt-preview-toolbar{
+    padding:14px 18px;display:flex;align-items:center;justify-content:center;gap:6px;
+    border-bottom:1px solid rgba(0,0,0,.05);
+  }
+  .gpt-device-btn{
+    width:36px;height:30px;border-radius:7px;border:1px solid transparent;
+    display:grid;place-items:center;cursor:pointer;color:var(--ink-soft);
+    transition:all .15s var(--ease);background:transparent;
+  }
+  .gpt-device-btn:hover{background:rgba(0,0,0,.04)}
+  .gpt-device-btn.active{background:var(--purple-100,#EDE9FE);color:var(--purple-700);border-color:var(--purple-200,#DDD6FE)}
+  .gpt-device-btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  .gpt-preview-stage{
+    flex:1;display:flex;align-items:center;justify-content:center;
+    padding:24px;min-height:600px;overflow:auto;
+  }
+  .gpt-preview-frame{
+    width:100%;max-width:780px;transition:max-width .25s var(--ease);
+    background:var(--bg,#F5F2EA);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:50px 40px;border-radius:14px;min-height:520px;
+    text-align:center;
+  }
+  .gpt-preview-col[data-device="mobile"] .gpt-preview-frame{max-width:380px;padding:40px 24px}
+
+  .gpt-prev-logo{
+    width:54px;height:54px;border-radius:50%;background:#FAFAF7;
+    border:1px solid rgba(0,0,0,.05);
+    display:grid;place-items:center;margin-bottom:18px;overflow:hidden;
+  }
+  .gpt-prev-logo svg{width:24px;height:24px;color:var(--ink-soft);opacity:.5}
+  .gpt-prev-logo img{width:100%;height:100%;object-fit:cover}
+  .gpt-prev-title{
+    font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.01em;
+    line-height:1.35;margin-bottom:8px;max-width:560px;
+  }
+  .gpt-prev-sub{
+    font-size:13.5px;color:var(--ink-soft);line-height:1.55;max-width:560px;
+    margin-bottom:28px;
+  }
+  .gpt-prev-hero{
+    font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-.025em;
+    line-height:1.15;margin-bottom:28px;max-width:600px;
+  }
+  .gpt-preview-col[data-device="mobile"] .gpt-prev-hero{font-size:24px}
+  .gpt-prev-input{
+    width:100%;max-width:560px;
+    display:flex;align-items:center;gap:10px;
+    padding:11px 14px 11px 16px;background:#fff;border-radius:14px;
+    box-shadow:0 4px 18px -8px rgba(0,0,0,.1);border:1px solid rgba(0,0,0,.06);
+    margin-bottom:18px;
+  }
+  .gpt-prev-input svg.clip{width:16px;height:16px;color:var(--ink-soft);opacity:.6}
+  .gpt-prev-input input{
+    flex:1;border:0;outline:0;font:inherit;font-size:14px;background:transparent;color:var(--ink);
+  }
+  .gpt-prev-input input::placeholder{color:var(--ink-soft);opacity:.55}
+  .gpt-prev-send{
+    width:34px;height:34px;border-radius:50%;background:var(--c,#2d3c1f);
+    color:#fff;display:grid;place-items:center;cursor:pointer;border:0;flex-shrink:0;
+    transition:transform .15s var(--ease);
+  }
+  .gpt-prev-send:hover{transform:scale(1.05)}
+  .gpt-prev-send svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+  .gpt-prev-pills{
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:30px;
+    max-width:620px;
+  }
+  .gpt-prev-pill{
+    padding:8px 16px;border-radius:999px;border:1px solid rgba(0,0,0,.08);
+    background:#fff;color:var(--ink);font-size:13px;font-weight:500;
+    cursor:pointer;transition:all .15s var(--ease);
+  }
+  .gpt-prev-pill:hover{border-color:var(--c,#2d3c1f);transform:translateY(-1px)}
+
+  .gpt-prev-footer{font-size:11.5px;color:var(--ink-soft);opacity:.65}
+  .gpt-prev-footer strong{color:var(--ink-soft);font-weight:600}
+
+  @media (max-width:1200px){
+    .gpt-builder{grid-template-columns:1fr}
+    .gpt-form-col{border-right:0;border-bottom:1px solid var(--line)}
+    .gpt-preview-stage{min-height:420px}
+  }
+</style>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="gpt-bygger"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i GPT-er..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-btn-ghost">Avbryt</button>
+        <button class="panel-cta">Publiser</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">GPT-bygger</div>
+          <div class="panel-hello">Konfigurer startskjermen som møter kundene dine — logo, farger, intro og forslag.</div>
+        </div>
+        <span class="panel-pill ok"><span class="panel-pill-dot"></span>Utkast · ikke publisert</span>
+      </div>
+
+      <div class="gpt-builder" id="gptBuilder">
+
+        <!-- ========== FORM COLUMN ========== -->
+        <div class="gpt-form-col">
+          <div class="gpt-form-head">
+            <div class="gpt-form-title">Widget Configuration</div>
+            <div class="gpt-tabs" id="gptTabs">
+              <span class="active" data-gpt-tab="config">Configuration</span>
+              <span data-gpt-tab="theme">Theme</span>
+              <span data-gpt-tab="url">Widget URL</span>
+              <span data-gpt-tab="code">Code</span>
+            </div>
+          </div>
+
+          <div class="gpt-form-body">
+
+            <div class="gpt-field">
+              <label class="gpt-label">Widget-logo</label>
+              <div class="gpt-logo-row">
+                <div class="gpt-logo-preview" id="logoPreview">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                </div>
+                <label class="gpt-logo-drop">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <div><strong>Klikk for å laste opp</strong> eller dra hit</div>
+                  <div class="gpt-logo-drop-sub">SVG, PNG, JPG eller GIF (maks 5MB)</div>
+                  <input type="file" hidden accept="image/*"/>
+                </label>
+              </div>
+            </div>
+
+            <div class="gpt-field">
+              <label class="gpt-label">Språk<span class="req">*</span></label>
+              <select class="gpt-select">
+                <option>🇳🇴 Norsk (bokmål)</option>
+                <option>🇳🇴 Nynorsk</option>
+                <option>🇬🇧 English</option>
+                <option>🇸🇪 Svenska</option>
+                <option>🇩🇰 Dansk</option>
+              </select>
+            </div>
+
+            <div class="gpt-field">
+              <label class="gpt-label">Primærfarge<span class="req">*</span></label>
+              <div class="gpt-color-row" id="colorRow">
+                <div class="gpt-color-swatch" style="--c:#6D28D9"></div>
+                <input type="text" id="colorInput" value="#6D28D9"/>
+                <span class="eye" title="Velg farge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <div class="gpt-field">
+              <label class="gpt-label">Widget-tittel<span class="req">*</span></label>
+              <input class="gpt-input" id="titleInput" type="text" placeholder="Vises under logoen" value="Hei! Lurer du på noe om bedriften vår?"/>
+            </div>
+
+            <div class="gpt-field">
+              <label class="gpt-label">Underoverskrift<span class="req">*</span></label>
+              <textarea class="gpt-textarea" id="subInput" maxlength="500" rows="4">Spør meg om produkter, priser, leveringsbetingelser eller hva som helst annet — så finner jeg svaret i vår kunnskapsbase.</textarea>
+              <div class="gpt-counter"><span id="subCount">163</span> / 500</div>
+              <div class="gpt-hint">Tips: du kan bruke <strong>markdown</strong> for å formatere teksten</div>
+            </div>
+
+            <div class="gpt-field">
+              <label class="gpt-label">Input-placeholder<span class="req">*</span></label>
+              <input class="gpt-input" id="placeholderInput" type="text" placeholder="Tekst i søkefeltet" value="Spør om hva som helst..."/>
+            </div>
+
+            <div class="gpt-field">
+              <label class="gpt-label">Foreslåtte spørsmål</label>
+              <div class="gpt-radio-row">
+                <label><input type="radio" name="suggMode" value="manual" checked/> Manuelt</label>
+                <label><input type="radio" name="suggMode" value="ai"/> AI-generert</label>
+              </div>
+              <div class="gpt-sugg-list" id="suggList">
+                <div class="gpt-sugg-item">
+                  <input type="text" value="Hva slags produkter har dere? 📦"/>
+                  <button class="gpt-sugg-remove" type="button">Fjern</button>
+                </div>
+                <div class="gpt-sugg-item">
+                  <input type="text" value="Hvor lang er leveringstiden? 🚚"/>
+                  <button class="gpt-sugg-remove" type="button">Fjern</button>
+                </div>
+                <div class="gpt-sugg-item">
+                  <input type="text" value="Hvordan returnerer jeg en vare? ↩️"/>
+                  <button class="gpt-sugg-remove" type="button">Fjern</button>
+                </div>
+                <div class="gpt-sugg-item">
+                  <input type="text" value="Har dere bedriftsavtaler? 💼"/>
+                  <button class="gpt-sugg-remove" type="button">Fjern</button>
+                </div>
+              </div>
+              <button class="gpt-add-btn" type="button" id="addSugg">+ Legg til forslag</button>
+            </div>
+
+            <div class="gpt-toggle-row">
+              <div>
+                <label class="gpt-label">Vis lead-skjema</label>
+                <div class="gpt-hint">Be om kontaktinfo etter første spørsmål</div>
+              </div>
+              <div class="gpt-toggle" data-toggle></div>
+            </div>
+
+            <div class="gpt-field">
+              <label class="gpt-label">Svar etter lead-innsending<span class="req">*</span></label>
+              <textarea class="gpt-textarea" rows="3" placeholder="Vises etter at brukeren har sendt inn skjemaet">Takk for at du tok kontakt! 🙌 En fra teamet vårt vil svare deg snart. Du kan gjerne fortsette samtalen her hvis du har flere spørsmål.</textarea>
+            </div>
+
+            <div class="gpt-toggle-row">
+              <div>
+                <label class="gpt-label">Vis svar-forslag</label>
+                <div class="gpt-hint">Pills med oppfølgingsspørsmål etter svaret</div>
+              </div>
+              <div class="gpt-toggle on" data-toggle></div>
+            </div>
+
+            <div class="gpt-field">
+              <label class="gpt-label">Footer-tekst</label>
+              <input class="gpt-input" id="footerInput" type="text" placeholder="La stå tom for standard"/>
+              <div class="gpt-hint">Standard: «Drevet av AI-teknologi fra MotherX.ai»</div>
+            </div>
+
+          </div>
+
+          <div class="gpt-save-row">
+            <button class="panel-cta">Lagre endringer</button>
+          </div>
+        </div>
+
+        <!-- ========== PREVIEW COLUMN ========== -->
+        <div class="gpt-preview-col" id="previewCol" data-device="desktop">
+          <div class="gpt-preview-toolbar">
+            <button class="gpt-device-btn active" data-device="desktop" title="Desktop">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </button>
+            <button class="gpt-device-btn" data-device="mobile" title="Mobil">
+              <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+            </button>
+          </div>
+
+          <div class="gpt-preview-stage">
+            <div class="gpt-preview-frame" id="prevFrame" style="--c:#6D28D9">
+              <div class="gpt-prev-logo" id="prevLogo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+              </div>
+              <div class="gpt-prev-title" id="prevTitle">Hei! Lurer du på noe om bedriften vår?</div>
+              <div class="gpt-prev-sub" id="prevSub">Spør meg om produkter, priser, leveringsbetingelser eller hva som helst annet — så finner jeg svaret i vår kunnskapsbase.</div>
+              <div class="gpt-prev-hero">Hva kan jeg hjelpe deg med?</div>
+
+              <div class="gpt-prev-input">
+                <svg class="clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                <input type="text" id="prevPlaceholder" placeholder="Spør om hva som helst..."/>
+                <button class="gpt-prev-send">
+                  <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+                </button>
+              </div>
+
+              <div class="gpt-prev-pills" id="prevPills">
+                <span class="gpt-prev-pill">Hva slags produkter har dere? 📦</span>
+                <span class="gpt-prev-pill">Hvor lang er leveringstiden? 🚚</span>
+                <span class="gpt-prev-pill">Hvordan returnerer jeg en vare? ↩️</span>
+                <span class="gpt-prev-pill">Har dere bedriftsavtaler? 💼</span>
+              </div>
+
+              <div class="gpt-prev-footer">Drevet av AI-teknologi fra <strong>MotherX.ai</strong></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+<script>
+  // ========== Live preview binding ==========
+  (function(){
+    const frame = document.getElementById('prevFrame');
+    const colorInput = document.getElementById('colorInput');
+    const colorSwatch = document.querySelector('.gpt-color-swatch');
+    const titleInput = document.getElementById('titleInput');
+    const subInput = document.getElementById('subInput');
+    const subCount = document.getElementById('subCount');
+    const placeholderInput = document.getElementById('placeholderInput');
+    const prevTitle = document.getElementById('prevTitle');
+    const prevSub = document.getElementById('prevSub');
+    const prevPlaceholder = document.getElementById('prevPlaceholder');
+    const prevPills = document.getElementById('prevPills');
+    const suggList = document.getElementById('suggList');
+    const addSuggBtn = document.getElementById('addSugg');
+
+    // Color → swatch + send-button bg
+    const applyColor = () => {
+      const c = colorInput.value.trim() || '#6D28D9';
+      frame.style.setProperty('--c', c);
+      colorSwatch.style.setProperty('--c', c);
+    };
+    colorInput.addEventListener('input', applyColor);
+
+    // Title
+    titleInput.addEventListener('input', () => {
+      prevTitle.textContent = titleInput.value || '—';
+    });
+
+    // Sub
+    subInput.addEventListener('input', () => {
+      prevSub.textContent = subInput.value || '—';
+      subCount.textContent = subInput.value.length;
+    });
+
+    // Placeholder
+    placeholderInput.addEventListener('input', () => {
+      prevPlaceholder.placeholder = placeholderInput.value || '';
+    });
+
+    // Suggestions: keep preview in sync with form list
+    const refreshPills = () => {
+      const items = suggList.querySelectorAll('.gpt-sugg-item input');
+      prevPills.innerHTML = '';
+      items.forEach(i => {
+        if(!i.value.trim()) return;
+        const span = document.createElement('span');
+        span.className = 'gpt-prev-pill';
+        span.textContent = i.value;
+        prevPills.appendChild(span);
+      });
+    };
+    suggList.addEventListener('input', refreshPills);
+    suggList.addEventListener('click', (e) => {
+      if(e.target.classList.contains('gpt-sugg-remove')){
+        e.target.closest('.gpt-sugg-item').remove();
+        refreshPills();
+      }
+    });
+    addSuggBtn.addEventListener('click', () => {
+      const div = document.createElement('div');
+      div.className = 'gpt-sugg-item';
+      div.innerHTML = '<input type="text" placeholder="Nytt forslag..."/><button class="gpt-sugg-remove" type="button">Fjern</button>';
+      suggList.appendChild(div);
+      div.querySelector('input').focus();
+    });
+
+    // Toggles
+    document.querySelectorAll('[data-toggle]').forEach(t => {
+      t.addEventListener('click', () => t.classList.toggle('on'));
+    });
+
+    // Tabs (only Configuration has content — others are visual stubs)
+    document.querySelectorAll('#gptTabs span').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('#gptTabs span').forEach(x => x.classList.toggle('active', x === t));
+      });
+    });
+
+    // Device toggle
+    document.querySelectorAll('.gpt-device-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.gpt-device-btn').forEach(x => x.classList.toggle('active', x === b));
+        document.getElementById('previewCol').dataset.device = b.dataset.device;
+      });
+    });
+
+    // Logo upload preview
+    const fileInput = document.querySelector('.gpt-logo-drop input[type="file"]');
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if(!file) return;
+      const url = URL.createObjectURL(file);
+      const target1 = document.getElementById('logoPreview');
+      const target2 = document.getElementById('prevLogo');
+      [target1, target2].forEach(el => {
+        el.innerHTML = `<img src="${url}" alt=""/>`;
+      });
+    });
+  })();
+</script>
+</body>
+</html>

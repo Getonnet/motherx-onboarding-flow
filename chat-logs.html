@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chat Logs — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="chat-logs"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i samtaler..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-cta">Eksporter</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Chat Logs</div>
+          <div class="panel-hello">2 847 samtaler de siste 30 dagene — klikk en rad for å se transkriptet.</div>
+        </div>
+        <div class="panel-range">📅 21. mars – 21. april 2026</div>
+      </div>
+
+      <div class="panel-chips">
+        <span class="panel-chip active">Alle (2 847)</span>
+        <span class="panel-chip">Pågående (8)</span>
+        <span class="panel-chip">Lukket (2 839)</span>
+        <span class="panel-chip">👍 Positive (1 942)</span>
+        <span class="panel-chip">👎 Negative (218)</span>
+        <span class="panel-chip">⚠ Med lead (74)</span>
+        <span class="panel-chip">🔁 Mangler kilde (31)</span>
+      </div>
+
+      <div class="panel-two">
+        <div class="panel-card">
+          <div class="panel-card-head">
+            <span>Samtaler</span>
+            <span class="panel-card-sub">sortert etter nyeste</span>
+          </div>
+          <div class="panel-table">
+            <div class="panel-tr head" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <span></span><span>Bruker · spørsmål</span><span style="text-align:right">Meld.</span><span>Rating</span><span style="text-align:right">Tid</span>
+            </div>
+            <div class="panel-tr clickable selected" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <div class="panel-av">MB</div>
+              <div><div style="font-weight:600">Marius B.</div><div class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Har dere volumrabatt på Arctic Parka over 10 stk?</div></div>
+              <span class="panel-num" style="text-align:right">6</span>
+              <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>👍 5/5</span></span>
+              <span class="panel-num" style="text-align:right">2 min</span>
+            </div>
+            <div class="panel-tr clickable" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <div class="panel-av gray">G</div>
+              <div><div style="font-weight:600">Gjest · #a47f</div><div class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kan jeg bytte fra str. M til L?</div></div>
+              <span class="panel-num" style="text-align:right">4</span>
+              <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>👍 5/5</span></span>
+              <span class="panel-num" style="text-align:right">7 min</span>
+            </div>
+            <div class="panel-tr clickable" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <div class="panel-av green">AL</div>
+              <div><div style="font-weight:600">Anna L.</div><div class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Bedriftsavtale for 5+ ansatte — hva er prisen?</div></div>
+              <span class="panel-num" style="text-align:right">9</span>
+              <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>👍 4/5</span></span>
+              <span class="panel-num" style="text-align:right">48 min</span>
+            </div>
+            <div class="panel-tr clickable" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <div class="panel-av amber">SO</div>
+              <div><div style="font-weight:600">Sigrid O.</div><div class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Hva er fraktkostnaden til Svalbard?</div></div>
+              <span class="panel-num" style="text-align:right">3</span>
+              <span><span class="panel-pill warn"><span class="panel-pill-dot"></span>⚠ Mangler kilde</span></span>
+              <span class="panel-num" style="text-align:right">1 t</span>
+            </div>
+            <div class="panel-tr clickable" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <div class="panel-av blue">JK</div>
+              <div><div style="font-weight:600">Jonas K.</div><div class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Røde vinterjakker som tåler -20 °C?</div></div>
+              <span class="panel-num" style="text-align:right">7</span>
+              <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>👍 5/5</span></span>
+              <span class="panel-num" style="text-align:right">2 t</span>
+            </div>
+            <div class="panel-tr clickable" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <div class="panel-av red">PV</div>
+              <div><div style="font-weight:600">Per V.</div><div class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Garantisak — jakka mistet farge etter første vask</div></div>
+              <span class="panel-num" style="text-align:right">12</span>
+              <span><span class="panel-pill err"><span class="panel-pill-dot"></span>👎 2/5</span></span>
+              <span class="panel-num" style="text-align:right">3 t</span>
+            </div>
+            <div class="panel-tr clickable" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <div class="panel-av gray">G</div>
+              <div><div style="font-weight:600">Gjest · #b22c</div><div class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Hva tåler Arctic Parka av temperatur?</div></div>
+              <span class="panel-num" style="text-align:right">4</span>
+              <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>👍 5/5</span></span>
+              <span class="panel-num" style="text-align:right">5 t</span>
+            </div>
+            <div class="panel-tr clickable" style="grid-template-columns:32px 2fr 60px 90px 90px">
+              <div class="panel-av">EM</div>
+              <div><div style="font-weight:600">Eva M.</div><div class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Når kommer ordre #18274?</div></div>
+              <span class="panel-num" style="text-align:right">3</span>
+              <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>👍 5/5</span></span>
+              <span class="panel-num" style="text-align:right">i går</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card-head">
+            <span>Marius B. · Arctic Parka volumrabatt</span>
+            <span class="panel-pill sync"><span class="panel-pill-dot"></span>Pågående</span>
+          </div>
+          <div style="font-size:11.5px;color:var(--ink-soft);opacity:.75">Startet 14:32 · 6 meldinger · Lead-poeng <strong style="color:var(--ink)">8.4</strong></div>
+          <div class="chatlog-preview">
+            <div class="chatlog-msg">
+              <div class="panel-av">MB</div>
+              <div style="flex:1">
+                <div class="who">Marius B.</div>
+                <div class="bubble">Hei! Vi vurderer å kjøpe inn Arctic Parka i grått til hele arbeidslaget vårt — ca. 14 stk. Får vi rabatt på et slikt volum?</div>
+              </div>
+            </div>
+            <div class="chatlog-msg bot">
+              <div class="panel-av" style="background:linear-gradient(135deg,var(--purple-500),var(--purple-700))">M</div>
+              <div style="flex:1">
+                <div class="who">MotherX</div>
+                <div class="bubble">Ja, vi har bedriftsrabatt fra 10 stk! For 10–20 stk gir vi 12 % rabatt, og fra 21 stk gir vi 18 %. Skal jeg sende deg et uforpliktende tilbud?</div>
+              </div>
+            </div>
+            <div class="chatlog-msg">
+              <div class="panel-av">MB</div>
+              <div style="flex:1">
+                <div class="who">Marius B.</div>
+                <div class="bubble">Ja takk — vi trenger XL (4), L (6) og M (4). Trenger logo-brodering også, går det an?</div>
+              </div>
+            </div>
+            <div class="chatlog-msg bot">
+              <div class="panel-av" style="background:linear-gradient(135deg,var(--purple-500),var(--purple-700))">M</div>
+              <div style="flex:1">
+                <div class="who">MotherX</div>
+                <div class="bubble">Logo-brodering er inkludert ved bedriftsordre over 10 stk. Hva er bedriftens navn og e-post, så får salgsavdelingen sendt et tilbud innen 24 timer?</div>
+              </div>
+            </div>
+            <div class="chatlog-msg">
+              <div class="panel-av">MB</div>
+              <div style="flex:1">
+                <div class="who">Marius B.</div>
+                <div class="bubble">Nordby Anlegg AS, marius@nordby-anlegg.no</div>
+              </div>
+            </div>
+            <div class="chatlog-msg bot">
+              <div class="panel-av" style="background:linear-gradient(135deg,var(--purple-500),var(--purple-700))">M</div>
+              <div style="flex:1">
+                <div class="who">MotherX</div>
+                <div class="bubble">Mottatt! Tilbud sendes til marius@nordby-anlegg.no i løpet av dagen. Er det noe annet du lurer på i mellomtiden?</div>
+                <div class="src">📎 Kilde: Bedriftsavtaler_2026.pdf (s. 4) · Returvilkår_2026_v3.pdf (s. 2)</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:6px">
+            <button class="panel-btn-ghost" style="flex:1">Åpne full transkript</button>
+            <button class="panel-cta">Marker som lead</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kom i gang — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+<style>
+  .wiz{max-width:760px;margin:0 auto}
+  .wiz-header{text-align:center;margin-bottom:30px}
+  .wiz-eyebrow{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--purple-700);margin-bottom:14px;
+  }
+  .wiz-eyebrow::before{
+    content:"";width:7px;height:7px;border-radius:50%;
+    background:var(--purple-600);
+    animation:dashLivePulse 2s ease-in-out infinite;
+  }
+  .wiz-title{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:10px}
+  .wiz-lead{font-size:15px;color:var(--ink-soft);line-height:1.55;max-width:560px;margin:0 auto}
+
+  /* Step indicator */
+  .wiz-steps{
+    display:flex;align-items:center;gap:0;margin:0 auto 30px;
+    max-width:560px;
+  }
+  .wiz-step-dot{
+    width:30px;height:30px;border-radius:50%;
+    background:#fff;border:2px solid var(--line);
+    display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--ink-soft);
+    flex-shrink:0;transition:all .25s var(--ease);
+    font-variant-numeric:tabular-nums;
+  }
+  .wiz-step-dot.active{
+    background:linear-gradient(135deg,var(--purple-500),var(--purple-700));
+    border-color:var(--purple-700);color:#fff;
+    box-shadow:0 8px 16px -4px rgba(109,40,217,.45);
+    transform:scale(1.08);
+  }
+  .wiz-step-dot.done{background:var(--purple-700);border-color:var(--purple-700);color:#fff}
+  .wiz-step-line{flex:1;height:2px;background:var(--line);transition:background .3s var(--ease)}
+  .wiz-step-line.done{background:var(--purple-700)}
+
+  /* Wizard panel */
+  .wiz-panel{
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:32px 38px;min-height:380px;
+    display:flex;flex-direction:column;
+    box-shadow:0 30px 60px -30px rgba(76,29,149,.12);
+  }
+
+  [data-step]{display:none}
+  [data-step].active{display:flex;flex-direction:column;gap:18px;animation:wizIn .35s var(--ease)}
+  @keyframes wizIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .wiz-h2{font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:1.25}
+  .wiz-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.55}
+  .wiz-desc strong{color:var(--ink);font-weight:600}
+
+  /* Cards */
+  .wiz-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .wiz-card{
+    position:relative;
+    padding:18px;border:1.5px solid var(--line);border-radius:12px;background:#fff;
+    cursor:pointer;display:flex;flex-direction:column;gap:6px;text-align:left;
+    font:inherit;color:var(--ink);
+    transition:all .15s var(--ease);
+  }
+  .wiz-card:hover{border-color:var(--purple-300);transform:translateY(-1px)}
+  .wiz-card.selected{
+    border-color:var(--purple-600);background:rgba(139,92,246,.04);
+    box-shadow:0 0 0 3px rgba(139,92,246,.1);
+  }
+  .wiz-card-ico{font-size:26px;line-height:1;margin-bottom:4px}
+  .wiz-card-title{font-size:14px;font-weight:600;letter-spacing:-.01em}
+  .wiz-card-desc{font-size:12.5px;color:var(--ink-soft);opacity:.85;line-height:1.5}
+  .wiz-card-badge{
+    position:absolute;top:-9px;right:14px;
+    font-size:9.5px;font-weight:700;letter-spacing:.08em;
+    padding:3px 10px;border-radius:999px;
+    background:var(--purple-700);color:#fff;
+  }
+
+  /* Form fields */
+  .wiz-field{display:flex;flex-direction:column;gap:6px}
+  .wiz-label{font-size:13px;font-weight:600}
+  .wiz-input,.wiz-select,.wiz-textarea{
+    padding:10px 14px;border:1px solid var(--line);border-radius:9px;
+    font:inherit;font-size:14px;background:#fff;color:var(--ink);outline:0;
+    transition:border-color .15s var(--ease);
+  }
+  .wiz-input:focus,.wiz-select:focus,.wiz-textarea:focus{
+    border-color:var(--purple-400,#A78BFA);box-shadow:0 0 0 3px rgba(139,92,246,.1);
+  }
+  .wiz-textarea{resize:vertical;min-height:80px;line-height:1.5}
+  .wiz-hint-callout{
+    font-size:12px;color:var(--ink-soft);background:#FAFAF7;
+    border:1px dashed var(--line);border-radius:10px;padding:10px 13px;
+  }
+  .wiz-hint-callout a{color:var(--purple-700);font-weight:600}
+
+  /* Upload options */
+  .wiz-uploads{display:flex;flex-direction:column;gap:8px}
+  .wiz-upload-opt{
+    display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+    padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;
+    background:#fff;cursor:pointer;text-align:left;font:inherit;color:var(--ink);
+    transition:all .15s var(--ease);
+  }
+  .wiz-upload-opt:hover{border-color:var(--purple-300)}
+  .wiz-upload-opt.selected{border-color:var(--purple-600);background:rgba(139,92,246,.04);box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+  .wiz-upload-ico{
+    width:40px;height:40px;border-radius:10px;display:grid;place-items:center;
+    background:#EDE9FE;color:var(--purple-700);font-size:18px;font-weight:600;flex-shrink:0;
+  }
+  .wiz-upload-text{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .wiz-upload-text strong{font-weight:600;font-size:13.5px;color:var(--ink)}
+  .wiz-upload-text span{font-size:11.5px;color:var(--ink-soft);opacity:.8}
+  .wiz-upload-tag{
+    font-size:11px;color:var(--ink-soft);opacity:.7;white-space:nowrap;
+  }
+
+  /* Summary */
+  .wiz-summary{
+    background:linear-gradient(135deg,#F4EFFB 0%,#FAFAF7 100%);
+    border:1px solid var(--purple-200,#DDD6FE);
+    border-radius:12px;padding:18px 22px;
+    display:flex;flex-direction:column;gap:0;
+  }
+  .wiz-summary-row{
+    display:grid;grid-template-columns:110px 1fr;gap:14px;
+    font-size:13.5px;padding:10px 0;
+    border-bottom:1px dashed rgba(139,92,246,.2);
+  }
+  .wiz-summary-row:last-child{border-bottom:0}
+  .wiz-summary-row strong{color:var(--ink);font-weight:600}
+  .wiz-summary-row span{color:var(--ink-soft)}
+
+  .wiz-finish{
+    text-align:center;padding:10px 0 4px;
+  }
+  .wiz-finish-emoji{font-size:46px;margin-bottom:8px}
+  .wiz-finish .wiz-h2{font-size:26px;margin-bottom:6px}
+  .wiz-finish-sub{font-size:14px;color:var(--ink-soft);line-height:1.55;max-width:480px;margin:0 auto}
+
+  /* Nav */
+  .wiz-nav{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:auto;padding-top:24px;border-top:1px solid var(--line);
+  }
+  .wiz-nav-step{font-size:12px;color:var(--ink-soft);opacity:.7;font-variant-numeric:tabular-nums}
+  .wiz-nav-btns{display:flex;gap:10px}
+  .wiz-btn{
+    padding:11px 22px;border-radius:10px;font-size:14px;font-weight:600;
+    font:inherit;cursor:pointer;border:0;transition:all .15s var(--ease);
+    text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  }
+  .wiz-btn:disabled{opacity:.4;cursor:not-allowed}
+  .wiz-btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .wiz-btn-ghost:hover{border-color:var(--ink-soft)}
+  .wiz-btn-primary{
+    background:linear-gradient(135deg,var(--purple-500),var(--purple-700));
+    color:#fff;box-shadow:0 8px 18px -8px rgba(109,40,217,.55);
+  }
+  .wiz-btn-primary:hover:not(:disabled){transform:translateY(-1px)}
+
+  @media (max-width:760px){
+    .wiz-panel{padding:22px 18px}
+    .wiz-cards{grid-template-columns:1fr}
+    .wiz-title{font-size:26px}
+  }
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active=""></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <a href="din-bedrift.html" class="wiz-btn wiz-btn-ghost" style="padding:8px 14px;font-size:13px">Avbryt</a>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="wiz">
+
+        <div class="wiz-header">
+          <div class="wiz-eyebrow">Kom i gang</div>
+          <h1 class="wiz-title">Sett opp din første AI-modul</h1>
+          <p class="wiz-lead">Vi tar deg gjennom 5 enkle steg — og du er klar til å publisere på under 10 minutter.</p>
+        </div>
+
+        <div class="wiz-steps" id="wizSteps">
+          <div class="wiz-step-dot active" data-stepno="1">1</div>
+          <div class="wiz-step-line"></div>
+          <div class="wiz-step-dot" data-stepno="2">2</div>
+          <div class="wiz-step-line"></div>
+          <div class="wiz-step-dot" data-stepno="3">3</div>
+          <div class="wiz-step-line"></div>
+          <div class="wiz-step-dot" data-stepno="4">4</div>
+          <div class="wiz-step-line"></div>
+          <div class="wiz-step-dot" data-stepno="5">5</div>
+        </div>
+
+        <div class="wiz-panel">
+
+          <!-- Step 1: Mål -->
+          <div data-step="1" class="active">
+            <h2 class="wiz-h2">Hva er viktigst for dere?</h2>
+            <p class="wiz-desc">Velg ett eller flere mål — vi tilpasser opplevelsen videre etter dette.</p>
+            <div class="wiz-cards">
+              <button class="wiz-card" data-goal="kundeservice">
+                <div class="wiz-card-ico">💬</div>
+                <div class="wiz-card-title">Bedre kundeservice</div>
+                <div class="wiz-card-desc">Kundene får svar 24/7 — også når kontoret er stengt.</div>
+              </button>
+              <button class="wiz-card" data-goal="intern">
+                <div class="wiz-card-ico">🧠</div>
+                <div class="wiz-card-title">Intern assistent</div>
+                <div class="wiz-card-desc">Ansatte slipper å lete — AI-en finner svaret i interne kilder.</div>
+              </button>
+              <button class="wiz-card" data-goal="sok">
+                <div class="wiz-card-ico">🔍</div>
+                <div class="wiz-card-title">Smartere nettsøk</div>
+                <div class="wiz-card-desc">Folk finner produkter, FAQ og guider på sekunder.</div>
+              </button>
+              <button class="wiz-card" data-goal="leads">
+                <div class="wiz-card-ico">✦</div>
+                <div class="wiz-card-title">Fange flere leads</div>
+                <div class="wiz-card-desc">AI-en plukker opp interesserte kunder automatisk.</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Bedrift -->
+          <div data-step="2">
+            <h2 class="wiz-h2">Fortell oss om bedriften</h2>
+            <p class="wiz-desc">Vi har allerede noe — sjekk og juster om noe ikke stemmer.</p>
+            <div class="wiz-field">
+              <label class="wiz-label">Bedriftsnavn</label>
+              <input class="wiz-input" type="text" value="Dinbedrift AS"/>
+            </div>
+            <div class="wiz-field">
+              <label class="wiz-label">Bransje</label>
+              <select class="wiz-select">
+                <option>Klær, sko &amp; tekstil</option>
+                <option>Bygg &amp; anlegg</option>
+                <option>Detaljhandel (annet)</option>
+                <option>Tjenester</option>
+                <option>SaaS / IT</option>
+                <option>Industri / produksjon</option>
+                <option>Hotell &amp; reiseliv</option>
+                <option>Helse</option>
+              </select>
+            </div>
+            <div class="wiz-field">
+              <label class="wiz-label">Kort beskrivelse av hva dere gjør</label>
+              <textarea class="wiz-textarea" rows="3">Dinbedrift AS er en norsk klesbutikk som spesialiserer seg på funksjonsklær for kalde fjellturer og hverdagsbruk.</textarea>
+            </div>
+            <div class="wiz-hint-callout">
+              💡 Du kan endre logo, farger og AI-tone senere under <a href="din-bedrift.html">Din bedrift</a>.
+            </div>
+          </div>
+
+          <!-- Step 3: Verktøy -->
+          <div data-step="3">
+            <h2 class="wiz-h2">Velg ditt første verktøy</h2>
+            <p class="wiz-desc" id="toolRecText">Basert på målene dine anbefaler vi <strong>Chat-assistent</strong> — men du kan velge fritt.</p>
+            <div class="wiz-cards">
+              <button class="wiz-card selected" data-tool="chat-assistent">
+                <span class="wiz-card-badge" id="badgeChat">Anbefalt</span>
+                <div class="wiz-card-ico">💬</div>
+                <div class="wiz-card-title">Chat-assistent</div>
+                <div class="wiz-card-desc">Chat-boble i hjørnet av nettsiden som svarer kunder 24/7.</div>
+              </button>
+              <button class="wiz-card" data-tool="gpt-bygger">
+                <div class="wiz-card-ico">✦</div>
+                <div class="wiz-card-title">GPT-bygger</div>
+                <div class="wiz-card-desc">Din egen ChatGPT-side, trent på bedriftens kunnskap.</div>
+              </button>
+              <button class="wiz-card" data-tool="popup-sok">
+                <div class="wiz-card-ico">⌘</div>
+                <div class="wiz-card-title">Popup-søk</div>
+                <div class="wiz-card-desc">Hurtigsøk som åpnes med ⌘K — som i moderne apper.</div>
+              </button>
+              <button class="wiz-card" data-tool="smart-sok">
+                <div class="wiz-card-ico">🔍</div>
+                <div class="wiz-card-title">Smart-søk</div>
+                <div class="wiz-card-desc">Erstatter det vanlige produktsøket på nettsiden.</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 4: Kilder -->
+          <div data-step="4">
+            <h2 class="wiz-h2">Gi AI-en noe å lære fra</h2>
+            <p class="wiz-desc">Velg én eller flere kilder — du kan alltid legge til mer senere under Treningsdata.</p>
+            <div class="wiz-uploads">
+              <button class="wiz-upload-opt" data-source="pdf">
+                <div class="wiz-upload-ico">📄</div>
+                <div class="wiz-upload-text">
+                  <strong>Last opp filer</strong>
+                  <span>PDF, DOCX, TXT, MD — opptil 50 filer på en gang</span>
+                </div>
+                <span class="wiz-upload-tag">Vanligst</span>
+              </button>
+              <button class="wiz-upload-opt" data-source="url">
+                <div class="wiz-upload-ico" style="background:rgba(59,130,246,.13);color:#1D4ED8">🌐</div>
+                <div class="wiz-upload-text">
+                  <strong>Skann nettsiden</strong>
+                  <span>Vi går gjennom sitemap eller spesifikke URL-er du oppgir</span>
+                </div>
+                <span class="wiz-upload-tag">Auto-sync</span>
+              </button>
+              <button class="wiz-upload-opt" data-source="notion">
+                <div class="wiz-upload-ico" style="background:#F3F4F6;color:#374151">N</div>
+                <div class="wiz-upload-text">
+                  <strong>Koble til Notion</strong>
+                  <span>Hold AI-en automatisk oppdatert mot intern wiki</span>
+                </div>
+                <span class="wiz-upload-tag">Real-time</span>
+              </button>
+              <button class="wiz-upload-opt" data-source="skip">
+                <div class="wiz-upload-ico" style="background:#F1ECE0;color:var(--ink-soft)">○</div>
+                <div class="wiz-upload-text">
+                  <strong>Hopp over for nå</strong>
+                  <span>Vi gir deg demo-innhold så du kan teste umiddelbart</span>
+                </div>
+                <span class="wiz-upload-tag">Anbefalt</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 5: Klar -->
+          <div data-step="5">
+            <div class="wiz-finish">
+              <div class="wiz-finish-emoji">🎉</div>
+              <h2 class="wiz-h2">Du er klar til å publisere!</h2>
+              <p class="wiz-finish-sub">Vi har satt opp alt klart. Ta en rask test for å se hvordan AI-en svarer, eller hopp rett til dashbordet.</p>
+            </div>
+            <div class="wiz-summary">
+              <div class="wiz-summary-row"><strong>Mål</strong><span id="summGoal">—</span></div>
+              <div class="wiz-summary-row"><strong>Bedrift</strong><span>Dinbedrift AS · Klær, sko &amp; tekstil</span></div>
+              <div class="wiz-summary-row"><strong>Verktøy</strong><span id="summTool">Chat-assistent</span></div>
+              <div class="wiz-summary-row"><strong>Kilder</strong><span id="summSrc">—</span></div>
+            </div>
+          </div>
+
+          <div class="wiz-nav">
+            <div class="wiz-nav-step" id="wizStepLabel">Steg 1 av 5</div>
+            <div class="wiz-nav-btns">
+              <button class="wiz-btn wiz-btn-ghost" id="wizBack" style="visibility:hidden">← Tilbake</button>
+              <button class="wiz-btn wiz-btn-primary" id="wizNext">Neste →</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+<script>
+  (function(){
+    const dots = [...document.querySelectorAll('.wiz-step-dot')];
+    const lines = [...document.querySelectorAll('.wiz-step-line')];
+    const steps = [...document.querySelectorAll('[data-step]')];
+    const backBtn = document.getElementById('wizBack');
+    const nextBtn = document.getElementById('wizNext');
+    const stepLabel = document.getElementById('wizStepLabel');
+
+    let cur = 1;
+    const total = steps.length;
+
+    const goals = new Set();
+    let tool = 'chat-assistent';
+    let source = null;
+
+    const goalLabels = {
+      kundeservice:'Bedre kundeservice',
+      intern:'Intern assistent',
+      sok:'Smartere nettsøk',
+      leads:'Fange leads',
+    };
+    const toolLabels = {
+      'chat-assistent':'Chat-assistent',
+      'gpt-bygger':'GPT-bygger',
+      'popup-sok':'Popup-søk',
+      'smart-sok':'Smart-søk',
+    };
+    const sourceLabels = {
+      pdf:'PDF-opplasting (kommer)',
+      url:'Nettside-skann (kommer)',
+      notion:'Notion-tilkobling (kommer)',
+      skip:'Demo-innhold',
+    };
+
+    // Map dominant goal → recommended tool
+    const recommend = () => {
+      if(goals.has('kundeservice')) return 'chat-assistent';
+      if(goals.has('intern')) return 'gpt-bygger';
+      if(goals.has('sok')) return 'smart-sok';
+      if(goals.has('leads')) return 'chat-assistent';
+      return 'chat-assistent';
+    };
+
+    function updateRecommendation(){
+      const rec = recommend();
+      tool = rec;
+      document.querySelectorAll('[data-tool]').forEach(c => {
+        c.classList.toggle('selected', c.dataset.tool === rec);
+        const existingBadge = c.querySelector('.wiz-card-badge');
+        if(existingBadge) existingBadge.remove();
+        if(c.dataset.tool === rec){
+          const b = document.createElement('span');
+          b.className = 'wiz-card-badge';
+          b.textContent = 'Anbefalt';
+          c.appendChild(b);
+        }
+      });
+      const text = document.getElementById('toolRecText');
+      if(text) text.innerHTML = `Basert på målene dine anbefaler vi <strong>${toolLabels[rec]}</strong> — men du kan velge fritt.`;
+    }
+
+    function show(n){
+      cur = n;
+      steps.forEach(s => s.classList.toggle('active', +s.dataset.step === n));
+      dots.forEach((d,i) => {
+        d.classList.toggle('active', i+1 === n);
+        d.classList.toggle('done', i+1 < n);
+        d.innerHTML = i+1 < n ? '✓' : (i+1);
+      });
+      lines.forEach((l,i) => l.classList.toggle('done', i+1 < n));
+
+      backBtn.style.visibility = n === 1 ? 'hidden' : 'visible';
+      nextBtn.textContent = n === total ? 'Test din AI →' : 'Neste →';
+      stepLabel.textContent = `Steg ${n} av ${total}`;
+
+      if(n === total){
+        document.getElementById('summGoal').textContent =
+          goals.size ? [...goals].map(g => goalLabels[g]).join(' · ') : 'Ikke spesifisert';
+        document.getElementById('summTool').textContent = toolLabels[tool] || '—';
+        document.getElementById('summSrc').textContent =
+          source ? sourceLabels[source] : 'Ikke valgt — bruker demo-innhold';
+      }
+    }
+
+    backBtn.addEventListener('click', () => { if(cur > 1) show(cur - 1); });
+    nextBtn.addEventListener('click', () => {
+      if(cur < total){
+        if(cur === 1) updateRecommendation();
+        show(cur + 1);
+      } else {
+        // Final step → go test
+        window.location.href = 'chat-testing.html';
+      }
+    });
+
+    // Multi-select goals
+    document.querySelectorAll('[data-goal]').forEach(c => {
+      c.addEventListener('click', () => {
+        const g = c.dataset.goal;
+        if(goals.has(g)){ goals.delete(g); c.classList.remove('selected'); }
+        else{ goals.add(g); c.classList.add('selected'); }
+      });
+    });
+
+    // Single tool
+    document.querySelectorAll('[data-tool]').forEach(c => {
+      c.addEventListener('click', () => {
+        tool = c.dataset.tool;
+        document.querySelectorAll('[data-tool]').forEach(x => x.classList.toggle('selected', x === c));
+      });
+    });
+
+    // Single source
+    document.querySelectorAll('[data-source]').forEach(c => {
+      c.addEventListener('click', () => {
+        source = c.dataset.source;
+        document.querySelectorAll('[data-source]').forEach(x => x.classList.toggle('selected', x === c));
+      });
+    });
+  })();
+</script>
+</body>
+</html>

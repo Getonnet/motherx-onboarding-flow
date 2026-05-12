@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Din agent — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+<style>
+  .agent-builder{
+    display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start;
+  }
+
+  /* ============ Profile cards ============ */
+  .agent-profiles{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  }
+  .agent-prof{
+    position:relative;border:1.5px solid var(--line);border-radius:12px;background:#fff;
+    padding:14px;cursor:pointer;text-align:center;font:inherit;color:var(--ink);
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    transition:all .15s var(--ease);
+  }
+  .agent-prof:hover{border-color:var(--purple-300);transform:translateY(-1px)}
+  .agent-prof.active{
+    border-color:var(--purple-600);background:rgba(139,92,246,.04);
+    box-shadow:0 0 0 3px rgba(139,92,246,.1);
+  }
+  .agent-prof-avatar{
+    width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
+    background:linear-gradient(135deg,#EDE9FE,#FAFAF7);
+    font-size:26px;margin-bottom:4px;
+  }
+  .agent-prof.active .agent-prof-avatar{
+    background:linear-gradient(135deg,var(--purple-400,#A78BFA),var(--purple-600));
+    color:#fff;
+  }
+  .agent-prof-name{font-size:14px;font-weight:700;letter-spacing:-.01em}
+  .agent-prof-tag{
+    font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--purple-700);
+  }
+  .agent-prof-desc{font-size:11.5px;color:var(--ink-soft);line-height:1.45;margin-top:2px}
+
+  /* ============ Field rows ============ */
+  .agent-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .agent-field{display:flex;flex-direction:column;gap:5px}
+  .agent-field label{
+    display:flex;align-items:center;gap:6px;
+    font-size:12.5px;font-weight:600;color:var(--ink);
+  }
+  .agent-field label .q{
+    width:14px;height:14px;border-radius:50%;border:1px solid var(--line);
+    font-size:9px;display:grid;place-items:center;color:var(--ink-soft);cursor:help;
+  }
+  .agent-select{
+    padding:9px 12px;border:1px solid var(--line);border-radius:9px;
+    font:inherit;font-size:13px;background:#fff;color:var(--ink);outline:0;
+    transition:border-color .15s var(--ease);
+  }
+  .agent-select:focus{border-color:var(--purple-400,#A78BFA)}
+
+  /* Advanced details */
+  .agent-advanced{
+    border:1px solid var(--line);border-radius:10px;background:#FAFAF7;
+    margin-top:6px;overflow:hidden;
+  }
+  .agent-advanced summary{
+    list-style:none;cursor:pointer;
+    display:flex;align-items:center;gap:8px;
+    padding:10px 14px;font-size:13px;font-weight:600;color:var(--purple-700);
+  }
+  .agent-advanced summary::-webkit-details-marker{display:none}
+  .agent-advanced summary::before{
+    content:"⚙";font-size:13px;
+  }
+  .agent-advanced summary::after{
+    content:"▾";margin-left:auto;font-size:11px;color:var(--ink-soft);
+    transition:transform .2s var(--ease);
+  }
+  .agent-advanced[open] summary::after{transform:rotate(180deg)}
+  .agent-advanced-body{
+    padding:0 14px 14px;display:flex;flex-direction:column;gap:12px;
+    font-size:12.5px;color:var(--ink-soft);line-height:1.55;
+  }
+
+  /* ============ Sliders ============ */
+  .agent-slider{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .agent-slider:last-child{margin-bottom:0}
+  .agent-slider-head{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:13px;font-weight:600;
+  }
+  .agent-slider-head .ico{margin-right:6px;font-size:14px}
+  .agent-slider-val{
+    font-variant-numeric:tabular-nums;color:var(--purple-700);font-weight:700;
+    min-width:28px;text-align:right;
+  }
+  .agent-slider input[type="range"]{
+    -webkit-appearance:none;appearance:none;
+    width:100%;height:6px;border-radius:999px;outline:0;
+    background:linear-gradient(to right,var(--purple-500) 0%,var(--purple-500) 50%,#EDE5E5 50%,#EDE5E5 100%);
+    cursor:pointer;
+  }
+  .agent-slider input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:18px;height:18px;border-radius:50%;
+    background:#fff;border:3px solid var(--purple-600);
+    cursor:pointer;
+    box-shadow:0 2px 8px rgba(109,40,217,.3);
+  }
+  .agent-slider input[type="range"]::-moz-range-thumb{
+    width:18px;height:18px;border-radius:50%;
+    background:#fff;border:3px solid var(--purple-600);
+    cursor:pointer;
+    box-shadow:0 2px 8px rgba(109,40,217,.3);
+  }
+  .agent-slider-ends{
+    display:flex;justify-content:space-between;
+    font-size:11px;color:var(--ink-soft);opacity:.7;
+  }
+
+  /* ============ RIGHT: Preview ============ */
+  .agent-preview-head{
+    display:flex;align-items:center;gap:8px;
+    font-size:14px;font-weight:700;
+    color:var(--purple-700);
+  }
+  .agent-name-row{
+    display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;margin-top:4px;
+  }
+  .agent-name-avatar{
+    width:64px;height:64px;border-radius:50%;border:1px solid var(--line);
+    background:#FAFAF7;display:grid;place-items:center;color:var(--ink-soft);overflow:hidden;
+  }
+  .agent-name-avatar svg{width:30px;height:30px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .agent-name-avatar img{width:100%;height:100%;object-fit:cover}
+  .agent-name-input{
+    width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:9px;
+    font:inherit;font-size:14px;outline:0;
+    transition:border-color .15s var(--ease);
+  }
+  .agent-name-input:focus{border-color:var(--purple-400,#A78BFA)}
+
+  .agent-desc-blurb{
+    font-size:12.5px;color:var(--ink-soft);line-height:1.6;
+    padding:11px 14px;background:#FAFAF7;border-radius:9px;border-left:2px solid var(--purple-400,#A78BFA);
+  }
+
+  .agent-avatar-styles{display:flex;flex-direction:column;gap:8px}
+  .agent-avatar-styles label{font-size:12.5px;font-weight:600}
+  .agent-style-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+  }
+  .agent-style-btn{
+    padding:10px 8px;border:1px solid var(--line);border-radius:9px;background:#fff;
+    font:inherit;font-size:11.5px;font-weight:500;cursor:pointer;color:var(--ink-soft);
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    transition:all .15s var(--ease);
+  }
+  .agent-style-btn:hover{border-color:var(--purple-300);color:var(--purple-700)}
+  .agent-style-btn.active{
+    border-color:var(--purple-600);background:rgba(139,92,246,.05);color:var(--purple-700);
+  }
+  .agent-style-btn span.ico{font-size:16px}
+
+  .agent-generate{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;padding:11px;
+  }
+
+  /* ============ Systemprompt ============ */
+  .agent-prompt-card{position:relative}
+  .agent-prompt-copy{
+    position:absolute;top:18px;right:20px;
+    padding:5px 12px;border-radius:7px;border:1px solid var(--line);background:#fff;
+    font:inherit;font-size:11.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;
+    display:inline-flex;align-items:center;gap:5px;
+    transition:all .15s var(--ease);
+  }
+  .agent-prompt-copy:hover{border-color:var(--purple-300);color:var(--purple-700)}
+  .agent-prompt{
+    background:#0F0B1A;color:#C4B5FD;
+    border-radius:10px;padding:14px 16px;
+    max-height:340px;overflow-y:auto;
+    font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;
+    white-space:pre-wrap;word-break:break-word;
+    border:1px solid #2D2845;
+  }
+  .agent-prompt strong{color:#F0ABFC;font-weight:600}
+  .agent-prompt em{color:#FCD34D;font-style:normal}
+  .agent-prompt-foot{
+    display:flex;justify-content:space-between;
+    font-size:11px;color:var(--ink-soft);opacity:.7;
+    padding:8px 4px 0;
+  }
+
+  /* Config-id accordion */
+  .agent-configid{margin-top:0}
+  .agent-configid summary{
+    list-style:none;cursor:pointer;
+    display:flex;align-items:center;gap:8px;
+    font-size:14px;font-weight:600;
+  }
+  .agent-configid summary::-webkit-details-marker{display:none}
+  .agent-configid summary::after{
+    content:"▾";margin-left:auto;color:var(--ink-soft);font-size:11px;
+    transition:transform .2s var(--ease);
+  }
+  .agent-configid[open] summary::after{transform:rotate(180deg)}
+  .agent-configid-body{
+    margin-top:12px;display:flex;flex-direction:column;gap:8px;
+  }
+  .agent-configid-body code{
+    background:#FAFAF7;border:1px solid var(--line);border-radius:6px;
+    padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--purple-700);
+  }
+  .agent-configid-body p{font-size:12px;color:var(--ink-soft);line-height:1.55}
+
+  /* ============ Chat-med-agent seksjon ============ */
+  .agent-chat-card{margin-top:14px}
+  .agent-chat-head{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:14px;
+  }
+  .agent-chat-title{display:flex;align-items:center;gap:12px}
+  .agent-chat-avatar{
+    width:44px;height:44px;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(135deg,var(--purple-400,#A78BFA),var(--purple-600));
+    color:#fff;display:grid;place-items:center;
+    font-size:18px;font-weight:700;
+  }
+  .agent-chat-name{font-size:16px;font-weight:700;letter-spacing:-.01em}
+  .agent-chat-name span{color:var(--purple-700)}
+  .agent-chat-sub{font-size:11.5px;color:var(--ink-soft);opacity:.75;margin-top:1px}
+
+  .agent-chat-stage{
+    background:#FAFAF7;border:1px solid var(--line);border-radius:12px;
+    display:flex;flex-direction:column;height:440px;overflow:hidden;
+  }
+  .agent-chat-msgs{
+    flex:1;overflow-y:auto;padding:18px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .agent-msg{display:flex;gap:10px;align-items:flex-start;max-width:75%}
+  .agent-msg.user{align-self:flex-end;flex-direction:row-reverse}
+  .agent-msg-avatar{
+    width:30px;height:30px;border-radius:50%;flex-shrink:0;
+    display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,var(--purple-400,#A78BFA),var(--purple-600));
+  }
+  .agent-msg.user .agent-msg-avatar{
+    background:linear-gradient(135deg,#9CA3AF,#4B5563);
+  }
+  .agent-msg-bubble{
+    padding:10px 14px;border-radius:13px;font-size:13.5px;line-height:1.55;
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+  }
+  .agent-msg.user .agent-msg-bubble{
+    background:linear-gradient(135deg,var(--purple-600),var(--purple-700));
+    color:#fff;border-color:transparent;border-bottom-right-radius:4px;
+  }
+  .agent-msg.bot .agent-msg-bubble{border-bottom-left-radius:4px}
+  .agent-msg-bubble em{font-style:normal;background:rgba(139,92,246,.12);color:var(--purple-700);padding:0 4px;border-radius:3px}
+
+  /* Typing indicator */
+  .agent-typing .agent-msg-bubble{
+    padding:12px 16px;display:flex;gap:4px;
+  }
+  .agent-typing .dot{
+    width:6px;height:6px;border-radius:50%;background:var(--purple-400,#A78BFA);
+    animation:typingBlink 1.2s ease-in-out infinite;
+  }
+  .agent-typing .dot:nth-child(2){animation-delay:.2s}
+  .agent-typing .dot:nth-child(3){animation-delay:.4s}
+  @keyframes typingBlink{
+    0%,80%,100%{opacity:.3;transform:scale(.8)}
+    40%{opacity:1;transform:scale(1)}
+  }
+
+  .agent-chat-suggestions{
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    padding:10px 14px;border-top:1px solid var(--line);background:#fff;
+    font-size:11.5px;color:var(--ink-soft);
+  }
+  .agent-suggest{
+    padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;
+    font:inherit;font-size:12px;color:var(--ink);cursor:pointer;
+    transition:all .15s var(--ease);
+  }
+  .agent-suggest:hover{border-color:var(--purple-300);color:var(--purple-700);background:rgba(139,92,246,.04)}
+
+  .agent-chat-input{
+    display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line);background:#fff;
+  }
+  .agent-chat-input input{
+    flex:1;padding:10px 14px;border-radius:9px;border:1px solid var(--line);
+    font:inherit;font-size:13.5px;outline:0;
+    transition:border-color .15s var(--ease);
+  }
+  .agent-chat-input input:focus{border-color:var(--purple-400,#A78BFA)}
+  .agent-chat-input button{
+    padding:9px 18px;border-radius:9px;
+    background:linear-gradient(135deg,var(--purple-500),var(--purple-700));
+    color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:0;
+    box-shadow:0 6px 14px -4px rgba(109,40,247,.4);
+    transition:transform .15s var(--ease);
+  }
+  .agent-chat-input button:hover{transform:translateY(-1px)}
+
+  @media (max-width:1100px){
+    .agent-builder{grid-template-columns:1fr}
+    .agent-profiles{grid-template-columns:repeat(2,1fr)}
+    .agent-grid-3{grid-template-columns:1fr}
+    .agent-style-grid{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="din-agent"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-btn-ghost">Tilbakestill</button>
+        <button class="panel-cta">Lagre agent</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Din agent</div>
+          <div class="panel-hello">Sett personlighet og tone for AI-en på tvers av alle verktøy. Endringer her påvirker GPT-bygger, Chat-assistent, Popup-søk og Smart-søk.</div>
+        </div>
+        <span class="panel-pill ok"><span class="panel-pill-dot"></span>Aktiv konfigurasjon</span>
+      </div>
+
+      <div class="agent-builder">
+
+        <!-- ============ LEFT: Controls ============ -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <span>Velg profil</span>
+              <span class="panel-card-sub">forhåndsdefinerte personligheter</span>
+            </div>
+            <div class="agent-profiles" id="agentProfiles">
+              <button class="agent-prof active" data-prof="alex"
+                      data-name="Alex" data-desc="Denne agenten er en balansert og saklig assistent som kommuniserer personlig. Denne agenten balanserer detaljer og kortfattethet."
+                      data-tone="Nøytral" data-perspective="Du-form" data-style="Balansert"
+                      data-friendliness="50" data-confidence="50" data-energy="50" data-formality="50" data-followup="50">
+                <div class="agent-prof-avatar">🧑</div>
+                <div class="agent-prof-name">Alex</div>
+                <div class="agent-prof-tag">Standard</div>
+                <div class="agent-prof-desc">Balansert og allsidig assistent</div>
+              </button>
+              <button class="agent-prof" data-prof="beatrix"
+                      data-name="Beatrix" data-desc="Beatrix er en formell og presis kommunikator. Holder tonen profesjonell og gir presise, faktabaserte svar."
+                      data-tone="Formell" data-perspective="De-form" data-style="Detaljert"
+                      data-friendliness="30" data-confidence="75" data-energy="35" data-formality="85" data-followup="40">
+                <div class="agent-prof-avatar">👩‍💼</div>
+                <div class="agent-prof-name">Beatrix</div>
+                <div class="agent-prof-tag">Profesjonell</div>
+                <div class="agent-prof-desc">Formell og presis kommunikasjon</div>
+              </button>
+              <button class="agent-prof" data-prof="roxie"
+                      data-name="Roxie" data-desc="Roxie er varm, vennlig og imøtekommende. Møter brukeren med entusiasme og bygger trygghet."
+                      data-tone="Hyggelig" data-perspective="Du-form" data-style="Kortfattet"
+                      data-friendliness="90" data-confidence="60" data-energy="80" data-formality="20" data-followup="65">
+                <div class="agent-prof-avatar">😊</div>
+                <div class="agent-prof-name">Roxie</div>
+                <div class="agent-prof-tag">Vennlig</div>
+                <div class="agent-prof-desc">Varm og imøtekommende tone</div>
+              </button>
+              <button class="agent-prof" data-prof="max"
+                      data-name="Max" data-desc="Max er motiverende og støttende. Bruker oppmuntring og hjelper brukeren steg for steg."
+                      data-tone="Hyggelig" data-perspective="Du-form" data-style="Detaljert"
+                      data-friendliness="80" data-confidence="80" data-energy="85" data-formality="30" data-followup="80">
+                <div class="agent-prof-avatar">💪</div>
+                <div class="agent-prof-name">Max</div>
+                <div class="agent-prof-tag">Coach</div>
+                <div class="agent-prof-desc">Motiverende og støttende</div>
+              </button>
+              <button class="agent-prof" data-prof="felix"
+                      data-name="Felix" data-desc="Felix er kunnskapsrik og detaljert. Gir grundige forklaringer og refererer til kilder."
+                      data-tone="Nøytral" data-perspective="Du-form" data-style="Detaljert"
+                      data-friendliness="55" data-confidence="90" data-energy="40" data-formality="70" data-followup="35">
+                <div class="agent-prof-avatar">🎓</div>
+                <div class="agent-prof-name">Felix</div>
+                <div class="agent-prof-tag">Ekspert</div>
+                <div class="agent-prof-desc">Kunnskapsrik og detaljert</div>
+              </button>
+              <button class="agent-prof" data-prof="custom"
+                      data-name="CustomX" data-desc="Din egendefinerte AI-personlighet. Juster alle parametere til du finner riktig stemme for bedriften."
+                      data-tone="Nøytral" data-perspective="Du-form" data-style="Balansert"
+                      data-friendliness="50" data-confidence="50" data-energy="50" data-formality="50" data-followup="50">
+                <div class="agent-prof-avatar" style="background:linear-gradient(135deg,#A78BFA,#6D28D9);color:#fff">✦</div>
+                <div class="agent-prof-name">CustomX</div>
+                <div class="agent-prof-tag">Custom</div>
+                <div class="agent-prof-desc">Definer din egen AI-personlighet</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head"><span>Innstillinger</span></div>
+            <div class="agent-grid-3">
+              <div class="agent-field">
+                <label>Tone <span class="q" title="Hvordan AI-en uttrykker seg">?</span></label>
+                <select class="agent-select" id="optTone">
+                  <option>Nøytral</option>
+                  <option>Hyggelig</option>
+                  <option>Formell</option>
+                  <option>Energisk</option>
+                </select>
+              </div>
+              <div class="agent-field">
+                <label>Perspektiv <span class="q" title="Hvordan AI-en tiltaler brukeren">?</span></label>
+                <select class="agent-select" id="optPersp">
+                  <option>Du-form</option>
+                  <option>De-form</option>
+                  <option>Vi-form</option>
+                </select>
+              </div>
+              <div class="agent-field">
+                <label>Svarstil <span class="q" title="Hvor utfyllende svar AI-en gir">?</span></label>
+                <select class="agent-select" id="optStyle">
+                  <option>Balansert</option>
+                  <option>Kortfattet</option>
+                  <option>Detaljert</option>
+                </select>
+              </div>
+            </div>
+            <details class="agent-advanced">
+              <summary>Avansert</summary>
+              <div class="agent-advanced-body">
+                <div class="agent-grid-3">
+                  <div class="agent-field">
+                    <label>Modell</label>
+                    <select class="agent-select">
+                      <option>MotherX-large</option>
+                      <option>MotherX-fast</option>
+                      <option>MotherX-precise</option>
+                    </select>
+                  </div>
+                  <div class="agent-field">
+                    <label>Temperatur</label>
+                    <select class="agent-select">
+                      <option>0.2 (presis)</option>
+                      <option>0.5 (balansert)</option>
+                      <option>0.8 (kreativ)</option>
+                    </select>
+                  </div>
+                  <div class="agent-field">
+                    <label>Maks svar-lengde</label>
+                    <select class="agent-select">
+                      <option>Standard (512)</option>
+                      <option>Lang (1024)</option>
+                      <option>Veldig lang (2048)</option>
+                    </select>
+                  </div>
+                </div>
+                <div style="font-size:11.5px;color:var(--ink-soft)">Avanserte parametere overstyrer profil-presets. La være tom for å bruke standard.</div>
+              </div>
+            </details>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head"><span>Justeringer</span><span class="panel-card-sub">finjuster personligheten</span></div>
+
+            <div class="agent-slider" data-slider="friendliness">
+              <div class="agent-slider-head"><span><span class="ico">😊</span>Vennlighet</span><span class="agent-slider-val">50</span></div>
+              <input type="range" min="0" max="100" value="50"/>
+              <div class="agent-slider-ends"><span>Distansert</span><span>Varm</span></div>
+            </div>
+
+            <div class="agent-slider" data-slider="confidence">
+              <div class="agent-slider-head"><span><span class="ico">💪</span>Selvtillit</span><span class="agent-slider-val">50</span></div>
+              <input type="range" min="0" max="100" value="50"/>
+              <div class="agent-slider-ends"><span>Forsiktig</span><span>Trygg</span></div>
+            </div>
+
+            <div class="agent-slider" data-slider="energy">
+              <div class="agent-slider-head"><span><span class="ico">⚡</span>Entusiasme</span><span class="agent-slider-val">50</span></div>
+              <input type="range" min="0" max="100" value="50"/>
+              <div class="agent-slider-ends"><span>Rolig</span><span>Energisk</span></div>
+            </div>
+
+            <div class="agent-slider" data-slider="formality">
+              <div class="agent-slider-head"><span><span class="ico">📖</span>Formalitet</span><span class="agent-slider-val">50</span></div>
+              <input type="range" min="0" max="100" value="50"/>
+              <div class="agent-slider-ends"><span>Uformell</span><span>Formell</span></div>
+            </div>
+
+            <div class="agent-slider" data-slider="followup">
+              <div class="agent-slider-head"><span><span class="ico">❓</span>Oppfølgingsspørsmål</span><span class="agent-slider-val">50</span></div>
+              <input type="range" min="0" max="100" value="50"/>
+              <div class="agent-slider-ends"><span>Sjelden</span><span>Ofte</span></div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ============ RIGHT: Preview ============ -->
+        <div style="display:flex;flex-direction:column;gap:14px;position:sticky;top:80px">
+
+          <div class="panel-card">
+            <div class="agent-preview-head">
+              <span style="color:var(--purple-600)">✦</span>
+              <span>Din AI-agent</span>
+            </div>
+
+            <div class="agent-name-row">
+              <div class="agent-name-avatar" id="agentAvatar">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+              </div>
+              <input class="agent-name-input" id="agentNameInput" type="text" placeholder="Gi agenten et navn" value="Alex"/>
+            </div>
+
+            <div class="agent-desc-blurb" id="agentDescBlurb">Denne agenten er en balansert og saklig assistent som kommuniserer personlig. Denne agenten balanserer detaljer og kortfattethet.</div>
+
+            <div class="agent-avatar-styles">
+              <label>Avatar-stil</label>
+              <div class="agent-style-grid">
+                <button class="agent-style-btn"><span class="ico">🤖</span>Robot</button>
+                <button class="agent-style-btn"><span class="ico">🐾</span>Dyr</button>
+                <button class="agent-style-btn active"><span class="ico">🧑</span>Menneske</button>
+                <button class="agent-style-btn"><span class="ico">🎨</span>Cartoon</button>
+                <button class="agent-style-btn"><span class="ico">◐</span>Abstrakt</button>
+                <button class="agent-style-btn"><span class="ico">💼</span>Profesjonell</button>
+              </div>
+              <button class="agent-style-btn" style="margin-top:4px"><span class="ico">⬆</span>Egen logo</button>
+            </div>
+
+            <button class="panel-cta agent-generate">✦ Generer avatar</button>
+          </div>
+
+          <div class="panel-card agent-prompt-card">
+            <div class="panel-card-head">
+              <span>📝 Systemprompt</span>
+            </div>
+            <button class="agent-prompt-copy" id="copyPrompt">📋 Kopier</button>
+            <div class="agent-prompt" id="promptText"><!-- generated by JS --></div>
+            <div class="agent-prompt-foot">
+              <span id="promptChars">0 tegn</span>
+              <span id="promptWords">0 ord</span>
+            </div>
+          </div>
+
+          <details class="panel-card agent-configid">
+            <summary>♂ Konfigurasjon-ID</summary>
+            <div class="agent-configid-body">
+              <code id="configId">mx-agent-alex-7f3a-2026q2</code>
+              <p>Lim denne ID-en inn i SDK-en for å bruke samme agent på tvers av miljøer (staging / produksjon).</p>
+              <div style="display:flex;gap:8px">
+                <button class="panel-btn-ghost" style="font-size:12px;padding:7px 12px">Kopier ID</button>
+                <button class="panel-btn-ghost" style="font-size:12px;padding:7px 12px">Roter</button>
+              </div>
+            </div>
+          </details>
+
+        </div>
+
+      </div>
+
+      <!-- ============ Snakk med agent ============ -->
+      <div class="panel-card agent-chat-card">
+        <div class="agent-chat-head">
+          <div class="agent-chat-title">
+            <div class="agent-chat-avatar" id="chatAvatar">A</div>
+            <div>
+              <div class="agent-chat-name">Snakk med <span id="chatAgentName">Alex</span></div>
+              <div class="agent-chat-sub">Test tonen og språket på direkten — innstillingene over speiles i svarene.</div>
+            </div>
+          </div>
+          <button class="panel-btn-ghost" id="chatReset" type="button">↺ Start på nytt</button>
+        </div>
+
+        <div class="agent-chat-stage">
+          <div class="agent-chat-msgs" id="agentChatMsgs">
+            <!-- meldinger rendres av JS -->
+          </div>
+          <div class="agent-chat-suggestions">
+            <span>Prøv:</span>
+            <button class="agent-suggest" data-q="Hva slags produkter har dere?" type="button">Produkter</button>
+            <button class="agent-suggest" data-q="Når er åpningstidene?" type="button">Åpningstider</button>
+            <button class="agent-suggest" data-q="Kan jeg returnere et produkt?" type="button">Retur</button>
+            <button class="agent-suggest" data-q="Har dere bedriftsavtaler?" type="button">Bedriftsavtaler</button>
+          </div>
+          <form class="agent-chat-input" id="agentChatForm">
+            <input type="text" id="agentChatInput" placeholder="Skriv en testmelding..." autocomplete="off"/>
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+<script>
+  (function(){
+    const profs = document.querySelectorAll('.agent-prof');
+    const sliders = document.querySelectorAll('.agent-slider');
+    const nameInput = document.getElementById('agentNameInput');
+    const descBlurb = document.getElementById('agentDescBlurb');
+    const optTone = document.getElementById('optTone');
+    const optPersp = document.getElementById('optPersp');
+    const optStyle = document.getElementById('optStyle');
+    const promptEl = document.getElementById('promptText');
+    const charsEl = document.getElementById('promptChars');
+    const wordsEl = document.getElementById('promptWords');
+    const copyBtn = document.getElementById('copyPrompt');
+    const configIdEl = document.getElementById('configId');
+
+    // Style buttons (avatar style)
+    document.querySelectorAll('.agent-style-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.agent-style-btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+      });
+    });
+
+    // Slider value display + fill gradient
+    function paintSlider(slider){
+      const input = slider.querySelector('input[type="range"]');
+      const val = slider.querySelector('.agent-slider-val');
+      const v = +input.value;
+      val.textContent = v;
+      input.style.background = `linear-gradient(to right, var(--purple-500) 0%, var(--purple-500) ${v}%, #EDE5E5 ${v}%, #EDE5E5 100%)`;
+    }
+    sliders.forEach(s => {
+      const input = s.querySelector('input[type="range"]');
+      paintSlider(s);
+      input.addEventListener('input', () => { paintSlider(s); regen(); });
+    });
+
+    // Profile selection — apply all the data-* attrs to controls
+    profs.forEach(p => {
+      p.addEventListener('click', () => {
+        profs.forEach(x => x.classList.toggle('active', x === p));
+        const d = p.dataset;
+        nameInput.value = d.name;
+        descBlurb.textContent = d.desc;
+        optTone.value = d.tone;
+        optPersp.value = d.perspective;
+        optStyle.value = d.style;
+        const map = {friendliness:d.friendliness,confidence:d.confidence,energy:d.energy,formality:d.formality,followup:d.followup};
+        sliders.forEach(s => {
+          const input = s.querySelector('input[type="range"]');
+          input.value = map[s.dataset.slider] || 50;
+          paintSlider(s);
+        });
+        regen();
+      });
+    });
+
+    [nameInput, optTone, optPersp, optStyle].forEach(el => el.addEventListener('input', regen));
+
+    function regen(){
+      const name = nameInput.value || 'Alex';
+      const tone = optTone.value;
+      const persp = optPersp.value;
+      const style = optStyle.value;
+      const v = (k) => +document.querySelector(`[data-slider="${k}"] input`).value;
+
+      const friend = v('friendliness');
+      const conf   = v('confidence');
+      const ener   = v('energy');
+      const form   = v('formality');
+      const fup    = v('followup');
+
+      const lvl = (n) => n < 33 ? 'lav' : (n < 67 ? 'middels' : 'høy');
+
+      const prompt =
+`You are <strong>${name}</strong>, a multilingual retrieval-augmented assistant for Dinbedrift AS.
+You answer questions based strictly on the knowledge base provided.
+
+# Personality
+- Tone: <em>${tone}</em>
+- Perspective: <em>${persp}</em>
+- Response style: <em>${style}</em>
+- Friendliness: <em>${lvl(friend)}</em> (${friend}/100)
+- Confidence: <em>${lvl(conf)}</em> (${conf}/100)
+- Energy: <em>${lvl(ener)}</em> (${ener}/100)
+- Formality: <em>${lvl(form)}</em> (${form}/100)
+- Follow-up questions: <em>${lvl(fup)}</em> (${fup}/100)
+
+# Behavior
+- Respond in the same language the user writes in.
+- If a query is in a different language than the source, translate either query or answer as needed.
+- Always cite the source document and page when referencing knowledge base content.
+- Never fabricate information — if uncertain, say "Det vet jeg ikke ut fra kildene mine, men jeg kan henvise deg videre."
+- Use a maximum of ${style === 'Kortfattet' ? '2-3 sentences' : style === 'Detaljert' ? '6-8 sentences' : '4-5 sentences'} per response unless explicitly asked for more.
+
+# Lead capture
+- When you detect interest from a B2B buyer (volume questions, demos, partnership), politely collect contact info.
+- After the second exchange in such conversations, suggest: "Skal jeg sende deg et tilbud? Hva er bedriftens navn og e-post?"
+
+# Source citations
+- Format: "📎 [Source.pdf](#) (s. X)" at the end of relevant answers.
+- Never invent source titles — only use indexed files.
+
+# Off-topic handling
+- For requests outside the knowledge domain, politely redirect: "Jeg er spesialisert på spørsmål om Dinbedrift — kan jeg hjelpe deg med noe der i stedet?"`;
+
+      promptEl.innerHTML = prompt;
+      const plain = promptEl.textContent;
+      charsEl.textContent = plain.length.toLocaleString('nb-NO').replace(/,/g,' ') + ' tegn';
+      wordsEl.textContent = plain.trim().split(/\s+/).length.toLocaleString('nb-NO').replace(/,/g,' ') + ' ord';
+
+      // Config ID reflects name
+      const slug = name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+      configIdEl.textContent = `mx-agent-${slug}-7f3a-2026q2`;
+    }
+
+    copyBtn.addEventListener('click', () => {
+      const text = promptEl.textContent;
+      navigator.clipboard?.writeText(text).then(() => {
+        const orig = copyBtn.innerHTML;
+        copyBtn.innerHTML = '✓ Kopiert';
+        setTimeout(() => copyBtn.innerHTML = orig, 1500);
+      });
+    });
+
+    regen();
+  })();
+</script>
+</body>
+</html>

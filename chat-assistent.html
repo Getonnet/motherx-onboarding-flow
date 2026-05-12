@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chat-assistent — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<style>
+  .widget-stage{
+    position:relative;background:#1F1B2E;border:1px solid var(--line);border-radius:14px;
+    height:560px;overflow:hidden;
+    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:30px 30px;
+  }
+  .widget-fakepage{
+    position:absolute;inset:24px 24px 90px;background:#fff;border-radius:10px;
+    padding:24px;font-size:12px;color:var(--ink-soft);opacity:.7;
+    box-shadow:0 20px 40px -20px rgba(0,0,0,.4);
+    overflow:hidden;
+  }
+  .widget-fakepage::before{
+    content:"dinbedrift.no";display:block;font-size:11px;color:var(--ink-soft);opacity:.5;
+    padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:14px;font-family:monospace;
+  }
+  .widget-launcher{
+    position:absolute;bottom:24px;right:24px;
+    width:60px;height:60px;border-radius:50%;
+    background:linear-gradient(135deg,var(--purple-500),var(--purple-700));
+    box-shadow:0 16px 32px -10px rgba(109,40,217,.6);
+    display:grid;place-items:center;color:#fff;font-size:24px;
+    cursor:pointer;
+  }
+  .widget-bubble{
+    position:absolute;bottom:96px;right:24px;width:340px;max-height:420px;
+    background:#fff;border-radius:14px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.4);
+    display:flex;flex-direction:column;overflow:hidden;
+  }
+  .widget-bubble-head{
+    padding:14px 16px;color:#fff;font-size:13px;font-weight:600;
+    background:linear-gradient(135deg,var(--purple-500),var(--purple-700));
+    display:flex;align-items:center;gap:10px;
+  }
+  .widget-bubble-head .panel-av{width:28px;height:28px;background:rgba(255,255,255,.2);font-size:11px}
+  .widget-bubble-body{flex:1;padding:14px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;font-size:13px}
+  .widget-msg{padding:9px 13px;border-radius:13px;max-width:85%;line-height:1.5}
+  .widget-msg.bot{background:#F4EFFB;color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
+  .widget-msg.user{background:linear-gradient(135deg,var(--purple-600),var(--purple-700));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .widget-bubble-foot{
+    padding:10px 12px;border-top:1px solid var(--line);
+    display:flex;gap:8px;align-items:center;
+  }
+  .widget-bubble-foot input{
+    flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--line);
+    font:inherit;font-size:12.5px;outline:0;
+  }
+</style>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="chat-assistent"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk i widgets..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-btn-ghost">Embed-kode</button>
+        <button class="panel-cta">Publiser</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Chat-assistent</div>
+          <div class="panel-hello">En chat-boble som bor i hjørnet av nettsiden din og svarer kunder 24/7.</div>
+        </div>
+        <span class="panel-pill ok"><span class="panel-pill-dot"></span>Live på dinbedrift.no</span>
+      </div>
+
+      <div class="playground">
+
+        <div class="pg-controls">
+          <div class="panel-card">
+            <div class="panel-card-head"><span>Utseende</span></div>
+            <div class="pg-field">
+              <span class="pg-label">Tittel</span>
+              <input class="pg-input" type="text" value="Kundeservice"/>
+            </div>
+            <div class="pg-field">
+              <span class="pg-label">Velkomstmelding</span>
+              <textarea class="pg-textarea" rows="2">Hei! Hva kan jeg hjelpe deg med i dag?</textarea>
+            </div>
+            <div class="pg-field">
+              <span class="pg-label">Plassering</span>
+              <select class="pg-select">
+                <option>Nede høyre</option>
+                <option>Nede venstre</option>
+                <option>Senter</option>
+              </select>
+            </div>
+            <div class="pg-field">
+              <span class="pg-label">Primærfarge</span>
+              <div style="display:flex;gap:8px;align-items:center">
+                <span style="width:28px;height:28px;border-radius:8px;background:var(--purple-600);border:2px solid #fff;box-shadow:0 0 0 1px var(--line)"></span>
+                <input class="pg-input" type="text" value="#6D28D9" style="font-variant-numeric:tabular-nums"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head"><span>Triggere</span></div>
+            <div class="settings-row" style="padding:10px 12px;background:#FAFAF7;border:0">
+              <div class="settings-row-l"><strong style="font-size:12.5px">Auto-åpne etter</strong><span style="font-size:11px">Vises som popup etter X sekunder</span></div>
+              <input class="pg-input" type="text" value="20s" style="justify-self:end;width:80px;text-align:right"/>
+            </div>
+            <div class="settings-row" style="padding:10px 12px;background:#FAFAF7;border:0">
+              <div class="settings-row-l"><strong style="font-size:12.5px">Vis ved exit-intent</strong><span style="font-size:11px">Når brukeren beveger seg mot fanen</span></div>
+              <div class="settings-toggle on" style="justify-self:end"></div>
+            </div>
+            <div class="settings-row" style="padding:10px 12px;background:#FAFAF7;border:0">
+              <div class="settings-row-l"><strong style="font-size:12.5px">Skjul på mobil</strong><span style="font-size:11px">Bare desktop og nettbrett</span></div>
+              <div class="settings-toggle" style="justify-self:end"></div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head"><span>Aktive sider</span><span class="panel-card-sub">3 regler</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12.5px">
+              <div style="padding:8px 10px;border-radius:8px;background:#FAFAF7"><strong>Inkluder:</strong> <code style="font-family:monospace">dinbedrift.no/*</code></div>
+              <div style="padding:8px 10px;border-radius:8px;background:#FAFAF7"><strong>Ekskluder:</strong> <code style="font-family:monospace">/admin/*</code></div>
+              <div style="padding:8px 10px;border-radius:8px;background:#FAFAF7"><strong>Ekskluder:</strong> <code style="font-family:monospace">/checkout/*</code></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="widget-stage">
+            <div class="widget-fakepage">
+              <div style="height:18px;width:60%;background:#F1ECE0;border-radius:4px;margin-bottom:10px"></div>
+              <div style="height:10px;width:90%;background:#F4F2EC;border-radius:4px;margin-bottom:8px"></div>
+              <div style="height:10px;width:85%;background:#F4F2EC;border-radius:4px;margin-bottom:8px"></div>
+              <div style="height:10px;width:78%;background:#F4F2EC;border-radius:4px;margin-bottom:18px"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="height:80px;background:#F4F2EC;border-radius:8px"></div>
+                <div style="height:80px;background:#F4F2EC;border-radius:8px"></div>
+              </div>
+            </div>
+
+            <div class="widget-bubble">
+              <div class="widget-bubble-head">
+                <div class="panel-av">M</div>
+                <div>
+                  <div>Kundeservice</div>
+                  <div style="font-size:10.5px;opacity:.7;font-weight:400">Vanligvis svar innen 1 minutt</div>
+                </div>
+              </div>
+              <div class="widget-bubble-body">
+                <div class="widget-msg bot">Hei! Hva kan jeg hjelpe deg med i dag?</div>
+                <div class="widget-msg user">Har dere røde vinterjakker?</div>
+                <div class="widget-msg bot">Ja, tre modeller: Arctic Parka, Polarbukse Rød Edition, og Nordlys-skall. Skal jeg vise dem?</div>
+              </div>
+              <div class="widget-bubble-foot">
+                <input type="text" placeholder="Skriv en melding..."/>
+                <button class="panel-cta" style="padding:7px 12px;font-size:12px">Send</button>
+              </div>
+            </div>
+
+            <div class="widget-launcher">💬</div>
+          </div>
+
+          <div style="display:flex;gap:14px;margin-top:14px">
+            <div class="panel-card" style="flex:1">
+              <div class="panel-card-sub">Sesjoner i dag</div>
+              <div style="font-size:24px;font-weight:700">847</div>
+            </div>
+            <div class="panel-card" style="flex:1">
+              <div class="panel-card-sub">CSAT</div>
+              <div style="font-size:24px;font-weight:700;color:#059669">4,7</div>
+            </div>
+            <div class="panel-card" style="flex:1">
+              <div class="panel-card-sub">Snitt svartid</div>
+              <div style="font-size:24px;font-weight:700">1,2s</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+</body>
+</html>

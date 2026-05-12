@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Din bedrift — MotherX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Fav-icon.png"/>
+<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="panel.css"/>
+<style>
+  .biz-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .biz-grid-full{grid-column:1/-1}
+  .biz-row{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .biz-row:last-child{margin-bottom:0}
+  .biz-row-l strong{font-size:13.5px;font-weight:600;display:block}
+  .biz-row-l span{font-size:11.5px;color:var(--ink-soft);opacity:.75}
+
+  .biz-logo-row{
+    display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;
+    padding:18px;background:#FAFAF7;border-radius:11px;
+  }
+  .biz-logo-box{
+    width:96px;height:96px;border-radius:14px;background:#fff;
+    border:1px dashed var(--line);display:grid;place-items:center;
+    color:var(--purple-700);font-family:'Instrument Serif',serif;font-style:italic;font-size:46px;
+  }
+  .biz-logo-text{font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+
+  .biz-colors{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .biz-color{
+    padding:14px;border-radius:11px;background:#FAFAF7;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .biz-color-label{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);opacity:.7}
+  .biz-color-swatch{
+    height:56px;border-radius:8px;border:1px solid var(--line);
+  }
+  .biz-color-input{
+    display:flex;gap:6px;align-items:center;
+    padding:7px 10px;background:#fff;border:1px solid var(--line);border-radius:8px;
+    font-family:monospace;font-size:12.5px;
+  }
+  .biz-color-input input{flex:1;border:0;outline:0;font:inherit}
+
+  .biz-voice{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .biz-voice-opt{
+    padding:14px;border:1px solid var(--line);border-radius:11px;background:#fff;
+    cursor:pointer;transition:all .15s var(--ease);
+  }
+  .biz-voice-opt:hover{border-color:var(--purple-300)}
+  .biz-voice-opt.active{
+    border-color:var(--purple-600);background:#F4EFFB;
+    box-shadow:0 0 0 3px rgba(139,92,246,.1);
+  }
+  .biz-voice-opt strong{display:block;font-size:13.5px;margin-bottom:4px}
+  .biz-voice-opt em{font-style:normal;font-size:11.5px;color:var(--ink-soft);line-height:1.5}
+
+  .biz-preview{
+    background:linear-gradient(135deg,var(--purple-600),var(--purple-700));
+    border-radius:14px;padding:22px;color:#fff;
+    display:flex;align-items:center;gap:18px;
+  }
+
+  /* Kom i gang — CTA over Din bedrift */
+  .biz-wizard-cta{
+    position:relative;overflow:hidden;
+    border:1px solid var(--purple-200,#DDD6FE);border-radius:16px;
+    background:
+      radial-gradient(ellipse at top right,rgba(139,92,246,.15),transparent 55%),
+      linear-gradient(180deg,#fff,#FAFAF7);
+    padding:22px 24px;
+    display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+  }
+  .biz-wizard-eyebrow{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--purple-700);margin-bottom:8px;
+  }
+  .biz-wizard-eyebrow::before{
+    content:"";width:7px;height:7px;border-radius:50%;background:var(--purple-600);
+    animation:dashLivePulse 2s ease-in-out infinite;
+  }
+  .biz-wizard-title{
+    font-size:20px;font-weight:700;letter-spacing:-.015em;line-height:1.3;margin-bottom:6px;
+  }
+  .biz-wizard-sub{font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:12px;max-width:520px}
+  .biz-wizard-progress{display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--ink-soft)}
+  .biz-wizard-progress-bar{
+    flex:1;max-width:260px;height:6px;background:#EDE9FE;border-radius:999px;overflow:hidden;
+  }
+  .biz-wizard-progress-fill{
+    height:100%;border-radius:999px;
+    background:linear-gradient(90deg,var(--purple-400,#A78BFA),var(--purple-600));
+    transition:width .8s var(--ease);
+  }
+  .biz-wizard-cta-btn{
+    padding:12px 22px;border-radius:11px;
+    background:linear-gradient(135deg,var(--purple-500),var(--purple-700));
+    color:#fff;font-weight:600;font-size:14px;text-decoration:none;
+    box-shadow:0 10px 22px -8px rgba(109,40,217,.5);
+    transition:transform .15s var(--ease);white-space:nowrap;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .biz-wizard-cta-btn:hover{transform:translateY(-1px)}
+
+  @media (max-width:760px){
+    .biz-wizard-cta{grid-template-columns:1fr;gap:14px}
+  }
+  .biz-preview-mark{
+    width:60px;height:60px;border-radius:14px;background:rgba(255,255,255,.15);
+    display:grid;place-items:center;font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:30px;flex-shrink:0;
+  }
+  .biz-preview-title{font-size:18px;font-weight:700;letter-spacing:-.01em}
+  .biz-preview-sub{font-size:12.5px;opacity:.8;margin-top:2px}
+  .biz-preview-action{
+    margin-left:auto;padding:9px 16px;border-radius:10px;background:#fff;color:var(--purple-700);
+    font-weight:600;font-size:12.5px;cursor:pointer;border:0;
+  }
+
+  @media (max-width:1100px){
+    .biz-grid{grid-template-columns:1fr}
+    .biz-colors,.biz-voice{grid-template-columns:1fr}
+  }
+</style>
+<script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"default")</script>
+</head>
+<body>
+
+<div class="panel">
+  <aside class="panel-side" data-active="din-bedrift"></aside>
+
+  <main class="panel-main">
+    <div class="panel-top">
+      <div class="panel-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Søk..." />
+        <kbd>⌘K</kbd>
+      </div>
+      <div class="panel-top-actions">
+        <button class="panel-icon-btn" title="Varsler">🔔<span class="dot"></span></button>
+        <button class="panel-btn-ghost">Avbryt</button>
+        <button class="panel-cta">Lagre endringer</button>
+      </div>
+    </div>
+
+    <div class="panel-content">
+
+      <div class="panel-page-head">
+        <div>
+          <div class="panel-page-title">Din bedrift</div>
+          <div class="panel-hello">Grunnleggende informasjon om bedriften — brukes til branding, AI-tone og kontakt på tvers av verktøyene.</div>
+        </div>
+        <span class="panel-pill ok"><span class="panel-pill-dot"></span>Komplett · klar for publisering</span>
+      </div>
+
+      <div class="biz-wizard-cta">
+        <div>
+          <div class="biz-wizard-eyebrow">Kom i gang</div>
+          <div class="biz-wizard-title">Sett opp din første AI-modul på 10 minutter</div>
+          <div class="biz-wizard-sub">En guidet wizard tar deg gjennom mål, bedriftsinfo, valg av verktøy og opplasting av kilder — og du er klar til å publisere.</div>
+          <div class="biz-wizard-progress">
+            <div class="biz-wizard-progress-bar"><div class="biz-wizard-progress-fill" style="width:40%"></div></div>
+            <span>2 av 5 steg fullført</span>
+          </div>
+        </div>
+        <a href="onboarding.html" class="biz-wizard-cta-btn">Fortsett oppsettet →</a>
+      </div>
+
+      <div class="biz-preview">
+        <div class="biz-preview-mark">D</div>
+        <div>
+          <div class="biz-preview-title">Slik ser bedriften ut for AI-en</div>
+          <div class="biz-preview-sub">Dinbedrift AS · klesbutikk · vennlig fagtone · primærfarge #6D28D9</div>
+        </div>
+        <button class="biz-preview-action">Forhåndsvis chat</button>
+      </div>
+
+      <div class="biz-grid">
+
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Bedriftsinfo</span></div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Bedriftsnavn</strong><span>Vises i widgets, e-poster og signaturer.</span></div>
+            <input class="pg-input" type="text" value="Dinbedrift AS"/>
+          </div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Organisasjonsnummer</strong><span>Brukes på faktura.</span></div>
+            <input class="pg-input" type="text" value="987 654 321 MVA"/>
+          </div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Bransje</strong><span>Hjelper AI-en å forstå konteksten.</span></div>
+            <select class="pg-select">
+              <option>Klær, sko &amp; tekstil</option>
+              <option>Bygg &amp; anlegg</option>
+              <option>Detaljhandel (annet)</option>
+              <option>Tjenester</option>
+              <option>SaaS / IT</option>
+              <option>Industri / produksjon</option>
+              <option>Hotell &amp; reiseliv</option>
+              <option>Helse</option>
+            </select>
+          </div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Kort beskrivelse</strong><span>1–2 setninger AI-en bruker som grunnkontekst.</span></div>
+            <textarea class="pg-textarea" rows="3">Dinbedrift AS er en norsk klesbutikk som spesialiserer seg på funksjonsklær for kalde fjellturer og hverdagsbruk. Vi har butikk i Oslo og nettbutikk i hele Norden.</textarea>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-card-head"><span>Kontakt</span></div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Nettside</strong></div>
+            <input class="pg-input" type="text" value="https://dinbedrift.no" style="font-family:monospace;font-size:12.5px"/>
+          </div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Support-e-post</strong><span>Brukes når AI-en henviser kunder videre.</span></div>
+            <input class="pg-input" type="email" value="kundeservice@dinbedrift.no"/>
+          </div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Telefon</strong></div>
+            <input class="pg-input" type="tel" value="+47 22 33 44 55"/>
+          </div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Adresse</strong></div>
+            <textarea class="pg-textarea" rows="2">Storgata 12, 0184 Oslo</textarea>
+          </div>
+          <div class="biz-row">
+            <div class="biz-row-l"><strong>Åpningstider</strong></div>
+            <input class="pg-input" type="text" value="Man–fre 10–18 · lør 11–16 · søn stengt"/>
+          </div>
+        </div>
+
+        <div class="panel-card biz-grid-full">
+          <div class="panel-card-head"><span>Logo</span><span class="panel-card-sub">SVG eller PNG, transparent bakgrunn</span></div>
+          <div class="biz-logo-row">
+            <div class="biz-logo-box">D</div>
+            <div>
+              <div style="font-weight:600;font-size:13.5px;margin-bottom:4px">dinbedrift-logo.svg</div>
+              <div class="biz-logo-text">Lastet opp 12. mars 2026 · brukes i widget-header, e-postsignaturer og forhåndsvisninger. Anbefalt minstebredde: 512px.</div>
+              <div style="display:flex;gap:8px;margin-top:10px">
+                <button class="panel-btn-ghost">Last opp ny</button>
+                <button class="panel-btn-ghost" style="color:#DC2626">Fjern</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card biz-grid-full">
+          <div class="panel-card-head"><span>Farger</span><span class="panel-card-sub">brukes på tvers av alle moduler</span></div>
+          <div class="biz-colors">
+            <div class="biz-color">
+              <span class="biz-color-label">Primær</span>
+              <div class="biz-color-swatch" style="background:#6D28D9"></div>
+              <div class="biz-color-input"><span style="color:var(--ink-soft)">#</span><input type="text" value="6D28D9"/></div>
+            </div>
+            <div class="biz-color">
+              <span class="biz-color-label">Sekundær</span>
+              <div class="biz-color-swatch" style="background:#A78BFA"></div>
+              <div class="biz-color-input"><span style="color:var(--ink-soft)">#</span><input type="text" value="A78BFA"/></div>
+            </div>
+            <div class="biz-color">
+              <span class="biz-color-label">Aksent</span>
+              <div class="biz-color-swatch" style="background:#10B981"></div>
+              <div class="biz-color-input"><span style="color:var(--ink-soft)">#</span><input type="text" value="10B981"/></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card biz-grid-full">
+          <div class="panel-card-head"><span>AI-tone</span><span class="panel-card-sub">hvordan AI-en skal kommunisere</span></div>
+          <div class="biz-voice">
+            <div class="biz-voice-opt active">
+              <strong>Vennlig fagperson</strong>
+              <em>«Hei! Arctic Parka tåler ned til -30 °C. Skal jeg vise størrelsesguiden?»</em>
+            </div>
+            <div class="biz-voice-opt">
+              <strong>Formell &amp; presis</strong>
+              <em>«God dag. Arctic Parka er sertifisert for temperaturer ned til -30 °C. Ønsker du detaljer om størrelser?»</em>
+            </div>
+            <div class="biz-voice-opt">
+              <strong>Tøff &amp; direkte</strong>
+              <em>«Arctic Parka tåler -30 °C. Punktum. Hvilken størrelse trenger du?»</em>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card biz-grid-full">
+          <div class="panel-card-head"><span>Språk &amp; region</span></div>
+          <div class="biz-grid">
+            <div class="biz-row">
+              <div class="biz-row-l"><strong>Hovedspråk</strong><span>Brukes når brukerens språk er ukjent.</span></div>
+              <select class="pg-select">
+                <option>🇳🇴 Norsk (bokmål)</option>
+                <option>🇳🇴 Nynorsk</option>
+                <option>🇬🇧 English</option>
+                <option>🇸🇪 Svenska</option>
+                <option>🇩🇰 Dansk</option>
+              </select>
+            </div>
+            <div class="biz-row">
+              <div class="biz-row-l"><strong>Andre språk AI-en støtter</strong><span>Detekteres automatisk fra brukeren.</span></div>
+              <input class="pg-input" type="text" value="Engelsk, svensk, dansk"/>
+            </div>
+            <div class="biz-row">
+              <div class="biz-row-l"><strong>Tidssone</strong></div>
+              <select class="pg-select">
+                <option>Europe/Oslo (UTC+1)</option>
+                <option>Europe/London (UTC+0)</option>
+                <option>America/New_York (UTC-5)</option>
+              </select>
+            </div>
+            <div class="biz-row">
+              <div class="biz-row-l"><strong>Valuta</strong></div>
+              <select class="pg-select">
+                <option>NOK · norske kroner</option>
+                <option>SEK · svenske kroner</option>
+                <option>EUR · euro</option>
+                <option>USD · amerikanske dollar</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="panel-shell.js"></script>
+</body>
+</html>
