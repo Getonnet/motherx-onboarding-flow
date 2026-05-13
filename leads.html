@@ -11,6 +11,198 @@
 <link rel="stylesheet" href="styles.css"/>
 <link rel="stylesheet" href="panel.css"/>
 <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("mx-theme")||"warm-purple")</script>
+<style>
+  /* ===== Notifications settings card (collapsible) ===== */
+  .lead-settings{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}
+  .lead-settings > summary{
+    list-style:none;cursor:pointer;
+    display:flex;align-items:center;gap:12px;padding:16px 20px;
+    font-size:14px;font-weight:600;
+  }
+  .lead-settings > summary::-webkit-details-marker{display:none}
+  .lead-settings > summary::after{
+    content:"▾";margin-left:auto;color:var(--ink-soft);font-size:12px;
+    transition:transform .2s var(--ease);
+  }
+  .lead-settings[open] > summary::after{transform:rotate(180deg)}
+  .lead-settings-eyebrow{
+    font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--purple-700);
+  }
+  .lead-settings-ico{
+    width:34px;height:34px;border-radius:9px;background:#EDE9FE;color:var(--purple-700);
+    display:grid;place-items:center;font-size:15px;flex-shrink:0;
+  }
+  .lead-settings-meta{font-size:11.5px;font-weight:500;color:var(--ink-soft);opacity:.75;margin-top:2px}
+
+  .lead-settings-body{padding:0 20px 20px;display:flex;flex-direction:column;gap:14px}
+  .lead-settings-section-title{
+    font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);opacity:.7;margin:6px 0 -2px;
+  }
+
+  .lead-channels{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .lead-channel{
+    display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;
+    padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:#FAFAF7;
+  }
+  .lead-channel-ico{
+    width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+    background:#fff;border:1px solid var(--line);font-size:16px;flex-shrink:0;
+  }
+  .lead-channel-text strong{font-size:13px;font-weight:600;display:block}
+  .lead-channel-text span{font-size:11.5px;color:var(--ink-soft);opacity:.75}
+  .lead-channel-text input{
+    margin-top:6px;width:100%;padding:6px 9px;border:1px solid var(--line);border-radius:7px;
+    font:inherit;font-size:12px;background:#fff;outline:0;
+  }
+  .lead-channel-text input:focus{border-color:var(--purple-400,#A78BFA)}
+
+  .lead-channel-cta{
+    padding:7px 13px;border-radius:8px;font-size:12px;font-weight:600;
+    font:inherit;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);
+    transition:all .15s var(--ease);
+  }
+  .lead-channel-cta:hover{border-color:var(--purple-300);color:var(--purple-700)}
+  .lead-channel-cta.connected{
+    background:rgba(16,185,129,.1);color:#059669;border-color:rgba(16,185,129,.3);
+    cursor:default;
+  }
+
+  .lead-rules{
+    display:flex;flex-direction:column;gap:8px;
+    background:#FAFAF7;border:1px solid var(--line);border-radius:11px;padding:12px 14px;
+  }
+  .lead-rule{
+    display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:13px;
+  }
+  .lead-rule-text strong{display:block;font-weight:600;font-size:13px}
+  .lead-rule-text span{font-size:11.5px;color:var(--ink-soft);opacity:.75}
+
+  /* ===== Table tweaks ===== */
+  .lead-row{cursor:pointer;transition:background .12s var(--ease)}
+  .lead-row:hover{background:#FAFAF7}
+  .lead-row .lead-del{opacity:0;transition:opacity .15s var(--ease)}
+  .lead-row:hover .lead-del{opacity:1}
+  .lead-del{
+    width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:#fff;
+    color:var(--ink-soft);cursor:pointer;
+    display:grid;place-items:center;padding:0;
+    transition:all .12s var(--ease);
+  }
+  .lead-del:hover{border-color:#EF4444;color:#DC2626;background:rgba(239,68,68,.06)}
+  .lead-del svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .lead-time-cell{display:flex;flex-direction:column;line-height:1.2}
+  .lead-time-cell .abs{font-size:11.5px;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+  .lead-time-cell .rel{font-size:10.5px;color:var(--ink-soft);opacity:.65;font-variant-numeric:tabular-nums}
+
+  /* ===== Drawer ===== */
+  .lead-drawer-backdrop{
+    position:fixed;inset:0;background:rgba(15,11,26,.45);backdrop-filter:blur(2px);
+    opacity:0;pointer-events:none;transition:opacity .25s var(--ease);z-index:50;
+  }
+  .lead-drawer-backdrop.open{opacity:1;pointer-events:auto}
+  .lead-drawer{
+    position:fixed;top:0;right:0;bottom:0;width:540px;max-width:100vw;
+    background:#fff;z-index:51;transform:translateX(100%);
+    transition:transform .3s var(--ease);
+    display:flex;flex-direction:column;
+    box-shadow:-30px 0 60px -30px rgba(15,11,26,.5);
+  }
+  .lead-drawer.open{transform:translateX(0)}
+  .lead-drawer-head{
+    padding:18px 24px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;
+  }
+  .lead-drawer-close{
+    width:34px;height:34px;border-radius:9px;border:1px solid var(--line);
+    background:#fff;cursor:pointer;display:grid;place-items:center;
+    color:var(--ink-soft);font-size:16px;font:inherit;
+    transition:all .12s var(--ease);
+  }
+  .lead-drawer-close:hover{border-color:var(--ink-soft);color:var(--ink)}
+  .lead-drawer-title{flex:1;min-width:0}
+  .lead-drawer-title .name{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .lead-drawer-title .company{font-size:12.5px;color:var(--ink-soft);opacity:.8}
+
+  .lead-drawer-body{
+    flex:1;overflow-y:auto;padding:20px 24px 24px;
+    display:flex;flex-direction:column;gap:20px;
+  }
+  .lead-section-title{
+    font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);opacity:.65;margin-bottom:8px;
+  }
+
+  .lead-info-card{
+    background:#FAFAF7;border:1px solid var(--line);border-radius:11px;padding:14px 16px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .lead-info-row{
+    display:grid;grid-template-columns:18px 100px 1fr;gap:10px;align-items:center;
+    font-size:13px;
+  }
+  .lead-info-row .key{color:var(--ink-soft);opacity:.75;font-size:12.5px}
+  .lead-info-row .val{font-weight:500}
+  .lead-info-row .val a{color:var(--purple-700);text-decoration:none}
+  .lead-info-row .val a:hover{text-decoration:underline}
+
+  .lead-transcript{
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .lead-msg{display:flex;gap:9px;font-size:13px;line-height:1.5}
+  .lead-msg.user{justify-content:flex-end}
+  .lead-msg-avatar{
+    width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;
+    font-size:11px;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,var(--purple-400,#A78BFA),var(--purple-600));
+  }
+  .lead-msg.bot .lead-msg-avatar{
+    background:linear-gradient(135deg,var(--purple-500),var(--purple-700));
+  }
+  .lead-msg-bubble{
+    padding:9px 13px;border-radius:13px;max-width:78%;
+    background:#fff;border:1px solid var(--line);
+  }
+  .lead-msg.user .lead-msg-bubble{
+    background:#F4EFFB;border-color:#EDE4FC;border-bottom-right-radius:4px;
+  }
+  .lead-msg.bot .lead-msg-bubble{border-bottom-left-radius:4px;background:#FAFAF7}
+  .lead-msg-bubble .src{
+    font-size:11px;color:var(--ink-soft);opacity:.75;margin-top:6px;
+  }
+
+  .lead-drawer-foot{
+    padding:14px 24px;border-top:1px solid var(--line);background:#FAFAF7;
+    display:flex;gap:8px;align-items:center;
+  }
+  .lead-drawer-foot .panel-btn-ghost{flex:1;justify-content:center;display:inline-flex}
+  .lead-drawer-foot .danger{
+    padding:9px 14px;border-radius:9px;border:1px solid rgba(239,68,68,.3);
+    background:#fff;color:#DC2626;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;
+    transition:all .12s var(--ease);
+  }
+  .lead-drawer-foot .danger:hover{background:rgba(239,68,68,.06);border-color:#DC2626}
+
+  /* Confirm dialog */
+  .lead-confirm{
+    position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
+    background:rgba(15,11,26,.55);
+  }
+  .lead-confirm.open{display:flex}
+  .lead-confirm-box{
+    background:#fff;border-radius:14px;padding:22px 24px;max-width:380px;width:90%;
+    box-shadow:0 30px 80px -10px rgba(0,0,0,.4);
+  }
+  .lead-confirm-box h3{font-size:17px;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+  .lead-confirm-box p{font-size:13px;color:var(--ink-soft);line-height:1.55;margin-bottom:18px}
+  .lead-confirm-box .actions{display:flex;gap:8px;justify-content:flex-end}
+
+  @media (max-width:760px){
+    .lead-drawer{width:100vw}
+    .lead-channels{grid-template-columns:1fr}
+  }
+</style>
 </head>
 <body>
 
@@ -43,183 +235,533 @@
         </div>
       </div>
 
+      <!-- ============ Varslings-innstillinger ============ -->
+      <details class="lead-settings" id="leadSettings">
+        <summary>
+          <div class="lead-settings-ico">🔔</div>
+          <div>
+            <div class="lead-settings-eyebrow">Varslinger</div>
+            <div>Hvor vil du bli varslet om nye leads?</div>
+            <div class="lead-settings-meta">2 kanaler aktive · E-post, Slack</div>
+          </div>
+        </summary>
+
+        <div class="lead-settings-body">
+
+          <div class="lead-settings-section-title">Kanaler</div>
+          <div class="lead-channels">
+
+            <div class="lead-channel">
+              <div class="lead-channel-ico">📧</div>
+              <div class="lead-channel-text">
+                <strong>E-post</strong>
+                <span>Mottar en e-post med leadens detaljer.</span>
+                <input type="email" value="tor@getonnet.no, sales@dinbedrift.no" placeholder="komma-separert liste"/>
+              </div>
+              <div class="settings-toggle on" data-toggle></div>
+            </div>
+
+            <div class="lead-channel">
+              <div class="lead-channel-ico">💬</div>
+              <div class="lead-channel-text">
+                <strong>Slack</strong>
+                <span>Sender melding i kanal #leads.</span>
+                <span style="display:block;font-family:monospace;font-size:11px;margin-top:4px">workspace: GetOnNet · #leads</span>
+              </div>
+              <button class="lead-channel-cta connected">✓ Tilkoblet</button>
+            </div>
+
+            <div class="lead-channel">
+              <div class="lead-channel-ico">📱</div>
+              <div class="lead-channel-text">
+                <strong>SMS</strong>
+                <span>Bare ved «kontakt-meg»-leads, kun mellom 08–22.</span>
+                <input type="tel" value="" placeholder="+47 ..."/>
+              </div>
+              <div class="settings-toggle" data-toggle></div>
+            </div>
+
+            <div class="lead-channel">
+              <div class="lead-channel-ico" style="background:#fff;color:#374151">N</div>
+              <div class="lead-channel-text">
+                <strong>Microsoft Teams</strong>
+                <span>Sender adaptive card til valgt kanal.</span>
+                <span style="display:block;font-size:11px;color:var(--ink-soft);opacity:.7;margin-top:4px">Ikke konfigurert</span>
+              </div>
+              <button class="lead-channel-cta">Koble til</button>
+            </div>
+
+            <div class="lead-channel">
+              <div class="lead-channel-ico">🌐</div>
+              <div class="lead-channel-text">
+                <strong>Webhook</strong>
+                <span>POST JSON ved hver nye lead.</span>
+                <input type="text" value="https://hooks.dinbedrift.no/mx/leads" style="font-family:monospace;font-size:11.5px"/>
+              </div>
+              <div class="settings-toggle on" data-toggle></div>
+            </div>
+
+            <div class="lead-channel">
+              <div class="lead-channel-ico" style="background:rgba(59,130,246,.12);color:#1D4ED8">⚡</div>
+              <div class="lead-channel-text">
+                <strong>Zapier / Make</strong>
+                <span>Bruk webhooken over til å trigge automatiseringer.</span>
+                <span style="display:block;font-size:11px;color:var(--ink-soft);opacity:.7;margin-top:4px">Se <a href="settings.html" style="color:var(--purple-700)">API-dokumentasjon</a></span>
+              </div>
+              <span style="font-size:11.5px;color:var(--ink-soft);opacity:.7;white-space:nowrap">Via webhook</span>
+            </div>
+
+          </div>
+
+          <div class="lead-settings-section-title" style="margin-top:8px">Når skal varslingen sendes?</div>
+          <div class="lead-rules">
+            <div class="lead-rule">
+              <div class="lead-rule-text"><strong>Alle leads</strong><span>Selv leads uten kontakt-info (kun navn / kallenavn).</span></div>
+              <div class="settings-toggle" data-toggle></div>
+            </div>
+            <div class="lead-rule">
+              <div class="lead-rule-text"><strong>Kun «kontakt-meg»-leads</strong><span>Brukeren har eksplisitt bedt om å bli kontaktet.</span></div>
+              <div class="settings-toggle on" data-toggle></div>
+            </div>
+            <div class="lead-rule">
+              <div class="lead-rule-text"><strong>Kun B2B-leads</strong><span>Hvis det er knyttet til et bedriftsnavn.</span></div>
+              <div class="settings-toggle on" data-toggle></div>
+            </div>
+            <div class="lead-rule">
+              <div class="lead-rule-text"><strong>Stillemodus (man-fre, 22–07)</strong><span>Varslinger samles i en oppsummering kl. 08.</span></div>
+              <div class="settings-toggle on" data-toggle></div>
+            </div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ============ Leads-tabell ============ -->
       <div class="panel-card">
         <div class="panel-card-head">
           <span>Siste leads</span>
           <span class="panel-card-sub">74 totalt · siste 30 dager</span>
         </div>
-        <div class="panel-table">
-          <div class="panel-tr head" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <span></span><span>Navn</span><span>Kontakt</span><span>Spørsmål</span><span>Modul</span><span>Webhook</span><span style="text-align:right">Tid</span>
+        <div class="panel-table" id="leadsTable">
+          <div class="panel-tr head" style="grid-template-columns:32px 1.3fr 1.5fr 1.8fr 130px 90px 100px 40px">
+            <span></span><span>Navn</span><span>Kontakt</span><span>Spørsmål</span><span>Modul</span><span>Webhook</span><span style="text-align:right">Mottatt</span><span></span>
           </div>
 
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av">MB</div>
-            <div>
-              <div style="font-weight:600">Marius B.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Nordby Anlegg AS</div>
-            </div>
-            <span class="panel-trunc panel-num">marius@nordby-anlegg.no</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Volumrabatt på Arctic Parka, 14 stk»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">2 min</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av green">AL</div>
-            <div>
-              <div style="font-weight:600">Anna L.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Lykkebo Bygg AS</div>
-            </div>
-            <span class="panel-trunc panel-num">anna@lykkebo.no</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Bedriftsavtale for 5+ ansatte»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">48 min</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av blue">JK</div>
-            <div>
-              <div style="font-weight:600">Jonas K.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Privatkunde</div>
-            </div>
-            <span class="panel-trunc panel-num">jonas.k@gmail.com</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Råd om jakke til fjelltur, Hardangervidda mai»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Produktsøk</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">4 t</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av amber">SO</div>
-            <div>
-              <div style="font-weight:600">Sigrid O.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Polarvarer AS</div>
-            </div>
-            <span class="panel-trunc panel-num">sigrid@polarvarer.no</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Distributøravtale for Svalbard og Nord-Norge»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">6 t</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av">KH</div>
-            <div>
-              <div style="font-weight:600">Kine H.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Privatkunde</div>
-            </div>
-            <span class="panel-trunc panel-num">kine.h@protonmail.com</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Komplett vinterutstyr — barn 8–12 år»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Produktsøk</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">i går</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av red">PV</div>
-            <div>
-              <div style="font-weight:600">Per V.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Sjøsiden Hotell</div>
-            </div>
-            <span class="panel-trunc panel-num">post@sjøsiden.no</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«28 jakker til staben — uke 18»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">B2B-chat</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">i går</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av blue">EH</div>
-            <div>
-              <div style="font-weight:600">Erik H.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Fjellguide Erik</div>
-            </div>
-            <span class="panel-trunc panel-num">erik@fjellguide.no</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Demo-program for skaljakke»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
-            <span><span class="panel-pill err"><span class="panel-pill-dot"></span>Feilet · 502</span></span>
-            <span class="panel-num" style="text-align:right">2 dg</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av green">LO</div>
-            <div>
-              <div style="font-weight:600">Lise O.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Privatkunde</div>
-            </div>
-            <span class="panel-trunc panel-num">lise.o@hotmail.com</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Pris på Polarbukse — 38 kr fraktbestilling»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Produktsøk</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">3 dg</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av">CB</div>
-            <div>
-              <div style="font-weight:600">Camilla B.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Fjellstyret Hemsedal</div>
-            </div>
-            <span class="panel-trunc panel-num">camilla@fjellstyret.no</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Uniformer for sesongansatte 2026/27»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">B2B-chat</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">4 dg</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av amber">NV</div>
-            <div>
-              <div style="font-weight:600">Nora V.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Privatkunde</div>
-            </div>
-            <span class="panel-trunc panel-num">nora.v@gmail.com</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Gave til mann — størrelse XL, varm»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">5 dg</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av red">DA</div>
-            <div>
-              <div style="font-weight:600">David A.</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Arctic Tours AS</div>
-            </div>
-            <span class="panel-trunc panel-num">david@arctic-tours.no</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«40 jakker til guide-staben for sesongen»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">B2B-chat</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">1 uke</span>
-          </div>
-
-          <div class="panel-tr" style="grid-template-columns:32px 1.4fr 1.6fr 2fr 140px 90px 90px">
-            <div class="panel-av gray">??</div>
-            <div>
-              <div style="font-weight:600">Anonym</div>
-              <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">Kun telefon: +47 482••• ••</div>
-            </div>
-            <span class="panel-trunc panel-num" style="opacity:.6">— ingen e-post —</span>
-            <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">«Vil bli ringt opp angående bedriftsavtale»</span>
-            <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">Kundeservice-widget</span>
-            <span><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span></span>
-            <span class="panel-num" style="text-align:right">1 uke</span>
-          </div>
-
+          <!-- Leads rendered by JS to keep markup compact -->
         </div>
       </div>
 
       <div style="font-size:12px;color:var(--ink-soft);text-align:center;padding:6px 0">
-        Viser 12 av 74 · <a href="#" style="color:var(--purple-700)">vis alle</a> · konfigurer webhook-destinasjon i <a href="settings.html" style="color:var(--purple-700)">Settings</a>
+        Viser <span id="leadCount">12</span> av 74 · <a href="#" style="color:var(--purple-700)">vis alle</a>
       </div>
 
     </div>
   </main>
 </div>
 
+<!-- ============ Detail drawer ============ -->
+<div class="lead-drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="lead-drawer" id="leadDrawer" aria-hidden="true">
+  <div class="lead-drawer-head">
+    <div class="panel-av" id="drawerAvatar" style="width:42px;height:42px;font-size:14px">—</div>
+    <div class="lead-drawer-title">
+      <div class="name" id="drawerName">—</div>
+      <div class="company" id="drawerCompany">—</div>
+    </div>
+    <button class="lead-drawer-close" id="drawerClose" aria-label="Lukk">✕</button>
+  </div>
+  <div class="lead-drawer-body">
+
+    <div>
+      <div class="lead-section-title">Status</div>
+      <div id="drawerStatus"><span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt til CRM</span></div>
+    </div>
+
+    <div>
+      <div class="lead-section-title">Kontakt</div>
+      <div class="lead-info-card" id="drawerContact"></div>
+    </div>
+
+    <div>
+      <div class="lead-section-title">Detaljer</div>
+      <div class="lead-info-card" id="drawerDetails"></div>
+    </div>
+
+    <div>
+      <div class="lead-section-title">Samtale som førte til kontakten</div>
+      <div class="lead-transcript" id="drawerTranscript"></div>
+    </div>
+
+  </div>
+  <div class="lead-drawer-foot">
+    <button class="panel-btn-ghost">Marker kontaktet</button>
+    <button class="panel-btn-ghost">Send på nytt</button>
+    <button class="danger" id="drawerDelete">Slett lead</button>
+  </div>
+</aside>
+
+<!-- ============ Confirm dialog ============ -->
+<div class="lead-confirm" id="confirmDialog">
+  <div class="lead-confirm-box">
+    <h3>Slette lead?</h3>
+    <p id="confirmText">Slettingen fjerner kontaktet både fra denne listen og CRM-en hvis webhook er konfigurert til synk. Handlingen kan ikke angres.</p>
+    <div class="actions">
+      <button class="panel-btn-ghost" id="confirmCancel">Avbryt</button>
+      <button class="danger" id="confirmDelete" style="padding:9px 14px;border-radius:9px;border:1px solid rgba(239,68,68,.3);background:#fff;color:#DC2626;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer">Slett</button>
+    </div>
+  </div>
+</div>
+
 <script src="panel-shell.js"></script>
+<script>
+  // ============ Lead data ============
+  const LEADS = [
+    {
+      id:'mb', initials:'MB', avClass:'',
+      name:'Marius B.', company:'Nordby Anlegg AS',
+      email:'marius@nordby-anlegg.no', phone:'+47 482 11 432',
+      question:'«Volumrabatt på Arctic Parka, 14 stk»',
+      module:'Kundeservice-widget',
+      webhook:'ok', webhookTime:'14:32:04',
+      receivedAbs:'21. apr · 14:32', receivedRel:'for 2 min siden',
+      transcript:[
+        {role:'user',  text:'Hei! Vi vurderer å kjøpe inn Arctic Parka i grått til hele arbeidslaget vårt — ca. 14 stk. Får vi rabatt på et slikt volum?'},
+        {role:'bot',   text:'Ja, vi har bedriftsrabatt fra 10 stk! For 10–20 stk gir vi 12 % rabatt, og fra 21 stk gir vi 18 %. Skal jeg sende deg et uforpliktende tilbud?', src:'Bedriftsavtaler_2026.pdf (s. 4)'},
+        {role:'user',  text:'Ja takk — vi trenger XL (4), L (6) og M (4). Trenger logo-brodering også, går det an?'},
+        {role:'bot',   text:'Logo-brodering er inkludert ved bedriftsordre over 10 stk. Hva er bedriftens navn og e-post, så får salgsavdelingen sendt et tilbud innen 24 timer?'},
+        {role:'user',  text:'Nordby Anlegg AS, marius@nordby-anlegg.no'},
+        {role:'bot',   text:'Mottatt! Tilbud sendes til marius@nordby-anlegg.no i løpet av dagen.'},
+      ],
+    },
+    {
+      id:'al', initials:'AL', avClass:'green',
+      name:'Anna L.', company:'Lykkebo Bygg AS',
+      email:'anna@lykkebo.no', phone:'',
+      question:'«Bedriftsavtale for 5+ ansatte»',
+      module:'Kundeservice-widget',
+      webhook:'ok', webhookTime:'13:48:17',
+      receivedAbs:'21. apr · 13:48', receivedRel:'for 48 min siden',
+      transcript:[
+        {role:'user', text:'Hei, vi har 7 ansatte og vurderer å kjøpe MotherX. Hvilken plan passer best?'},
+        {role:'bot',  text:'For 7 ansatte anbefaler vi <strong>Team</strong>-planen — den dekker opptil 15 seter og inkluderer alle moduler. Kan jeg sette deg i kontakt med en selger som kan gi dere et tilpasset tilbud?'},
+        {role:'user', text:'Ja, det hadde vært fint!'},
+        {role:'bot',  text:'Flott! Hva er bedriftens navn og e-post, så får dere et tilbud innen kort tid?'},
+        {role:'user', text:'Lykkebo Bygg AS, anna@lykkebo.no'},
+        {role:'bot',  text:'Tusen takk, Anna! Salgsteamet kontakter deg innen 24 timer.'},
+      ],
+    },
+    {
+      id:'jk', initials:'JK', avClass:'blue',
+      name:'Jonas K.', company:'Privatkunde',
+      email:'jonas.k@gmail.com', phone:'',
+      question:'«Råd om jakke til fjelltur, Hardangervidda mai»',
+      module:'Produktsøk',
+      webhook:'ok', webhookTime:'10:14:02',
+      receivedAbs:'21. apr · 10:14', receivedRel:'for 4 t siden',
+      transcript:[
+        {role:'user', text:'Skal på fjelltur over Hardangervidda i mai. Hvilken jakke trenger jeg?'},
+        {role:'bot',  text:'I mai på Hardangervidda kan det fortsatt være -10°C og kraftig vind. Vi anbefaler Arctic Parka eller Nordlys-skall som ytterlag — begge er vind- og vanntette ned til -25°C.', src:'Produktkatalog_v18.csv'},
+        {role:'user', text:'Kan noen ringe meg og hjelpe med valg?'},
+        {role:'bot',  text:'Selvfølgelig! La meg ta noen detaljer så ringer en av våre fjellfaglige innen 1 time. Hva er telefonnummeret ditt?'},
+        {role:'user', text:'jonas.k@gmail.com — kan dere maile først? Lager mat nå.'},
+        {role:'bot',  text:'Helt greit — en e-post kommer fra erik@dinbedrift.no innen 1 time.'},
+      ],
+    },
+    {
+      id:'so', initials:'SO', avClass:'amber',
+      name:'Sigrid O.', company:'Polarvarer AS',
+      email:'sigrid@polarvarer.no', phone:'+47 901 23 456',
+      question:'«Distributøravtale for Svalbard og Nord-Norge»',
+      module:'Kundeservice-widget',
+      webhook:'ok', webhookTime:'08:22:51',
+      receivedAbs:'21. apr · 08:22', receivedRel:'for 6 t siden',
+      transcript:[
+        {role:'user', text:'Hei! Polarvarer AS — vi driver med utstyr til Svalbard-markedet. Er distributøravtaler en mulighet?'},
+        {role:'bot',  text:'Det er mulig for partnere med fysisk butikk i Nord-Norge eller Svalbard. Skal jeg sette deg i kontakt med partnerskapsavdelingen?'},
+        {role:'user', text:'Ja takk. Sigrid Olsen, sigrid@polarvarer.no, 90123456.'},
+        {role:'bot',  text:'Mottatt! En av partner-managerne våre kontakter deg i løpet av dagen.'},
+      ],
+    },
+    {
+      id:'kh', initials:'KH', avClass:'',
+      name:'Kine H.', company:'Privatkunde',
+      email:'kine.h@protonmail.com', phone:'',
+      question:'«Komplett vinterutstyr — barn 8–12 år»',
+      module:'Produktsøk',
+      webhook:'ok', webhookTime:'i går 16:11',
+      receivedAbs:'20. apr · 16:11', receivedRel:'i går',
+      transcript:[
+        {role:'user', text:'Skal kjøpe komplett vinterutstyr til to barn (8 og 11 år). Har dere pakker?'},
+        {role:'bot',  text:'Ja! Vinterpakke Junior dekker jakke, bukse, votter og lue — fra kr 2 990 per barn. Skal jeg sende deg et tilbud med rabatt på 2 sett?'},
+        {role:'user', text:'Ja, gjerne. kine.h@protonmail.com'},
+      ],
+    },
+    {
+      id:'pv', initials:'PV', avClass:'red',
+      name:'Per V.', company:'Sjøsiden Hotell',
+      email:'post@sjøsiden.no', phone:'',
+      question:'«28 jakker til staben — uke 18»',
+      module:'B2B-chat',
+      webhook:'ok', webhookTime:'i går 11:03',
+      receivedAbs:'20. apr · 11:03', receivedRel:'i går',
+      transcript:[
+        {role:'user', text:'Vi trenger 28 jakker til staben på hotellet, leveranse uke 18. Hva kan dere tilby?'},
+        {role:'bot',  text:'For volum over 25 stk gir vi 18 % rabatt + brodering inkludert. Hva er bedriftens navn og kontaktperson?'},
+        {role:'user', text:'Sjøsiden Hotell, post@sjøsiden.no. Snakker med Per V.'},
+        {role:'bot',  text:'Mottatt! Et detaljert tilbud sendes innen dagens slutt.'},
+      ],
+    },
+    {
+      id:'eh', initials:'EH', avClass:'blue',
+      name:'Erik H.', company:'Fjellguide Erik',
+      email:'erik@fjellguide.no', phone:'',
+      question:'«Demo-program for skaljakke»',
+      module:'Kundeservice-widget',
+      webhook:'err', webhookTime:'feilet 502',
+      receivedAbs:'19. apr · 09:47', receivedRel:'for 2 dg',
+      transcript:[
+        {role:'user', text:'Jeg er fjellguide og lurer på om dere har et demo-program der jeg kan teste skaljakka før kjøp.'},
+        {role:'bot',  text:'Vi har et program for proffe brukere — du får låne et sett i 2 uker gratis. Skal jeg melde deg på?'},
+        {role:'user', text:'Ja! erik@fjellguide.no'},
+        {role:'bot',  text:'Klart! Du hører fra oss innen 48 timer.'},
+      ],
+    },
+    {
+      id:'lo', initials:'LO', avClass:'green',
+      name:'Lise O.', company:'Privatkunde',
+      email:'lise.o@hotmail.com', phone:'',
+      question:'«Pris på Polarbukse — 38 kr fraktbestilling»',
+      module:'Produktsøk',
+      webhook:'ok', webhookTime:'18. apr 14:30',
+      receivedAbs:'18. apr · 14:30', receivedRel:'for 3 dg',
+      transcript:[
+        {role:'user', text:'Hva koster Polarbukse Rød Edition i str. 34?'},
+        {role:'bot',  text:'Polarbukse Rød Edition i str. 34 koster kr 2 490. Vi har den på lager — fri frakt over kr 1 500.'},
+        {role:'user', text:'Topp! lise.o@hotmail.com hvis dere har tilbud snart.'},
+      ],
+    },
+    {
+      id:'cb', initials:'CB', avClass:'',
+      name:'Camilla B.', company:'Fjellstyret Hemsedal',
+      email:'camilla@fjellstyret.no', phone:'',
+      question:'«Uniformer for sesongansatte 2026/27»',
+      module:'B2B-chat',
+      webhook:'ok', webhookTime:'17. apr 12:14',
+      receivedAbs:'17. apr · 12:14', receivedRel:'for 4 dg',
+      transcript:[
+        {role:'user', text:'Vi trenger uniformer til ca. 18 sesongansatte til neste vinter. Kan dere lage en pakke?'},
+        {role:'bot',  text:'Ja, vi har egen sesong-pakke med jakke, bukse og logo. Pris fra kr 3 400 per ansatt ved 15+ stk. Skal jeg sette deg i kontakt med salg?'},
+        {role:'user', text:'Ja takk! Camilla, camilla@fjellstyret.no.'},
+      ],
+    },
+    {
+      id:'nv', initials:'NV', avClass:'amber',
+      name:'Nora V.', company:'Privatkunde',
+      email:'nora.v@gmail.com', phone:'',
+      question:'«Gave til mann — størrelse XL, varm»',
+      module:'Kundeservice-widget',
+      webhook:'ok', webhookTime:'16. apr 19:05',
+      receivedAbs:'16. apr · 19:05', receivedRel:'for 5 dg',
+      transcript:[
+        {role:'user', text:'Skal kjøpe gave til mannen min. Han er XL og fryser lett. Hva anbefaler dere?'},
+        {role:'bot',  text:'Arctic Parka i XL er vår varmeste jakke (-30°C) og passer perfekt. Vil du ha den i svart eller marineblå?'},
+        {role:'user', text:'Marineblå! nora.v@gmail.com — kan dere sende en gavekvittering?'},
+      ],
+    },
+    {
+      id:'da', initials:'DA', avClass:'red',
+      name:'David A.', company:'Arctic Tours AS',
+      email:'david@arctic-tours.no', phone:'+47 412 99 102',
+      question:'«40 jakker til guide-staben for sesongen»',
+      module:'B2B-chat',
+      webhook:'ok', webhookTime:'14. apr 10:22',
+      receivedAbs:'14. apr · 10:22', receivedRel:'for 1 uke',
+      transcript:[
+        {role:'user', text:'Arctic Tours AS — vi trenger 40 jakker til guidene før sesongen. Logo på arm. Tid?'},
+        {role:'bot',  text:'For 40 stk gir vi 18 % rabatt + brodering inkludert. Leveringstid 3–4 uker fra bekreftelse. Skal jeg sende tilbud?'},
+        {role:'user', text:'Ja. david@arctic-tours.no, 41299102.'},
+        {role:'bot',  text:'Mottatt! Du hører fra oss innen 24 timer.'},
+      ],
+    },
+    {
+      id:'anon', initials:'??', avClass:'gray',
+      name:'Anonym', company:'Kun telefon',
+      email:'', phone:'+47 482 ••• ••',
+      question:'«Vil bli ringt opp angående bedriftsavtale»',
+      module:'Kundeservice-widget',
+      webhook:'ok', webhookTime:'14. apr 09:11',
+      receivedAbs:'14. apr · 09:11', receivedRel:'for 1 uke',
+      transcript:[
+        {role:'user', text:'Hei, kan dere ringe meg? Lurer på bedriftsavtaler.'},
+        {role:'bot',  text:'Det ordner vi! Hva er telefonnummeret ditt?'},
+        {role:'user', text:'+47 482 11 432'},
+        {role:'bot',  text:'Mottatt! En selger ringer deg innen 2 timer (i åpningstidene).'},
+      ],
+    },
+  ];
+
+  // ============ Render leads table ============
+  const tbl = document.getElementById('leadsTable');
+  const countEl = document.getElementById('leadCount');
+  const grid = 'grid-template-columns:32px 1.3fr 1.5fr 1.8fr 130px 90px 100px 40px';
+
+  function pillHtml(state){
+    if(state === 'ok') return '<span class="panel-pill ok"><span class="panel-pill-dot"></span>Sendt</span>';
+    if(state === 'err') return '<span class="panel-pill err"><span class="panel-pill-dot"></span>Feilet · 502</span>';
+    return '<span class="panel-pill warn"><span class="panel-pill-dot"></span>Venter</span>';
+  }
+
+  function renderRows(){
+    // Keep the head row, replace rest
+    const head = tbl.querySelector('.head');
+    tbl.innerHTML = '';
+    tbl.appendChild(head);
+
+    LEADS.forEach(L => {
+      const row = document.createElement('div');
+      row.className = 'panel-tr lead-row';
+      row.dataset.leadId = L.id;
+      row.style.cssText = grid;
+      row.innerHTML = `
+        <div class="panel-av ${L.avClass}">${L.initials}</div>
+        <div>
+          <div style="font-weight:600">${L.name}</div>
+          <div class="panel-trunc" style="font-size:11.5px;color:var(--ink-soft);opacity:.7">${L.company}</div>
+        </div>
+        <span class="panel-trunc panel-num">${L.email || '<span style="opacity:.5">' + (L.phone || '— ingen kontakt —') + '</span>'}</span>
+        <span class="panel-trunc" style="font-size:12.5px;color:var(--ink-soft)">${L.question}</span>
+        <span class="panel-trunc" style="font-size:12px;color:var(--ink-soft)">${L.module}</span>
+        <span>${pillHtml(L.webhook)}</span>
+        <span class="lead-time-cell" style="text-align:right">
+          <span class="abs">${L.receivedAbs}</span>
+          <span class="rel">${L.receivedRel}</span>
+        </span>
+        <button class="lead-del" type="button" title="Slett lead" data-action="delete">
+          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        </button>
+      `;
+      tbl.appendChild(row);
+    });
+    countEl.textContent = LEADS.length;
+  }
+
+  // ============ Drawer ============
+  const drawer = document.getElementById('leadDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+  const drawerClose = document.getElementById('drawerClose');
+  const drawerAvatar = document.getElementById('drawerAvatar');
+  const drawerName = document.getElementById('drawerName');
+  const drawerCompany = document.getElementById('drawerCompany');
+  const drawerContact = document.getElementById('drawerContact');
+  const drawerDetails = document.getElementById('drawerDetails');
+  const drawerTranscript = document.getElementById('drawerTranscript');
+  const drawerStatus = document.getElementById('drawerStatus');
+  const drawerDelete = document.getElementById('drawerDelete');
+  let currentLeadId = null;
+
+  function openDrawer(id){
+    const L = LEADS.find(x => x.id === id);
+    if(!L) return;
+    currentLeadId = id;
+
+    drawerAvatar.className = 'panel-av ' + L.avClass;
+    drawerAvatar.textContent = L.initials;
+    drawerAvatar.style.cssText = 'width:42px;height:42px;font-size:14px';
+    drawerName.textContent = L.name;
+    drawerCompany.textContent = L.company;
+    drawerStatus.innerHTML = pillHtml(L.webhook);
+
+    const c = [];
+    if(L.email) c.push(`<div class="lead-info-row"><span>📧</span><span class="key">E-post</span><span class="val"><a href="mailto:${L.email}">${L.email}</a></span></div>`);
+    if(L.phone) c.push(`<div class="lead-info-row"><span>📞</span><span class="key">Telefon</span><span class="val"><a href="tel:${L.phone.replace(/\s/g,'')}">${L.phone}</a></span></div>`);
+    c.push(`<div class="lead-info-row"><span>🏢</span><span class="key">Bedrift</span><span class="val">${L.company}</span></div>`);
+    drawerContact.innerHTML = c.join('');
+
+    drawerDetails.innerHTML = `
+      <div class="lead-info-row"><span>◐</span><span class="key">Modul</span><span class="val">${L.module}</span></div>
+      <div class="lead-info-row"><span>📅</span><span class="key">Mottatt</span><span class="val">${L.receivedAbs} <span style="color:var(--ink-soft);opacity:.6;font-size:11.5px">· ${L.receivedRel}</span></span></div>
+      <div class="lead-info-row"><span>🌐</span><span class="key">Webhook</span><span class="val">${L.webhook === 'ok' ? '✓ Sendt ' + L.webhookTime : (L.webhook === 'err' ? '⚠ ' + L.webhookTime : 'Venter')}</span></div>
+    `;
+
+    drawerTranscript.innerHTML = L.transcript.map(m => {
+      const src = m.src ? `<div class="src">📎 ${m.src}</div>` : '';
+      const av = m.role === 'user'
+        ? `<div class="lead-msg-avatar">${L.initials}</div>`
+        : `<div class="lead-msg-avatar">M</div>`;
+      return `<div class="lead-msg ${m.role}">
+        ${m.role === 'user' ? '' : av}
+        <div class="lead-msg-bubble">${m.text}${src}</div>
+        ${m.role === 'user' ? av : ''}
+      </div>`;
+    }).join('');
+
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    drawer.setAttribute('aria-hidden','false');
+  }
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    drawer.setAttribute('aria-hidden','true');
+    currentLeadId = null;
+  }
+
+  drawerClose.addEventListener('click', closeDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeDrawer(); });
+
+  // ============ Row clicks: open or delete ============
+  tbl.addEventListener('click', (e) => {
+    const delBtn = e.target.closest('[data-action="delete"]');
+    if(delBtn){
+      e.stopPropagation();
+      const row = delBtn.closest('.lead-row');
+      askDelete(row.dataset.leadId);
+      return;
+    }
+    const row = e.target.closest('.lead-row');
+    if(row) openDrawer(row.dataset.leadId);
+  });
+
+  // ============ Delete confirm ============
+  const confirmDialog = document.getElementById('confirmDialog');
+  const confirmCancel = document.getElementById('confirmCancel');
+  const confirmDelete = document.getElementById('confirmDelete');
+  const confirmText = document.getElementById('confirmText');
+  let pendingDeleteId = null;
+
+  function askDelete(id){
+    pendingDeleteId = id;
+    const L = LEADS.find(x => x.id === id);
+    if(L) confirmText.textContent = `Slett "${L.name}" (${L.company}) permanent? Handlingen kan ikke angres.`;
+    confirmDialog.classList.add('open');
+  }
+  function doDelete(){
+    if(!pendingDeleteId) return;
+    const idx = LEADS.findIndex(x => x.id === pendingDeleteId);
+    if(idx >= 0) LEADS.splice(idx, 1);
+    renderRows();
+    if(currentLeadId === pendingDeleteId) closeDrawer();
+    pendingDeleteId = null;
+    confirmDialog.classList.remove('open');
+  }
+  confirmCancel.addEventListener('click', () => {
+    pendingDeleteId = null;
+    confirmDialog.classList.remove('open');
+  });
+  confirmDelete.addEventListener('click', doDelete);
+
+  drawerDelete.addEventListener('click', () => {
+    if(currentLeadId) askDelete(currentLeadId);
+  });
+
+  // ============ Toggles ============
+  document.querySelectorAll('[data-toggle]').forEach(t => {
+    t.addEventListener('click', () => t.classList.toggle('on'));
+  });
+
+  // Init
+  renderRows();
+</script>
 </body>
 </html>
