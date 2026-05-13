@@ -1,12 +1,13 @@
 // ===== Tema: les fra localStorage, brukes på tvers av alle sider =====
 (function(){
-  const saved = localStorage.getItem('mx-theme') || 'default';
+  const DEFAULT_THEME = 'warm-purple';
+  const saved = localStorage.getItem('mx-theme') || DEFAULT_THEME;
   document.documentElement.setAttribute('data-theme', saved);
 
   // Eksponer global switcher som settings-siden kan kalle
   const VALID_THEMES = ['default', 'warm', 'warm-purple'];
   window.setMxTheme = (name) => {
-    const v = VALID_THEMES.includes(name) ? name : 'default';
+    const v = VALID_THEMES.includes(name) ? name : DEFAULT_THEME;
     localStorage.setItem('mx-theme', v);
     document.documentElement.setAttribute('data-theme', v);
     document.querySelectorAll('[data-theme-choice]').forEach(c => {
