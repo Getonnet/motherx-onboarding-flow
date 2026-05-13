@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&display=swap');
 
 /* ========== Panel app shell ========== */
 html,body{height:100%;overflow:hidden}
 body{background:#FAFAF7;color:var(--ink)}
+.panel{font-family:'Figtree','Inter',system-ui,-apple-system,sans-serif}
 
 /* ================================================================
    THEMES: warm (terrakotta) + warm-purple (MotherX-lilla på papir)
@@ -76,29 +77,20 @@ body{background:#FAFAF7;color:var(--ink)}
   box-shadow:0 8px 24px -14px hsl(24 30% 20% / 0.14);
 }
 
-/* Typografi: Fraunces på overskrifter, store tall og hero (begge temaer) */
+/* Typografi: Fraunces — kun i warm (varm & håndverk). warm-purple beholder Figtree. */
 [data-theme="warm"] .panel-page-title,
 [data-theme="warm"] .panel-ai-title,
 [data-theme="warm"] .panel-kpi-val,
 [data-theme="warm"] .gpt-prev-hero,
 [data-theme="warm"] .settings-section h3,
-[data-theme="warm"] .panel-donut-center .num,
-[data-theme="warm-purple"] .panel-page-title,
-[data-theme="warm-purple"] .panel-ai-title,
-[data-theme="warm-purple"] .panel-kpi-val,
-[data-theme="warm-purple"] .gpt-prev-hero,
-[data-theme="warm-purple"] .settings-section h3,
-[data-theme="warm-purple"] .panel-donut-center .num{
+[data-theme="warm"] .panel-donut-center .num{
   font-family:'Fraunces',serif;
   font-weight:500;
   letter-spacing:-.01em;
 }
-[data-theme="warm"] .panel-page-title,
-[data-theme="warm-purple"] .panel-page-title{font-weight:600;letter-spacing:-.02em}
-[data-theme="warm"] .panel-ai-title,
-[data-theme="warm-purple"] .panel-ai-title{font-weight:500}
-[data-theme="warm"] .panel-kpi-val,
-[data-theme="warm-purple"] .panel-kpi-val{font-weight:600}
+[data-theme="warm"] .panel-page-title{font-weight:600;letter-spacing:-.02em}
+[data-theme="warm"] .panel-ai-title{font-weight:500}
+[data-theme="warm"] .panel-kpi-val{font-weight:600}
 
 /* Section labels — mosegrønn aksent */
 [data-theme="warm"] .panel-nav-section,
@@ -968,7 +960,7 @@ body{background:#FAFAF7;color:var(--ink)}
 .theme-card.t-warm-purple .theme-card-side > div:nth-child(1){background:linear-gradient(135deg,#7C3AED,#6D28D9)}
 .theme-card.t-warm-purple .theme-card-side > div:nth-child(n+2){background:hsl(30 18% 84%)}
 .theme-card.t-warm-purple .theme-card-main{background:hsl(36 42% 98%);border:1px solid hsl(30 18% 84%);border-radius:8px}
-.theme-card.t-warm-purple .theme-card-h{background:hsl(24 18% 14%);font-family:'Fraunces',serif}
+.theme-card.t-warm-purple .theme-card-h{background:hsl(24 18% 14%);font-family:'Figtree',sans-serif}
 .theme-card.t-warm-purple .theme-card-row:nth-child(2){background:linear-gradient(135deg,#A78BFA,#7C3AED);width:55%}
 .theme-card.t-warm-purple .theme-card-row:nth-child(3){background:hsl(30 18% 84%);width:80%}
 
